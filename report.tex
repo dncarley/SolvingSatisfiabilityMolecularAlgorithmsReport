@@ -1,0 +1,81 @@
+\documentclass[11pt]{report}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{pseudocode}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{multicol}
+\usepackage{placeins}
+\usepackage{etoolbox}
+\usepackage{url}
+\usepackage{hyperref}
+\patchcmd{\quote}{\rightmargin}{\leftmargin 15em \rightmargin}{}{}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\widowpenalty=300
+\clubpenalty=300
+
+\hypersetup{
+	colorlinks,%
+	citecolor=black,%
+	filecolor=black,%
+	linkcolor=black,%
+	urlcolor=black
+}
+
+%%%%%%%%%% http://www.maths.tcd.ie/~dwilkins/LaTeXPrimer/Theorems.html
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+\newcommand{\qed}{\nobreak \ifvmode \relax \else
+	  \ifdim\lastskip<1.5em \hskip-\lastskip
+	  \hskip1.5em plus0em minus0.5em \fi \nobreak
+	  \vrule height0.75em width0.5em depth0.25em\fi}
+%%%%%%%%%% end <http://www.maths.tcd.ie/~dwilkins/LaTeXPrimer/Theorems.html>
+
+\begin{document}
+
+\input{title.tex}
+
+\thispagestyle{empty} 
+\begin{center}
+	\begin{abstract}
+	Molecular computation is a branch of computing that applies techniques from molecular biology and combinatorial chemistry to perform generalized computations.  We explore several molecular algorithms to solve {\sc Satisfiability} with simulations in a conventional computing environment.  We compare the performance of these simulations with a sweep over random $k$-{\sc Sat} instances.  The results provide design considerations for an integrated molecular computing architecture.
+	\end{abstract}
+\end{center}
+
+\pagenumbering{roman}
+\tableofcontents
+
+\clearpage
+\pagenumbering{arabic}
+\input{ch1_introduction.tex}
+\input{ch2_background.tex}
+\input{ch3_MolecularSatsolvers.tex}
+\input{ch4_newMolecularModel.tex}
+\input{ch5_MolecularSimulation.tex}
+\input{ch6_ExperimentalSetup.tex}
+\input{ch7_Results}
+\input{ch8_Conclusions.tex}
+
+\newpage
+\addcontentsline{toc}{chapter}{Bibliography} 
+\bibliographystyle{acm}
+\bibliography{./refAll}
+
+\end{document}

@@ -1,0 +1,33 @@
+\chapter{Introduction}
+
+%This chapter provides a a brief introduction to molecular computation.  
+
+Molecular computing uses genetic information for parallel molecular interactions.  We provide an experimental environment for simulating a sweep of {\sc Satisfiability} instances.  This chapter introduces the contents of the project.
+%Finally, we provide an introduction to physical gene sequencing techniques for generalized molecular computation.  
+
+\section{Introduction to molecular computation}
+	
+%<Paragraph> Thesis statement
+%				<active sentence> <idea>:{Exp space in polynomial time}
+				%	A machine built with exponential space constructs configurations for a NP-complete problem instance in polynomial time.  In this project, we present a simulation environment for solving {\sc Satisfiability} with molecular algorithms. 
+				
+Molecular computation harnesses the efficiencies of molecular interactions of genetic information for generalized computation.  %
+
+%%In this project, we consider molecular algorithms for solving {\sc Satisfiability}.				
+%		<Paragraph> Introduce algorithms
+%				<active sentence> <idea>:{}
+
+	We consider three molecular algorithms for solving {\sc Satisfiability}.  Lipton's algorithm \cite{Lipton95usingdna}, Ogihara and Ray's algorithm \cite{Ogihara:1996:BFS:898228, Ogihara97dna-basedparallel}, and the Distribution algorithm.  Lipton's algorithm enumerates a combinatorial space and gets reduced to satisfiable solutions.  Ogihara and Ray's algorithm constructs a space of potential solutions and eliminates non-satisfiable paths.  The Distribution algorithm constructs a set of non-conflicting states for a satisfiable solution.  Chapters 3 and 4 discuss the implementation of these algorithms.
+				
+\section{Simulation environment and physical devices}
+	
+%		<Paragraph> Introduce experiment
+This project introduces an environment for simulating three molecular algorithms for solving {\sc Satisfiability}.  The environment provides standard operations for molecular computing that we introduce in Chapter 2. Chapter 7 provides results for a sweep of random {\sc Satisfiability} instances from the experimental setup of the simulation described in Chapters 5 and 6.
+%		<Paragraph> Introduce implementation
+
+The implementation of the simulation environment simulates synthetic molecular interactions.  Collection of runtime metrics during execution provide metrics of operator usage.  The runtime metrics get saved after algorithm execution, allowing for analysis of the molecular algorithm performance.
+	
+%		<Paragraph> Introduce physical machine
+Chapter 7 provides production techniques for a general purpose molecular computation architecture We describe a fabrication overview for application of current gene sequencing technologies.  These technologies include fabrication of nanopores and micropumps \cite{ionTorrent, oxfordNanopore, Liao_Lee_Liu_Hsieh_Luo_2005}.
+
+The next chapter begins with a background of molecular computation.  This introduces the terminology and techniques for molecular computation. Techniques from nanotechnology, microbiology and theoretical computer science get introduced for applied molecular computation.

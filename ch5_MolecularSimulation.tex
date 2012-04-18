@@ -1,0 +1,214 @@
+\chapter{Molecular Simulation: An environment for molecular computation}
+
+%	<Paragraph> Provide overview of chapter contents
+
+This chapter introduces Molecular Simulation: An environment for molecular computation.  We provide an overview of the software and download location for Molecular Simulation and its documentation. We provide tools for use with Molecular Simulation.  This includes automated documentation, Perl execution scripts, and visualization for output data.  We provide examples for Molecular Simulation's input and output.  Invocation of Molecular Simulation from the command line provides user configurable options.  The next chapter describes the usage of Molecular Simulation with automated execution.
+	
+	\section{Overview}
+	
+%		<Paragraph> Define scope of simulation environment
+
+Molecular Simulation provides a molecular lab for operating on DNA.  The present simulation implements three molecular algorithms for {\sc Satisfiability}.  The included \texttt{Perl} scripts process DIMACS CNF input directories with invocations to Molecular Simulation.
+
+Molecular Simulation may be executed directly or invoked with the assistance of an execution script.  Environment requirements to execute or design a molecular experiment are listed in this section.  
+		
+This program is a simulated molecular lab for experimenting with DNA operations. Implementation of three molecular algorithms for solving {\sc Satisfiability} include Lipton's algorithm, Ogihara and Ray's algorithm and the Distribution algorithm.  Chapters 3 and 4 provide a background and pseudocode for these algorithms.		
+%		<Paragraph> Reference download and documentation locations
+
+Molecular Simulation can be downloaded from \url{http://www.cs.rit.edu/~dnc6813/project/project.html}.  The archive contains example DIMACS CNF testbench and example instances.  This document and the online documentation may be used independently for getting started.
+
+ 	\section{Requirements}
+ 	
+ 	Requirements for Molecular Simulation are specified in this section.  This includes the hardware and software requirements for running Molecular Simulation on your system.
+
+	\subsection{Hardware requirements}
+	
+	\par \noindent Molecular Simulation requires a 64-bit processor with 2 GB of RAM.  
+ 	
+ 	\subsection{Software requirements}
+	
+	\par \noindent \texttt{gcc} (GNU Compiler Collection) must be installed on your system. \\
+	
+	\par \noindent \texttt{Perl} must be installed on your system to automate build and execution of Molecular Simulation.
+	
+
+	\section{Documentation}
+
+The simulation environment allows the user to execute DIMACS CNF input.  Usage for algorithm implementation permits the user to design and test new molecular algorithms.
+
+Detailed documentation can be accessed from the project website.  This includes an overview of Molecular Simulation along with detailed class and function documentation.  Any modifications to this software should use this as a starting point in development. 
+		
+	\section{Tools}
+	
+%		<Paragraph> Describe external tools
+This project uses several tools for automating tasks and execution.  In this section, we describe the tools for documentation, automated execution and output visualization for Molecular Simulation.
+		
+		\subsection{Doxygen}
+		
+%			<Paragraph> Describe Doxygen formatted documentation
+
+\texttt{Doxygen} can be used to generate automated documentation for Molecular Simulation.  The online and offline documentation get generated from Doxygen formatted documentation.  Download and learn \texttt{Doxygen} at \url{http://www.stack.nl/~dimitri/doxygen/}.			
+		\subsection{Perl utilities}
+		
+%			<Paragraph> Describe Perl utilities				
+			
+The source directory includes several \texttt{Perl} scripts to assist in building and initiation of tests for Molecular Simulation.  Table \ref{perlScriptTable} documents the basic usage for build and testbench execution scripts. Each script provides detailed execution options.
+
+\begin{center}
+\begin{table}[htdp]
+\caption{\texttt{Perl} execution commands and descriptions.}
+\begin{center}
+\begin{tabular}{| l | l | p{5.7cm} |}
+\hline
+
+\textbf{Perl script} & \textbf{Usage} & \textbf{Description} \\ \hline 
+\texttt{build.pl} & \texttt{\$ perl build.pl} & Compiles Molecular Simulation and generates an executable in the directory \texttt{./execute/simulation}.\\ 
+& & \\
+\texttt{buildGenerate.pl} &\texttt{\$ perl buildGenerate.pl} &  Generates a sweep of CNF formulas over a range of $k$-{\sc Sat} ratios.  Program uses a modified random $k$-{\sc Sat} generator from Microsoft Research.\\ 
+& & \\
+\texttt{executeMolecularSat.pl} &\texttt{\$ perl executeMolecularSat.pl}  & Executes Molecular Simulation for a directory of {\sc Satisfiability} expressions with desired algorithms.  If no options are specified, then each of the three algorithms are executed and output is generated in the same test directory. \\ 
+& & \\
+\texttt{runSimulation.pl} & \texttt{\$ perl runSimulation.pl} & Executes \texttt{build.pl} followed by \texttt{executeMolecularSat.pl}.  Any command line arguments get passed to \texttt{executeMolecularSat.pl}\\ \hline
+
+\end{tabular}
+\end{center}
+\label{perlScriptTable}
+\end{table}%
+\end{center}
+			
+			
+			
+		\subsection{Data Visualization}
+		
+%			<Paragraph> Describe Modified visualization from Ben Fry
+
+We adopt a modified plot for visualization of output data.  Ben Fry's example in Chapter 4 of Visualizing Data\cite{fryVisualizingData} provides a framework for importing output from Molecular Simulation.  We provide the modified Processing source in the Molecular Simulation archive.  The visualization directory contains a README for usage.
+
+%			<Paragraph> Discuss implementation
+%In the following sections, we provide the output format for Molecular Simulation.  We explore several use cases, including a native desktop and online Javascript applications.
+			
+	\section{Input}
+	\label{inputSection}
+	
+%		<Paragraph> Describe DIMACS CNF 
+
+Input to Molecular Simulation consists of a DIMACS CNF file. The definition of the \texttt{*.cnf} filetype can be accessed from \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/doc/}.		
+%		<Verbatim> Show input example
+
+\begin{verbatim}
+c comments begin with a `c'
+c
+c cnf input is designated with `p cnf'
+c    followed by number of variables <n>, and clauses <m>
+c
+p cnf <n> <m>
+c
+c A clause is represented by a sequence of <k> integers,
+c     separated by whitespace and ending with a `0'.
+c Each variable is represented by the integer sequence, 
+c    negative polarity is represented by `-'.
+c
+-3 9 14 0
+6 -9 -12 0
+-2 11 17 0
+3 -13 -17 0
+\end{verbatim}
+		
+	\section{Output}
+	\label{outputSection}
+	
+%		<Paragraph> Describe Sat Competition output
+
+Output from Molecular Simulation, by default, conforms to the 2011 Sat Competition rules.  The rules can be accessed from \url{http://www.satcompetition.org/2011/rules.pdf}.
+
+
+%		<Verbatim> Show output example
+\begin{verbatim}
+c comments begin with a `c'
+c
+s UNKNOWN
+c
+c A line beginning with a `s' marks the status.
+c This can be either `UNSATISFIABLE', `SATISFIABLE', or `UNKNOWN'.
+c
+v 0
+c
+c A satisfiable valuation begins with a `v' and ends with a `0'.
+c     Between the `v' and `0' is a sequence of integers encoding the valuation.
+\end{verbatim}
+
+%		<Paragraph> Describe Output Options
+Table \ref{outputTableDefiniton} describes an extended custom output.  This output reports parameters for metric performance evaluation.
+\begin{table}[htdp]
+\caption{Molecular Simulation output logging.}
+\begin{center}
+\begin{tabular}{| l | l |}
+\hline
+\textbf{Parameter} & \textbf{Description} \\ \hline	
+\texttt{c algorithmType:}&	Display the algorithm type: \texttt{Lipton}, \texttt{Ogihara-Ray}, \texttt{Distribution}\\ 
+\texttt{c algorithmTime:}&	Display the algorithm execution time in seconds.\\ 
+\texttt{c solutionMemory:}& Display the solution space memory footprint in Bytes.	\\ 
+\texttt{c mixCount:}	&	Display the number of \texttt{mixes} required during algorithm execution.\\ 
+\texttt{c extractCount:}&	Display the number of \texttt{extracts} required during algorithm execution.\\ 
+\texttt{c appendCount:}&	Display the number of \texttt{appends} required during algorithm execution.\\ 
+\texttt{c splitCount:}	&	Display the number of \texttt{splits} required during algorithm execution.\\ 
+\texttt{c spliceCount:}&	Display the number of \texttt{splices} required during algorithm execution.\\ 
+\texttt{c purifyCount:}&	Display the number of \texttt{purifications} required during algorithm execution.\\ 
+\texttt{c numVar:}	&	Display the number of \texttt{variables} in the input CNF expression.\\ 
+\texttt{c numClause:}	&	Display the number of \texttt{clauses} in the input CNF expression.\\ \hline
+
+\end{tabular}
+\end{center}
+\label{outputTableDefiniton}
+\end{table}%
+		
+
+\FloatBarrier
+			
+\section{Execution}
+	
+%		<Paragraph>	Describe invocation of Molecular Simulation
+Invocation of Molecular Simulation can be performed from the command line.
+
+\[
+\texttt{\$ ./execute/simulation i [input] [options]}
+\]
+
+The \texttt{[input]} consists of a DIMACS CNF file.  Command line \texttt{[options]} may be a combination of the options in Table \ref{MolecularCommandLineArgs}.
+
+\begin{table}[htdp]
+\caption{Command line options for Molecular Simulation}
+\begin{center}
+\begin{tabular}{|c|c|l|}
+\hline
+\textbf{Argument} & \textbf{Parameters} & \textbf{Description} \\ \hline
+%\texttt{i}		& \texttt{[input]} & Required DIMACS CNF input \\
+% 				&				   &		 \\
+ \texttt{-a}	& 				   & Algorithm select \\
+  				&				   &		 \\
+ 				& \texttt{d}	   & Distribution algorithm		 \\
+ 				& \texttt{l}	   & Lipton's algorithm		 \\
+ 				& \texttt{o}	   & Ogihara and Ray's algorithm		 \\
+ 				&				   &		 \\ \hline 				
+\texttt{-d}		&				   & Debug		 \\ 				
+ 				&				   &		 \\ \hline
+\texttt{i}		&				   & Input		 \\ 				
+				& \texttt{[input]} & DIMACS CNF file		 \\ 				
+ 				&				   &		 \\ \hline 				
+\texttt{-w}		&				   & Write output to file		 \\
+ 				& \texttt{[output]} & Output filename \\
+ 				&				   &		 \\ \hline 				
+\end{tabular}
+\end{center}
+\label{MolecularCommandLineArgs}
+\end{table}%
+
+\FloatBarrier
+
+Let us consider an example.  Suppose that we would like to execute Ogihara and Ray's algorithm for a DIMACS CNF file.  We would like to execute the instance \texttt{test1.cnf} located in the directory \texttt{/molecularSimulation/testbench}.  We output the results \texttt{test1-o.out} in the same directory as the input CNF.  We invoke Molecular Simulation with the following command.
+\[
+\texttt{\$ ./execute/simulation i ../testbench/test1.cnf -a o -w ../testbench/test1-o.out}
+\]
+		
+%		<Paragraph> Describe next chapter
+In the next chapter, we will describe the automation for a random $k$-{\sc Sat} sweep with each of the algorithms.  The provided Perl scripts are the recommended method for building and execution of Molecular Simulation.

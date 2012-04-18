@@ -1,0 +1,18 @@
+This GitHub project contains the LaTeX for the MS project: Solving Satisfiability with Molecular Algorithms
+
+Update the BibTeX entries before executing LaTeX 
+	
+	refAll.bib
+	
+Execute LaTeX twice on `report.tex' to generate `report.pdf' with updated references
+
+	report.tex						%% document entry
+		title.tex					%% Title page
+		ch1_introduction.tex		
+		ch2_background.tex
+		ch3_MolecularSatsolvers.tex
+		ch4_newMolecularModel.tex
+		ch5_MolecularSimulation.tex
+		ch6_ExperimentalSetup.tex
+		ch7_Results
+		ch8_Conclusions.tex

@@ -1,0 +1,162 @@
+\begin{thebibliography}{10}
+
+\bibitem{Adleman:1994:MCS:189441.189442}
+{\sc Adleman, L.~M.}
+\newblock Molecular computation of solutions to combinatorial problems.
+\newblock {\em Science 266\/} (November 1994), 1021--1024.
+
+\bibitem{baltimore1971exp}
+{\sc Baltimore, D.}
+\newblock Expression of animal virus genomes.
+\newblock {\em Bacteriol Rev 35}, 3 (1971), 235--41.
+
+\bibitem{Braich02solutionof}
+{\sc Braich, R.~S., Chelyapov, N., Johnson, C., Rothemund, P. W.~K., and
+  Adleman, L.}
+\newblock Solution of a 20-variable 3-{\sc sat} problem on a {DNA} computer.
+\newblock {\em Science 296\/} (2002), 499--502.
+
+\bibitem{Cook:1971:CTP:800157.805047}
+{\sc Cook, S.~A.}
+\newblock The complexity of theorem-proving procedures.
+\newblock In {\em Proceedings of the third annual ACM symposium on Theory of
+  computing\/} (New York, NY, USA, 1971), STOC '71, ACM, pp.~151--158.
+
+\bibitem{dimacsFormat}
+{\sc {DIMACS}}.
+\newblock {\sc {S}atisfiability} suggested format. {A}ccessed from
+  \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/}. {DIMACS} 1993.
+\newblock {A}ccessed from
+  \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/}. {DIMACS} 1993.,
+  May 1993.
+
+\bibitem{Doherty08thehandbook}
+{\sc Doherty, P., and Kvarnstr{\"o}m, J.}
+\newblock {\em The Handbook of Knowledge Representation}.
+\newblock Elsevier, 2008.
+
+\bibitem{faulhammer2000mol}
+{\sc Faulhammer, D., Cukras, A., Lipton, R., and Landweber, L.}
+\newblock Molecular computation: {RNA} solutions to chess problems.
+\newblock {\em Proc Natl Acad Sci U S A 97}, 4 (2000), 1385--9.
+
+\bibitem{feynman1959}
+{\sc Feynman, R.}
+\newblock There's {P}lenty of {R}oom at {T}he {B}ottom. {A}ccessed from:
+  \url{http://resolver.caltech.edu/CaltechES:23.5.0}.
+\newblock {\em Caltech Engineering and Science 23}, 5 (1960).
+
+\bibitem{fryVisualizingData}
+{\sc Fry, B.}
+\newblock {\em Visualizing Data}.
+\newblock O'Reilly Media Inc., 2008.
+
+\bibitem{Gent94thesat}
+{\sc Gent, I.~P., and Walsh, T.}
+\newblock The {\sc sat} phase transition.
+\newblock In {\em ECAI\/} (1994), John Wiley {\&} Sons, pp.~105--109.
+
+\bibitem{Heng_Aksimentiev_Ho_Marks_Grinkova_Sligar_Schulten_Timp_2006}
+{\sc Heng, J.~B., Aksimentiev, A., Ho, C., Marks, P., Grinkova, Y.~V., Sligar,
+  S., Schulten, K., and Timp, G.}
+\newblock The electromechanics of {DNA} in a synthetic nanopore.
+\newblock {\em Biophysical Journal 90}, 3 (2006), 1098--106.
+
+\bibitem{dnaComputingModels2008}
+{\sc Ignatova, Z., Martinez-Perez, I., and Zimmerman, K.-H.}
+\newblock {\em DNA Computing Models}.
+\newblock Springer, 2008.
+
+\bibitem{levin1973}
+{\sc Levin, L.}
+\newblock Universal search problems (in {R}ussian).
+\newblock {\em Problemy Peredachi Informatsii 9}, 3 (1973), 115--116.
+
+\bibitem{Liao_Lee_Liu_Hsieh_Luo_2005}
+{\sc Liao, C.-S., Lee, G.-B., Liu, H.-S., Hsieh, T.-M., and Luo, C.-H.}
+\newblock Miniature {RT}--{PCR} system for diagnosis of {RNA}-based viruses.
+\newblock {\em Nucleic Acids Research 33}, 18 (2005), e156.
+
+\bibitem{ionTorrent}
+{\sc {L}ife {T}echnologies}.
+\newblock {I}on {T}orrent.
+\newblock Accessed from \url{http://www.iontorrent.com/}.
+
+\bibitem{Lipton95usingdna}
+{\sc Lipton, R.}
+\newblock Using {DNA} to solve \textsf{NP-complete} problems.
+\newblock {\em Science 268\/} (1995), 542--545.
+
+\bibitem{dnaTransistorIBMpressrelease}
+{\sc Loughran, M.}
+\newblock {IBM} {R}esearch {A}ims to {B}uild {N}anoscale {DNA} {S}equencer to
+  {H}elp {D}rive {D}own {C}ost of {P}ersonalized {G}enetic {A}nalysis.
+\newblock {A}ccessed from:
+  \url{http://www-03.ibm.com/press/us/en/pressrelease/28558.wss}, October 2009.
+
+\bibitem{MartinMateos02molecularcomputation}
+{\sc Mart{\'\i}n-Mateos, F., Alonso, J.~A., Perez-Jimenez, M., and
+  Sancho-Caparrini, F.}
+\newblock Molecular computation models in \text{ACL2}: a simulation of
+  \text{Lipton's} experiment solving {\sc sat}, 2002.
+
+\bibitem{Ogihara:1996:BFS:898228}
+{\sc Ogihara, M.}
+\newblock Breadth first search 3-{\sc sat} algorithms for {DNA} computers.
+\newblock Tech. rep., University of Rochester, Rochester, NY, USA, 1996.
+
+\bibitem{Ogihara97dna-basedparallel}
+{\sc Ogihara, M., and Ray, A.}
+\newblock {DNA}-based parallel computation by "counting".
+\newblock Tech. rep., University of Rochester, 1997.
+
+\bibitem{oxfordNanopore}
+{\sc {O}xford~{N}anopore {T}echnologies}.
+\newblock {O}xford {N}anopore {T}echnologies.
+\newblock Accessed from \url{http://www.nanoporetech.com/}.
+
+\bibitem{nanoporeChapter11}
+{\sc Peng, H., Luan, B., and Stolovitzky, G.}
+\newblock {\em Nanopores: Sensing and Fundamental Biological Interactions}.
+\newblock Springer, 2011, ch.~11.
+
+\bibitem{satcompetition}
+{\sc {SATC}omp~{O}rganizing committee}.
+\newblock {T}he international {\sc sat} {C}ompetitions web page.
+\newblock {A}ccessed from \url{http://satcompetition.org/}.
+
+\bibitem{sipser06}
+{\sc Sipser, M.}
+\newblock {\em Introduction to the Theory of Computation, Second Edition}.
+\newblock Course Technology, 2006.
+
+\bibitem{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_200%
+6}
+{\sc Stankovich, S., Dikin, D.~A., Dommett, G. H.~B., Kohlhaas, K.~M., Zimney,
+  E.~J., Stach, E.~A., Piner, R.~D., Nguyen, S.~T., and Ruoff, R.~S.}
+\newblock Graphene-based composite materials.
+\newblock {\em Nature 442}, 7100 (2006), 282--6.
+
+\bibitem{wilsonKsat}
+{\sc Wilson, D.}
+\newblock Random $k$-{\sc {s}at} generator.
+\newblock {\em Accessed from:
+  \url{http://research.microsoft.com/en-us/um/people/dbwilson/ksat/default.htm%
+}\/} (2011).
+
+\bibitem{dnaBasedImplemetation_Yoshida2000}
+{\sc Yoshida, H., and Suyama, A.}
+\newblock Solution to 3-\sc{Sat} by breadth first search.
+\newblock In {\em {DNA} Based Computers V\/} (2000), E.~Winfree and D.~Gifford,
+  Eds., vol.~54 of {\em DIMACS: Series in Discrete Mathematics and Theoretical
+  Computer Science}, pp.~9--22.
+
+\bibitem{Zhang2001}
+{\sc Zhang, W.}
+\newblock Phase transitions and backbones of 3-{\sc sat} and maximum 3-{\sc
+  sat}.
+\newblock In {\em Principles and Practice of Constraint Programming --- CP
+  2001}, T.~Walsh, Ed., vol.~2239 of {\em Lecture Notes in Computer Science}.
+  Springer Berlin $/$ Heidelberg, 2001, pp.~153--167.
+
+\end{thebibliography}
