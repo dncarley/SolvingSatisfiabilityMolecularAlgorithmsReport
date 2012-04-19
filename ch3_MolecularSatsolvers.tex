@@ -13,7 +13,7 @@ Introduced in 1995 by Richard Lipton \cite{Lipton95usingdna}, this algorithm cre
 Lipton's algorithm consists of two main procedures.  The first phase constructs a combinatorial space of $2^n$ independent vectors.  Second, the combinatorial space gets reduced based on the input CNF instance. 		
 
 %		<Paragraph> Describe setup
-The function {\sc Combinatorial Generate}$(n)$ implements the split-mix synthesis technique.  It returns a gel consisting of $2^n$ independent oligos that correspond to a unique vector space.  The space begins construction with an initial medium.  An iterative loop elongates a growing solution with the split-mix synthesis.  Each split corresponds with appending the tubes with a truth and false assignment.  The two tubes are mixed and amplified to contain equimolar portions.  
+The function {\sc Combinatorial Generate}$(n)$ implements the split-mix synthesis technique \cite{furka1982, furkaBook}.  It returns a gel consisting of $2^n$ independent oligos that correspond to a unique vector space.  The space begins construction with an initial medium.  An iterative loop elongates a growing solution with the split-mix synthesis.  Each split corresponds with appending the tubes with a truth and false assignment.  The two tubes are mixed and amplified to contain equimolar portions.  
 
 %		<Paragraph> Describe execution
 The amplification process gets modeled with a purification step.  This eliminates all redundant strings for the simulated environment.  After the iteration completes, the complete combinatorial space gets returned. This space consists of $2^n$ vectors of length $n$. 

@@ -2,45 +2,43 @@
 
 %<Paragraph> Overview of background
 
-This chapter provides a background of molecular computation techniques.  We explore nanotechnology and microbiology as a medium for computation and storage.  This begins with the foundations of nanotechnology, and continues with an example of encoding information with molecular matter.  Adleman's molecular computer for solving an instance of {\sc Hamiltonian Path} motivates the molecular operators and storage with DNA.
+This chapter provides a background on molecular computation techniques.  We begin with an introduction to nanotechnology and then provide an example of encoding information with molecular matter.  Following this example, we introduce Adleman's molecular operators for solving an instance of {\sc Hamiltonian Path}.  The operators provide a base instruction set for molecular computing, and provide the primitives to construct molecular algorithms.
 
-Finally, we provide an introduction to {\sc Satisfiability}.  This consists of development of the definition for {\sc Satisfiability} as a circuit.  We then view {\sc Satisfiability} as a language.  This provides a connection to other \textsf{NP-complete} problems through polynomial-time reductions.  We consider practical techniques for evaluating {\sc Satisfiability}.  This includes standards for input and output, along with an overview of {\sc Satisfiability} instance classification. 
+Finally, we provide an introduction to {\sc Satisfiability}.  We define {\sc Satisfiability} as a circuit.  We then view {\sc Satisfiability} as a language.  We also discuss practical matters related to efficiently evaluating {\sc Satisfiability}, such as how to encode input and output, and how to classify instances of {\sc Satisfiability} for the test cases that we consider.
 
 \section{On nanotechnology and construction of molecules}
 
 %		<Paragraph> Richard Feynman [introduces] nanotechnology
 		
-			Richard Feynman considered the possibility of construction of tiny machines from molecular interactions at the quantum scale.  Feynman founded the field of nanotechnology in his 1959 talk `There's Plenty of Room at the Bottom' \cite{feynman1959}.
-			
-%		<Paragraph> Applied nanotechnology [controls] materials
-We are in an age of applied nanotechnology. Presently, we have the ability to control molecules and atoms through industrial processes. Examples of these processes include the manufacturing of graphene and DNA nanopores \cite{dnaTransistorIBMpressrelease}. Graphene consists of an arrangement of carbon atoms that provides desirable physical and electrical properties \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006}. DNA nanopores create a physical channel for threading DNA for read and write operations.  Diverse applications continue to take advantage of properties of nanotechnology.  Gene sequencing technologies provide an example of applied nanotechnology.  					
+	Richard Feynman founded the field of nanotechnology in his 1959 talk `There's Plenty of Room at the Bottom' \cite{feynman1959}.  Examples of applied nanotechnology include the manufacturing of graphene \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006} and DNA nanopores \cite{dnaTransistorIBMpressrelease}. Graphene consists of an arrangement of carbon atoms that provides desirable physical and electrical properties \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006}. DNA nanopores create a physical channel for threading DNA for read and write operations.  Diverse applications continue to take advantage of the properties of nanotechnology.  Gene sequencing technologies provide an example of applied nanotechnology \cite{ionTorrent, oxfordNanopore}.  					
 			%The work has driven the fields of molecular and quantum computation, VLSI circuit construction, and continues with innovative design and applications into many everyday processes.
 		
 %		<Paragraph> DNA substrate [builds] molecular definition
 		
-Smaller and cost effective DNA sequencers provide the ability to read the contents of a gene. Introduction of benchtop sequencers allows doctors to treat patients at their genome level from their office. Life Technologies and Oxford Nanopore offer gene sequencers based on solid-state semiconductor technology \cite{ionTorrent, oxfordNanopore}.	
+Smaller and cost-effective DNA sequencers provide the ability to read the contents of a gene.  Benchtop sequencers \cite{ionTorrent, oxfordNanopore} allows doctors to treat patients at the genome level from their office.  Life Technologies and Oxford Nanopore offer gene sequencers based on solid-state semiconductor technology \cite{ionTorrent, oxfordNanopore}.	
 
 \section{On microbiology and computation}
 
 %	<Paragraph> Microbiology [studies] molecular life
 	
-	Microbiology studies properties of molecular interactions that form organic structures.  In this project, we explore techniques from applied genetics as a means for generalized computation.  Construction of a molecular computer requires transcription of data onto sequences of DNA or RNA.  Sequences of DNA and RNA define proteins that encode structural components.  As a computational medium, the encodings match configurations of a computation state. 
+	Microbiology studies the interactions among organic molecules.  In this project, we explore techniques from applied genetics as a means for generalized computation.  Molecular computation encodes data as sequences of DNA or RNA.  
 	
 %	<Paragraph> Genetic alphabet [defines] life
 		
-	The genetic alphabet defines a universal medium for proteins.  Each of the base pairs (A, C, G, T, U) transcribes redundant encodings of amino acids.  Sequences of amino acids form structure as proteins.  Redundant encodings in the each amino acid permit syntax errors without a functional abnormality.  This redundant encoding structure permits mutation in the third base pair of each amino acid without consequence on the entire string.
+%	The genetic alphabet defines a universal medium for proteins.  Each of the nucleotides (A, C, G, T, U) transcribes redundant encodings of amino acids.  Sequences of amino acids form structure as proteins.  Redundant encodings in the each amino acid permit syntax errors without a functional abnormality.  This redundant encoding structure permits mutation in the third nucleotide of each amino acid without consequence on the entire string.
 
 %	<Paragraph> Complex molecules [contain] unique strings 
 	
-	Strings of base pairs encode information as oligonucleotides.  A \textit{oligonucleotide} is a short string of genetic information.  There are several configurations for DNA and RNA; these include $+$RNA, $-$RNA, $+$DNA, $-$DNA, $\pm$RNA, $\pm$DNA and +mRNA \cite{baltimore1971exp}.  The polarity of the DNA sequence denotes the direction of genetic information.  $+$DNA gets denoted by $5'$---$3'$ and $-$DNA gets denoted by $3'$---$5'$.  We focus on $+$DNA and $-$DNA as a substrate for encoding configurations for computational states.
+	Strings of nucleotides encode information as oligonucleotides.  A \textit{oligonucleotide} is a short string of genetic information.  There are several configurations for DNA and RNA; these include $+$RNA, $-$RNA, $+$DNA, $-$DNA, $\pm$RNA, $\pm$DNA, and +mRNA \cite{baltimore1971exp}.  The polarity of the DNA sequence denotes the direction of genetic information.  $+$DNA gets denoted by $5'$---$3'$ and $-$DNA gets denoted by $3'$---$5'$.  We focus on $+$DNA and $-$DNA as a substrate for encoding configurations for computational states.
 	
 %	<Paragraph> Each string [builds] structure from proteins
-	Arbitrary encodings that represent mappings from variables to physical oligonucleotides may have undesirable structure and functionality.  Conventional techniques for DNA computing employ variable mappings from a library of oligonucleotides.  These strings avoid undesirable configurations, such as, self-complementary sequences that form hairpins \cite{dnaComputingModels2008}.  The sequence definition defines folding of the protein and the energy required to replicate. 
+	Arbitrary encodings that represent mappings from variables to physical oligonucleotides may have undesirable structure and functionality.  Conventional techniques for DNA computing employ variable mappings from a library of oligonucleotides.
+	%These strings avoid undesirable configurations, such as, self-complementary sequences that form hairpins \cite{dnaComputingModels2008}.
 	
 %	<Paragraph> Molecular definition [constructs] machine
-Molecular computation defines sequences to represent a computational state.  Let us consider two techniques for representing information with oligonucleotides.  These allow us to encode integer mappings as either a fixed width integer sequence or as a binary vector of information.
+Let us consider two techniques for representing information with oligonucleotides.  These allow us to encode integer mappings as a fixed width integer sequence.
 
-Representation of an integer sequence requires a systematic mapping of an oligonucleotide entry with an integer counterpart.  A fixed width representation map independent sequences on a readable boundary.  Now we explore an example for encoding an integer sequence with a sequence of oligonucleotides.  A sample mapping is provided in Table \ref{integer2OligoTable}.
+Representing an integer sequence requires a systematic mapping of an oligonucleotide entry with an integer counterpart.  A fixed width representation map independent sequences on a readable boundary.  Now we explore an example for encoding an integer sequence with a sequence of oligonucleotides.  A sample mapping is provided in Table \ref{integer2OligoTable}.
 
 \begin{table}[htdp]
 \caption{A mapping of the integers $[0,5]$ with arbitrary oligonucleotide definitions.}
@@ -61,7 +59,7 @@ Representation of an integer sequence requires a systematic mapping of an oligon
 
 Suppose that we would like to encode the sequence of integers $S$ as an equivalent oligonucleotide representation $O_1$.
 
-We have 
+We have, e.g., 
 \[
 S = [1, 3, 4, 3, 2, 0]
 \]
@@ -71,35 +69,57 @@ O_1 = 5'\text{AAACCC}\mid \text{CCCTCC}\mid \text{CTTTTC}\mid \text{CCCTCC}\mid 
 \]
 Recovering the sequence $S$ from $O_1$ can be done several ways.  Because the definition of the sequence exists, we may use the reverse complement to match sequences.  Another method splits the sequence $O_1$ on the encoding width.  In this case, the encoding width is six base pairs.  Gene sequencing tools permit reading the sequence and interpretation of the data with Table \ref{integer2OligoTable}.
 
-Another technique for representing data as an oligonucleotide requires an assumption for state order.  This is done by encoding an $n$-dimensional vector.  We consider a binary vector, without loss of generality, encoding an $m$-ary vector is possible through construction of $m$ independent integer states.
-
-Suppose that we would like to encode a bit vector $B$ as an equivalent oligonucleotide representation $O_2$.
-
-We have 
-\[
-B = \langle 0100110 \rangle
-\]
-with the oligonucleotide definitions for 0 and 1 represented by the entries in Table \ref{integer2OligoTable}, we have
-\[
-O_2 = 5'\text{TCTCCC}\mid \text{AAACCC}\mid \text{TCTCCC}\mid \text{TCTCCC}\mid \text{AAACCC}\mid \text{AAACCC}\mid \text{TCTCCC}3'.
-\]
-
-%0 TCTCCC
-%1 AAACCC
-
 %	<Paragraph> Interactions of molecules [performs] computation
-Molecular computing takes advantage of the inherent storage mechanism for solving problems with molecular interactions.  These interactions include matching and replication mechanics.  Although this setting describes and artificial construction for a machine, the natural encodings of organisms also share the mechanics that we exploit.  Interactions of molecules provide mechanics for generalized computation with oligonucleotides.
+Molecular computing encodes genetic information for both storage and operations on a problem state.  These interactions include matching and replication.  Although this setting describes and artificial construction for a machine, the natural encodings of organisms also share the mechanics that we exploit.  Interactions of molecules provide mechanics for generalized computation with oligonucleotides.
 	
 %	<Paragraph> Satisfiability [permits] universal computation
-In the following chapters, we describe molecular algorithms for {\sc Satisfiability} and provide insight to construction of a generalized molecular computer.  Next we provide a toolbox for molecular computation.  The tools presented permit generalized computation with molecular biology techniques.  We apply the techniques from Leonard Adleman's molecular computer with an example of his first experiment.
+In the following chapters, we describe molecular algorithms for {\sc Satisfiability} and provide insight to construction of a generalized molecular computer.  Next we provide a toolbox for molecular computation.  The tools presented permit generalized computation with molecular biology techniques.  In the next section we introduce the techniques from Adleman's molecular toolbox \cite{Adleman:1994:MCS:189441.189442}.
 
 \section{Adleman's molecular toolbox for solving {\sc Hamitonian Path}}
 	
 %	<Paragraph> Leonard Adleman [performs] first molecular computation 
-Leonard Adleman performed the first molecular computation in 1994 with recombinant DNA in a manual laboratory setting \cite{Adleman:1994:MCS:189441.189442}.  This experiment solved a six vertex instance of {\sc Hamitonian Path}, a \textsf{NP-complete} problem.  In this section, we describe the techniques applied in this experiment. We provide  definitions of Adleman's molecular toolbox from an example of the original problem instance.  This includes the molecular operations: append, extract, mix, split and purify construct.
+Leonard Adleman performed the first molecular computation in 1994 with recombinant DNA in a bench laboratory setting \cite{Adleman:1994:MCS:189441.189442}.  This experiment solved a six vertex instance of {\sc Hamiltonian Path}, an \textsf{NP-complete} problem.  In this section, we describe the techniques used in this experiment. We provide definitions for the following operations from Adleman's molecular toolbox: append, extract, mix, split, and purify.
 %	<Paragraph> Molecular computation [encodes] information from graph with DNA
 
-Each vertex gets assigned an independent oligonucleotide as we have done in Table \ref{integer2OligoTable}.  Possible solutions get stored in a test tube $T$.  $T$ begins as an empty tube.  We introduce equimolar portions of each string as a starting configuration with the \textit{mix} operation. 
+\begin{definition}
+{\sc Hamiltonian Path} \\
+Given an undirected graph $G$, does there exist a path that visits every vertex exactly once?
+
+\end{definition}
+
+%
+
+
+Adleman's encoding for graphs uses oligonucleotides for defining each vertex.  The vertex representation shares a similar definition for our example of encoding a sequence of integers in Table \ref{integer2OligoTable}.  Representing edges requires a definition of a reverse-complement oligonucleotide; this string connects the suffix of the vertex $v_i$ with the prefix of $v_j$.  For example, let us consider an example for appending $v_2$ to $v_1$.  Let, e.g.,
+\begin{align*}
+ v_1 &= 5'\text{ATCTTT}3' \\
+ v_2 &= 5'\text{CCTATA}3'.
+\end{align*}
+
+\noindent From the definition of $v_1$ and $v_2$, we can construct an edge $e_{1,2}$ as
+\[
+e_{1,2} = 3'\text{AAATTC}5'.
+\]
+
+\noindent Appending $v_2$ to $v_1$ gets accomplished by first attaching the edge $e_{1,2}$ to the vertex $v_1$
+\begin{align*}
+ 5'\text{ATC}&\text{TTT}3' \\
+  3'&\text{AAATTC}5'.
+\end{align*}
+
+\noindent Next we attach $v_2$ to the resulting complex, yielding
+\begin{align*}
+ 5'\text{ATCTTT}|&\text{CCTATA}3'\\
+  3'\text{AAA}&\text{TTC}5'.
+\end{align*}
+
+\noindent Finally the edge may be removed and we have the sequence
+\[
+v_1 \cdot v_2 = 5'\text{ATCTTT}|\text{CCTATA}3'.
+\]
+
+The sequence $v_1 \cdot v_2$ represents the path $v_1$ to $v_2$, and can be obtained with the \textit{append} operation.  Possible solutions get stored in a test tube $T$.  $T$ begins as an empty tube.  For solving {\sc Hamitonian Path}, we introduce equimolar portions of each oligonucleotide vertex for a starting configuration with the \textit{mix} operation.
+
 \begin{definition}
 \textit{Mix}\\
 $ T \leftarrow \text{mix}( T_1, T_2)$ --- combines two test tubes of information.  The output consists of a single set $T = T_1 \cup T_2$.
@@ -112,7 +132,7 @@ A small initial set may be amplified with \textit{polymerase chain reaction} (PC
 
 \begin{definition}
 \textit{Append}\\
-$T' \leftarrow \text{append}( T, a)$ --- the concatenation of $a$ with each element in $T$.  
+$T' \leftarrow \text{append}( T, a)$ --- the concatenation of the oligonucleotide $a$ with each element in $T$.  
 \end{definition}
 
 \begin{definition}
@@ -124,11 +144,10 @@ From the tube $T$, we keep paths that begin with $V_{in}$ and end with $V_{out}$
 
 \begin{definition}
 \textit{Extract}\\
-$ T' \leftarrow \text{extract}( T, a, x)$ --- separates all strings from $T$ containing the literal $a$ at position $x$.  The output consists of a set $T'$ of those strings containing $a$ at position $x$.
+$ T' \leftarrow \text{extract}( T, a, x)$ --- separates all oligonucleotides from $T$ containing the sequence $a$ at position $x$.  The output consists of a set $T'$ of those oligonucleotides containing $a$ at position $x$.
 \end{definition}
 
-The tube $T$ consists of possible encodings that have the correct starting and ending vertices. We select only strings with length $n$ to ensure that all vertices get traversed.  This can be performed with \textit{gel electrophoresis}, a technique for sorting molecules by mass.
-
+The tube $T$ consists of possible encodings that have the correct starting and ending vertices. We select only strings with length $n$, where $n$ is the number of vertices in $G$, to ensure that all vertices get traversed.  This can be performed with \textit{gel electrophoresis}, a technique for sorting molecules by mass.
 Next, we ensure that each vertex occurs exactly once.  This gets accomplished by extracting possible vertices.  If a vertex occurs multiple times in a path, then the string representation gets discarded.
 
 Finally, we check $T$ with \textit{detect} to determine if any valid paths remain.  If valid paths exist, then each string may be read for the path assignment.
@@ -143,7 +162,7 @@ $ \text{detect}( T)$ --- determine if any encodings are present in $T$.  The out
 In the following chapters, we will use the molecular operators for construction of molecular {\sc Satisfiability} solvers.  The Distribution algorithm, introduced in Chapter 4, requires the \textit{splice} operation.
 \begin{definition}
 \textit{Splice}\\
-$[a_1, a_2] \leftarrow \text{splice}(a, b)$ --- cuts a string $a$ with a subsequence $b$ into two pieces by a restriction enzyme.  These two pieces are $a_1$ and $a_2$.
+$[a_1, a_2] \leftarrow \text{splice}(a, b)$ --- cuts an oligonucleotide $a$ with a subsequence $b$ into two pieces by a restriction enzyme.  These two pieces are $a_1$ and $a_2$.
 \end{definition}
 
 In the implementation of a simulation environment, we avoid redundant string representations with the \textit{purify} operation.  This is a synthetic version of PCR.  Purify balances the space representation of molecules with a uniform distribution.
@@ -166,6 +185,14 @@ $T' \leftarrow \text{purify}(T)$ --- provides a uniform distribution from the co
 	
 {\sc Satisfiability} is a canonical \textsf{NP-complete} language.  Each {\sc Satisfiability} instance efficiently encodes a set of conditions to satisfy.  Because {\sc Satisfiability} is \textsf{NP-complete}, it can be reduced to any \textsf{NP-complete} language.
 
+\begin{definition}
+{\sc Satisfiability}\\
+Formally defined as the language
+\[
+\text{\sc Satisfiability} = \{ \langle \phi \rangle \mid \phi \text{ is a satisfiable Boolean formula}\} \cite{sipser06}.
+\]	
+\end{definition}
+
 %	<Paragraph>	Define {\sc Satisfiability} with circuit 
 
 Evaluation of a {\sc Satisfiability} instance requires validating the input with the instance definition.  We introduce {\sc Satisfiability} evaluation with a circuit.  Let us consider a three-layered circuit for {\sc Satisfiability}.  This circuit consists of $n$ inverters, $m$ \textbf{OR} gates, and one \textbf{AND} gate with $m$-fan-in.  This circuit behaves according to the internal wiring of the input expression $\phi$. Figure \ref{blackBoxSat} contains a schematic for {\sc Satisfiability}.	
@@ -187,11 +214,6 @@ The realization of {\sc Satisfiability} as a circuit shows two insights of the p
 
 Cook and Levin independently introduced the canonical instance of a \textsf{NP-complete} language {\sc Satisfiability}\cite{Cook:1971:CTP:800157.805047, levin1973}.  A \textsf{NP-complete} language is one that is in \textsf{NP} and \textsf{NP-hard}.  A \textsf{NP-hard} language is at least as hard as any problem in \textsf{NP}.
 
-{\sc Satisfiability} may be formally defined as the language
-\[
-\text{\sc Satisfiability} = \{ \langle \phi \rangle \mid \phi \text{ is a satisfiable Boolean formula}\} \cite{sipser06}.
-\]	
-	
 %	<Paragraph> Motivate practical input and classifying metrics 
 
 The next section considers standards adopted for {\sc Satisfiability}.  This allows practitioners to apply {\sc Satisfiability} in various settings.
@@ -200,43 +222,70 @@ The next section considers standards adopted for {\sc Satisfiability}.  This all
 
 %	<Paragraph> Overview of evaluation
 	
-	In this section, we consider standards for {\sc Satisfiability} instances.  This includes DIMACS CNF input and {\sc Sat} Competition output.  
+	In this section, we describe two standards for encoding the {\sc Satisfiability} problem that we adopt for the implementation.  This includes the input and output standards for the {\sc Satisfiability} Competition \cite{dimacsFormat, satcompetition}.  
 	
-	Next, we consider classification of {\sc Satisfiability} instances.  These include randomly generated, crafted and industrial problem instances.  Following, we examine metrics for classifying {\sc Satisfiability} instances.
+	Next, we introduce problem instance classification for {\sc Satisfiability}.  Classification of {\sc Satisfiability} problem instances include randomly generated, combinatorial, and industrial \cite{satcompetition}.  The experimental setup in Chapter 6 considers generation of random $k$-{\sc Sat} input.
 
 	\subsection{Input and output}
 	
 %		<Paragraph> {\sc Satisfiability} standards [provide] common interface
 	
-  Conforming to standards allows datasets and common interfaces to be shared.  The input and output standards for {\sc Satisfiability} allow common benchmarks for {\sc Sat} solvers.  {\sc Sat} solvers demonstrate state-of-the-art techniques. Each year a competition showcases techniques for evaluating {\sc Satisfiability}.  We conform to the standards of the {\sc Sat} Competition \url{http://www.satcompetition.org/}.
+%  Conforming to standards allows datasets and common interfaces to be shared.  
+ Each year a competition showcases techniques for evaluating {\sc Satisfiability} \cite{satcompetition}.  We conform to the standards of the {\sc Sat} Competition \url{http://www.satcompetition.org/}.  {\sc Sat} solvers demonstrate state-of-the-art techniques for solving three main tracks of {\sc Satisfiability} instances.  The tracks exhibit applications for {\sc Satisfiability}, including: industrial applications, hard combinatorial, and random problem instances.
+ 
+ The input and output standards for {\sc Satisfiability} allow common benchmarks for {\sc Sat} solvers.
 	
 		\subsubsection{Input}
 		
 %			<Paragraph> DIMACS CNF [provides] standard benchmark instances
-DIMACS CNF provides standard input for {\sc Satisfiability} \cite{dimacsFormat}.  This format consists of {\sc Satisfiability} encoded in conjunctive normal form (CNF).  The format is user readable with a natural encoding for {\sc Satisfiability}.  We provide an example of this encoding in Section \ref{inputSection}.
+DIMACS CNF provides a standard input for {\sc Satisfiability} \cite{dimacsFormat}.  The format permits sharing of existing {\sc Satisfiability} benchmarks by encoding {\sc Satisfiability} in conjunctive normal form (CNF).  The format is user readable with a natural encoding for {\sc Satisfiability}.  We provide an example of this encoding in Section \ref{inputSection}.
 		
 		\subsubsection{Output}
 		
 %			<Paragraph> Sat Competition output [provides] standard output
-{\sc Sat} Competition output \cite{satcompetition} provides a concise result for the state of a {\sc Satisfiability} instance.  The output consists of the known configuration and provides a valuation if the instance is satisfiable.  The output streams to standard output.  We provide an example along with a custom interface in Section \ref{outputSection}.
+
+{\sc Sat} Competition output consists of the status for a DIMACS CNF input instance \cite{satcompetition}.  This includes the known state, either \texttt{SATISFIABLE}, \texttt{UNSATISFIABLE}, or \texttt{UNKNOWN}.  When a witnessing satisfying assignment occurs, the assignment gets provided as a list of integers with the \texttt{SATISFIABLE} state.  We provide an example along with a custom interface in Section \ref{outputSection}.
 	
 	\subsection{Metrics for classifying {\sc Satisfiability}}
 
 %		<Paragraph> Describe metrics
-{\sc Sat}-phase-transition and {\sc Sat}-backbones are two classifying metrics for {\sc Satisfiability}.  These metrics may be used to classify {\sc Satisfiability} expressions.  We will use these metrics in the next section for defining a sweep of random $k$-{\sc Sat} instances.
+{\sc Sat} phase transition and {\sc Sat} backbones are two classifying metrics for {\sc Satisfiability}.  These metrics may be used to classify {\sc Satisfiability} expressions.  We will use these metrics in the next section for defining a collection of random $k$-{\sc Sat} instances.
 		
 %		<Paragraph> {\sc Sat} phase transition
 
-The {\sc Sat}-phase-transition is a region where both satisfiable and unsatisfiable instances may occur.  The ratio of clauses to variables $\alpha = m/n$ provide a classification for $k$-\textsf{CNF} formula \cite{Doherty08thehandbook,Gent94thesat}.
+\begin{definition}
+CNF\\
+Conjunctive Normal Form consists of the intersection of sets of disjunctive literals. 
+\end{definition}
+
+\begin{definition}
+$k$-CNF\\
+Consists of a CNF expression with each disjunctive clause containing $k$ literals.
+\end{definition}
+
+\begin{definition}
+$k$-{\sc Sat}\\
+Problem variant of {\sc Satisfiability} where each clause consists of $k$ Boolean literals.  $k$-CNF formula provide an equivalent representation.
+\end{definition}
+
+\begin{definition}
+{\sc Sat} phase transition\\
+The {\sc Sat} phase transition is a region where both satisfiable and unsatisfiable instances are likely.  The ratio of clauses to variables $\alpha = m/n$ provides a characterization for where phase transitions may occur in the space of all $k$-CNF formula \cite{Doherty08thehandbook,Gent94thesat}.
+\end{definition}
 		
 %		<Paragraph> {\sc Sat} backbones
+\begin{definition}
+{\sc Sat} backbones\\
+{\sc Sat} backbones are the variable assignments present in all of the satisfying assignments to a {\sc Satisfiability} expression \cite{Zhang2001}.  This is a set of variables that occur in all satisfiable valuations for an input expression.  
 
-{\sc Sat}-backbones are the variable assignments present in all of the satisfying assignments to a {\sc Satisfiability} expression \cite{Zhang2001}.  This is a set of variables that occur in all satisfiable valuations for an input expression.  
+\end{definition}
+
+
 
 	\subsection{{\sc Satisfiability} instances}
 		
 %		<Paragraph> Various methods for [constructing] {\sc Satisfiability} instances
-There are several methods for constructing {\sc Satisfiability} instances.  We consider techniques for constructing instances based on random assignment, crafted and real applications from industry.  The instance type demonstrate properties of {\sc Satisfiability} and provide heuristics for certain input.
+There are several methods for constructing {\sc Satisfiability} instances.  We consider techniques for constructing instances based on random assignment, combinatorial, and real applications from industry.  The instance type demonstrate properties of {\sc Satisfiability} and provide heuristics for certain input.
 	
 %		<Paragraph> {\sc Satisfiability} instance [generated] from random assignment
 A random $k$-{\sc Sat} expression consists of $m$ clauses with $k$ literals per-clause from  $n$ variables \cite{wilsonKsat}. Variable assignments get distributed with probability $Prob\left(\frac{1}{n}\right)$.  The positive or negative variable polarity get assigned with a probability $Prob\left(\frac{1}{2}\right)$.
@@ -247,7 +296,7 @@ A random $k$-{\sc Sat} expression consists of $m$ clauses with $k$ literals per-
 		
 %		<Paragraph> {\sc Satisfiability} instance [constructed] as hard assignment
 
-Crafted instances provide difficult benchmark cases.  These instances can be converted from other \textsf{NP-complete} problems.  This category also includes games and graph theoretic problems represented as {\sc Satisfiability}. 
+Combinatorial instances provide difficult benchmark cases.  These instances can be converted from other \textsf{NP-complete} problems.  This category also includes games and graph theoretic problems represented as {\sc Satisfiability}. 
 		
 		
 %		<Paragraph> {\sc Satisfiability} instance [applied] from real world problems

@@ -51,6 +51,19 @@
 \newblock {\em Visualizing Data}.
 \newblock O'Reilly Media Inc., 2008.
 
+\bibitem{furka1982}
+{\sc Furka, A.}
+\newblock Study on possibilities of systematic searching for pharmaceutically
+  useful peptides.
+\newblock {\em Notarized on May 29, 1982. {A}ccessed from
+  \url{http://szerves.chem.elte.hu/furka/}\/} (May 1982).
+
+\bibitem{furkaBook}
+{\sc Furka, A.}
+\newblock {\em Combinatorial Chemistry Combinatorial Chemistry Principles and
+  Techniques}.
+\newblock -, 2007.
+
 \bibitem{Gent94thesat}
 {\sc Gent, I.~P., and Walsh, T.}
 \newblock The {\sc sat} phase transition.
@@ -61,11 +74,6 @@
   S., Schulten, K., and Timp, G.}
 \newblock The electromechanics of {DNA} in a synthetic nanopore.
 \newblock {\em Biophysical Journal 90}, 3 (2006), 1098--106.
-
-\bibitem{dnaComputingModels2008}
-{\sc Ignatova, Z., Martinez-Perez, I., and Zimmerman, K.-H.}
-\newblock {\em DNA Computing Models}.
-\newblock Springer, 2008.
 
 \bibitem{levin1973}
 {\sc Levin, L.}
