@@ -8,7 +8,7 @@ Design considerations for a physical molecular computation environment extend th
 	\section{Algorithm metric comparison}
 	
 %		<Paragraph> Summary of measured metrics
-This section provides results from the simulation.  We provide the analysis for the molecular operations.  These include counts of append, extract, mix, purify, splice and split.  Presentation of actual computation time and required memory for the solution representation allow for comparison of algorithms.
+This section provides results from the simulation.  We provide the analysis for the molecular operations.  These include counts of append, extract, mix, purify, splice, and split.  Presentation of actual computation time and required memory for the solution representation allow for comparison of algorithms.
 
 \FloatBarrier
 		
@@ -239,13 +239,13 @@ Designing real molecules with artificial significance require consideration of t
 		\subsection{Selection of algorithm}
 		
 %			<Paragraph> Design of computing task
-Molecular Simulation provides a simulation environment for molecular {\sc Satisfiability} algorithms.  We have collected simulation results for a sweep of random $k$-{\sc Sat} instances.  Now we consider each of the algorithm's performance in terms of implementation in a physical environment.
+Molecular Simulation provides a simulation system for molecular {\sc Satisfiability} algorithms.  We have collected simulation results for a sweep of random $k$-{\sc Sat} instances.  Now we consider each of the algorithm's performance in terms of implementation in a physical system.
 			
 %			<Paragraph> Multiple considerations for general computation
 We have seen that some of the metrics vary considerably.  Beneficial components of algorithm performance should be considered for physical implementation.  This includes the benefits of reducing an existing space versus construction of only possible combinations.
 		
-%			<Paragraph> Construction of a computational environment
-Construction of a computational environment depends on the algorithm implementation.  Lipton's algorithm reduces a larger space to only the satisfiable solutions.  Ogihara and Ray's and the Distribution algorithm construct an incremental space based on the evaluation order.  The incremental construction decreases the total amount of required space for computing {\sc Satisfiability}.  With the Distribution algorithm, non-conflicting assignments provide shorter valuations without spanning all $n$ variables.
+%			<Paragraph> Construction of a computational space
+Construction of a computational space depends on the algorithm implementation.  Lipton's algorithm reduces a larger space to only the satisfiable solutions.  Ogihara and Ray's and the Distribution algorithm construct an incremental space based on the evaluation order.  The incremental construction decreases the total amount of required space for computing {\sc Satisfiability}.  With the Distribution algorithm, non-conflicting assignments provide shorter valuations without spanning all $n$ variables.
 			
 		\subsection{Selection of encoding mechanism}
 		
@@ -283,7 +283,7 @@ Construction of the integrated architecture extends standard silicon processes. 
 
 \FloatBarrier	
 	
-Figure \ref{molecularSchematic} shows a schematic representation for a molecular computing environment.  This environment consists of a series of tubes connected with nanopores ($\text{N}$) and micropumps ($\text{P}$).  Each well ($\text{T}$) contain the representation of a test tube in a macro-experimental view.  Information between wells gets transfered through a stackable microtube data bus, labeled $B_1$ and $B_2$.  The microtube data bus provides transfer of buffer solution and preparation of wells.  
+Figure \ref{molecularSchematic} shows a schematic representation for a molecular computing architecture.  This architecture consists of a series of tubes connected with nanopores ($\text{N}$) and micropumps ($\text{P}$).  Each well ($\text{T}$) contain the representation of a test tube in a macro-experimental view.  Information between wells gets transfered through a stackable microtube data bus, labeled $B_1$ and $B_2$.  The microtube data bus provides transfer of buffer solution and preparation of wells.  
 
 %			<Paragraph> Operating the machine
 Control of the machine in Figure \ref{molecularSchematic} requires the transfer of buffer solutions along with molecular encodings between tubes.  Activating a micropump permits flow through the tube and directed movement of solutions through an internal configuration.  For example, directing the pumps $\text{P}_1$ and $\text{P}_{n+1}$ from $\text{B}_1$ to $\text{B}_2$ permit the contents of $\text{T}_1$ to be mixed with $\text{B}_2$.  Once this transfer occurs, then $\text{P}_{n+1}$ can be closed.  Subsequent operations may be performed with multiple tubes, and the contents directed to specified storage.  
@@ -292,4 +292,4 @@ Control of the machine in Figure \ref{molecularSchematic} requires the transfer 
 Nanopores allow for reading and writing of genetic sequences.  In the molecular computing architecture the read and write cycle occurs in a isolated tube.  As a molecule passes through the nanopore, a current is induced according to the nucleotide present in the pore.  We cannot yet practically write molecules with nanopores.  Writing with nanopores requires modification of a molecular state, and can theoretically be accomplished \cite{dnaTransistorIBMpressrelease}.  The nanopore will consist of a full read-write component and provide an interface for external control.
 
 %			<Paragraph> Interface with existing architectures 
-Integration with existing computing architectures provides an interface to the user and a synergetic medium for general purpose computation.  Molecular computing can perform many tasks in parallel, however each operation may take orders of magnitude longer than conventional architectures.  For example, a conventional computer architecture may be used to verify valid configurations for {\sc Satisfiability} but cannot easily compute all valid configurations.  The computation of all configurations for a {\sc Satisfiability} problem instance may be executed as a combinatorial molecular process, and the solution written to a conventional computing medium.  This interface requires design and interaction with the user and can leverage computer architectures as a dual environment.   
+Integration with existing computing architectures provides an interface to the user and a synergetic medium for general purpose computation.  Molecular computing can perform many tasks in parallel, however each operation may take orders of magnitude longer than conventional architectures.  For example, a conventional computer architecture may be used to verify valid configurations for {\sc Satisfiability} but cannot easily compute all valid configurations.  The computation of all configurations for a {\sc Satisfiability} problem instance may be executed as a combinatorial molecular process, and the solution written to a conventional computing medium.  This interface requires design and interaction with the user by leveraging the architecture as a dual computing environment.   

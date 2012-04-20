@@ -16,7 +16,7 @@ Lipton's algorithm consists of two main procedures.  The first phase constructs 
 The function {\sc Combinatorial Generate}$(n)$ implements the split-mix synthesis technique \cite{furka1982, furkaBook}.  It returns a gel consisting of $2^n$ independent oligos that correspond to a unique vector space.  The space begins construction with an initial medium.  An iterative loop elongates a growing solution with the split-mix synthesis.  Each split corresponds with appending the tubes with a truth and false assignment.  The two tubes are mixed and amplified to contain equimolar portions.  
 
 %		<Paragraph> Describe execution
-The amplification process gets modeled with a purification step.  This eliminates all redundant strings for the simulated environment.  After the iteration completes, the complete combinatorial space gets returned. This space consists of $2^n$ vectors of length $n$. 
+The amplification process gets modeled with a purification step.  This eliminates all redundant strings for the simulated implementation.  After the iteration completes, the complete combinatorial space gets returned. This space consists of $2^n$ vectors of length $n$. 
 
 %		<Paragraph> Describe Output
 From the combinatorial space, we will begin to filter satisfying solutions to the input CNF formula.  For each clause, we extract each of the variables present in the solution space.  A disjunctive set $T_C$ contains the satisfied string instances for each clause.  {\sc Lipton's Algorithm} iterates over each of the clauses.  From the selected clause, the variables get extracted from the combinatorial space.  Once complete, the remaining space, $T$, contains satisfiable instances for $\phi$.
@@ -145,6 +145,6 @@ Yoshida and Suyama implemented Ogihara and Ray's algorithm with manual molecular
 	\subsection{Simulations}
 
 %		<Paragraph> Describe computer simulation 
-Martín-Mateos et al. introduced a simulation for Lipton's algorithm \cite{MartinMateos02molecularcomputation}.   Molecular operations get implemented with ACL2, a Common Lisp variant.  The framework for this environment implemented test cases for Lipton's algorithm.
+Martín-Mateos et al. introduced a simulation for Lipton's algorithm \cite{MartinMateos02molecularcomputation}.   Molecular operations get implemented with ACL2, a Common Lisp variant.  The framework for this system implemented test cases for Lipton's algorithm.
 
 Ogihara provides test results for implementation of his original molecular algorithm \cite{Ogihara:1996:BFS:898228}.  This simulation provides a comparison with Lipton's algorithm for practical length restrictions.

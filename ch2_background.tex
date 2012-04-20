@@ -165,7 +165,7 @@ In the following chapters, we will use the molecular operators for construction 
 $[a_1, a_2] \leftarrow \text{splice}(a, b)$ --- cuts an oligonucleotide $a$ with a subsequence $b$ into two pieces by a restriction enzyme.  These two pieces are $a_1$ and $a_2$.
 \end{definition}
 
-In the implementation of a simulation environment, we avoid redundant string representations with the \textit{purify} operation.  This is a synthetic version of PCR.  Purify balances the space representation of molecules with a uniform distribution.
+In the implementation of a simulation system, we avoid redundant string representations with the \textit{purify} operation.  This is a synthetic version of PCR.  Purify balances the space representation of molecules with a uniform distribution.
 \begin{definition}
 \textit{Purify}\\
 $T' \leftarrow \text{purify}(T)$ --- provides a uniform distribution from the contents of $T$ as $T'$.
@@ -301,5 +301,5 @@ Combinatorial instances provide difficult benchmark cases.  These instances can 
 		
 %		<Paragraph> {\sc Satisfiability} instance [applied] from real world problems
 
-Industrial processes apply {\sc Satisfiability} in many real world problems.  This includes circuit layout, planning, logistics, circuit fault testing and many other industrial \textsf{NP-complete} problems.  Applications for industrial {\sc Sat} will often apply heuristics and approximation techniques to relax the problem.  This allows approximate solutions to be computed in an efficient amount of time.
+Industrial processes apply {\sc Satisfiability} in many real world problems.  This includes circuit layout, planning, logistics, circuit fault testing and many other industrial \textsf{NP-complete} problems.  Applications for industrial {\sc Sat} will often apply heuristics, and approximation techniques to relax the problem.  This allows approximate solutions to be computed in an efficient amount of time.
 		
