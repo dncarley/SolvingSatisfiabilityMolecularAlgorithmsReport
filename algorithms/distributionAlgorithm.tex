@@ -1,0 +1,58 @@
+\begin{pseudocode}{Insert Variable}{v, s}
+\\
+	\IF s = \emptyset \THEN
+		T_R \GETS \{v\}	
+		
+	\ELSEIF v < s \THEN
+		T_R \GETS \text{append}(v, s)
+		
+	\ELSEIF v > s \THEN
+		T_R \GETS \text{append}(s, v)
+
+	\ELSE 
+		\BEGIN
+			\text{Find the position } i \text{ for } v \text{ in } s\\
+			\IF v = s_i \THEN
+				\BEGIN			
+				\IF v \text{ polarity is } s_i \text{ polarity, } 
+				T_R \GETS \{s\}
+				\ELSE
+				T_R \GETS \emptyset
+				\ELSEIF s_i > v \THEN
+				\BEGIN
+					[s', s''] \GETS \text{splice}(s, s_i)\\
+					s' \GETS \text{append}(s', v)\\
+					T_R  \GETS \text{append}(s', s'')\\
+				\END
+				\END
+		\END \\
+	\RETURN{T_R}
+\end{pseudocode}
+
+\begin{pseudocode}{Distribution Sat}{\phi}
+
+m \text{ number of clauses}\\
+k \text{ number of variables in each clause}\\
+\\
+
+\text{Initialize with the variables from the first clause}\\
+T \GETS \{ C_1 \} \\
+
+\FOR i \GETS 2 \text{ to } m \DO
+	\BEGIN 
+	\FOR j \GETS 1 \text{ to } k \DO
+		\BEGIN
+			T_j \GETS T\\
+			x_j \GETS C_{i,j}\\
+			\FOREACH \text{string } s \text{ in } T_j \DO		
+				T_j \GETS \text{mix}(T_j, \text{{\sc Insert Variable}}( x_j, s))\\
+		\END\\
+	\FOR j \GETS 1 \text{ to } k \DO
+		T \GETS \text{mix}( T, T_j)\\
+
+	\END
+\\
+\RETURN{detect(T)}
+\end{pseudocode}
+
+
