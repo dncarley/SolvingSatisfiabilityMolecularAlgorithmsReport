@@ -40,7 +40,7 @@ During this phase, each variable from a disjunctive clause gets considered, incr
 
 A variable conflict occurs when both positive and negative assignments of a variable occur in a sequence $s$.  In this case, the sequence $s$ gets removed from the set potential solutions.
 
-Redundant vectors get removed after insertion of the next disjunctive clause.  Any remaining valuations in the solution space contain non-conflicting variable assignments.  This does not immediately require that each valuation be a complete satisfiable assignment. Satisfiable valuations remain in a non-empty satisfying solution space.
+Redundant vectors get removed after insertion of the next disjunctive clause.  Any remaining witnesses in the solution space contain non-conflicting variable assignments.  This does not immediately require that each witness to be a complete satisfiable assignment. Satisfiable witnesses remain in a non-empty satisfying solution space.
 		
 		
 
@@ -48,7 +48,7 @@ Redundant vectors get removed after insertion of the next disjunctive clause.  A
 
 
 
-Vectors that are of equal magnitude of the number of variables in the problem instance are satisfiable valuations.  However, there may exist solutions that span only the required satisfiable assignments; that is activate each of the independent clauses with at least one non-conflicting assignment.  This assignment may be the minimum valuation for the expression, in the case that the backbone consists of the variables of the maximum valuation.
+Vectors that are of equal magnitude of the number of variables in the problem instance are satisfiable witnesses.  However, there may exist solutions that span only the required satisfiable assignments; that is activate each of the independent clauses with at least one non-conflicting assignment.  This assignment may be the minimum witness for the expression, in the case that the backbone consists of the variables of the maximum witness.
 
 		
 	\subsection{Pseudocode for Distribution algorithm}
