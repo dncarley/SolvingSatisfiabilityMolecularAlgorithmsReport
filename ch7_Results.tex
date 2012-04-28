@@ -3,8 +3,6 @@
 %	<Paragraph> Overview of results
 This chapter provides results of the $k$-{\sc Sat} execution test from the previous chapter.  We consider the results of the test and provide analysis of the algorithm metrics.  
 
-Design considerations for a physical molecular computation environment extend the algorithm test results.  Selection of a molecular {\sc Satisfiability} algorithm considers the simulation results and practical implementation techniques.
-
 	\section{Algorithm metric comparison}
 	
 %		<Paragraph> Summary of measured metrics
@@ -208,88 +206,3 @@ Each {\sc Satisfiability} instance has a constrained solution space during the p
 
 \FloatBarrier
 
-
-\section{On construction of a molecular computer}
-
-%		<Paragraph> Describe outlook of techniques		
-
-We consider present techniques in molecular biology and VLSI circuit construction as design considerations for a molecular computer.  We describe the selection of an encoding substrate and for sequence representation.  Implementation of the substrate considers properties from the molecular algorithms under test. 
-
-%		<Paragraph> Describe how techniques may construct general computer
-
-Continuing, we provide techniques for construction of a molecular computation environment.  The environment applies {\sc Satisfiability} as a standard algorithm for general computation.  This includes an execution pipeline for integration with existing silicon fabrication processes.
-		
-		\subsection{Selection of encoding substrate}
-		
-%			<Paragraph> Describe genetic encoding
-During the introduction of molecular computation, we considered $+$DNA and $-$DNA as a computing substrate.  These choices were arbitrary to illustrate the automatic string matching mechanism of genetic information.  Physical implementations can use various substrates for artificial or practical significance.
-			
-%			<Paragraph> Understand consequences of molecular computing
-
-Designing real molecules with artificial significance require consideration of the practical implications.  Physical features inadvertently encoded in a sequence may yield unexpected consequences.  This includes molecules with structural design flaws or potentially hazardous.
-			
-%			<Paragraph> Introduction to virology
-%%%%Virology is the study of a type of hazardous molecules.  Virons are non-living molecules that require a host to operate.  Once active, the molecule interacts with a host cell to perform actions.  
-			
-%			<Paragraph> Constrained consequences of molecular computing
-
-  Constraining molecular computation reduces the risk of external contamination.  We consider an environment constructed for isolation.  This eliminates external contamination of the molecular substrate and reduces the risk for contaminating the environment.
-
-			
-		\subsection{Selection of algorithm}
-		
-%			<Paragraph> Design of computing task
-Molecular Simulation provides a simulation system for molecular {\sc Satisfiability} algorithms.  We have collected simulation results for a sweep of random $k$-{\sc Sat} instances.  Now we consider each of the algorithm's performance in terms of implementation in a physical system.
-			
-%			<Paragraph> Multiple considerations for general computation
-We have seen that some of the metrics vary considerably.  Beneficial components of algorithm performance should be considered for physical implementation.  This includes the benefits of reducing an existing space versus construction of only possible combinations.
-		
-%			<Paragraph> Construction of a computational space
-Construction of a computational space depends on the algorithm implementation.  Lipton's algorithm reduces a larger space to only the satisfiable solutions.  Ogihara and Ray's and the Distribution algorithm construct an incremental space based on the evaluation order.  The incremental construction decreases the total amount of required space for computing {\sc Satisfiability}.  With the Distribution algorithm, non-conflicting assignments provide shorter valuations without spanning all $n$ variables.
-			
-		\subsection{Selection of encoding mechanism}
-		
-%			<Paragraph> On virons and other molecular constructions
-The encoding mechanism may exhibit features that can be utilized for desired functionality.  We consider construction and reuse of combinatorial spaces, along with permission of unbounded length restrictions.
-
-%			<Paragraph> On combinatorial spaces
-Lipton's algorithm begins with the construction of a combinatorial space. The algorithm discards the space after each {\sc Satisfiability} instance.  This does not need to be the case; the space can be recovered through a reaction process.  The process requires copying the discarded +DNA strands and from the satisfying solution.
-			
-%			<Paragraph> On unbounded length restrictions
-Let us consider a molecular computer without a fixed length bound.  This machine is the same as the construction of a combinatorial space without regarding the a fixed number of variables.  With this machine, we can provide assertions for problems beyond a fixed problem instance.  Immediately we can represent much larger problems that are representable in the current vector space.  This leads to a possible security concern that may allow the user to increase the space for solving any problem.  The present oligonucleotide definition does not provide efficient encodings compared with natural genomes. 
-
-			
-		\subsection{Description of a self contained molecular computer}
-		
-%			<Paragraph> Overview
-Manual laboratory procedures demonstrate molecular computation for single problem instances \cite{Adleman:1994:MCS:189441.189442, dnaBasedImplemetation_Yoshida2000, faulhammer2000mol, Braich02solutionof}.  These techniques are error prone due to human intervention.  Implementers have suggested robotic automation as a means to eliminate human contact \cite{dnaBasedImplemetation_Yoshida2000}.  However the techniques are an automated version of a human process.  We consider present gene sequencing technologies for the construction of a general molecular computer.
-			
-%			<Paragraph> Technology required
-Integrated molecular computing technology gets inherited from sequencing technologies.  Nanopores provide a method for sequencing genetic sequences \cite{dnaTransistorIBMpressrelease, nanoporeChapter11, ionTorrent, oxfordNanopore}.  We apply nanopores along with integrated micropumps \cite{Liao_Lee_Liu_Hsieh_Luo_2005} for the transfer of molecules within an integrated architecture.     
-			
-%			<Paragraph> Construction techniques
-Construction of the integrated architecture extends standard silicon processes.  A nanopore can be constructed by production of a silicon nitride ($\text{Si}_3\text{N}_4$) substrate and removing an hourglass shaped portion \cite{Heng_Aksimentiev_Ho_Marks_Grinkova_Sligar_Schulten_Timp_2006}.  Each side of the nanopore forms a membrane between two potentials \cite{Heng_Aksimentiev_Ho_Marks_Grinkova_Sligar_Schulten_Timp_2006}; the potential difference requires a concentration of potassium ($\text{K}^+$) and chlorine ($\text{C}^-$) ions in aqueous buffer solutions.  
-	
-%	<Figure>	Circuit description
-\begin{figure}[htbp]
-\begin{center}
-
-	\includegraphics[width=0.7434\textwidth]{figures/molecularSchematic.png}
-
-\caption{Schematic of molecular computing architecture.}
-\label{molecularSchematic}
-\end{center}
-\end{figure}
-
-\FloatBarrier	
-	
-Figure \ref{molecularSchematic} shows a schematic representation for a molecular computing architecture.  This architecture consists of a series of tubes connected with nanopores ($\text{N}$) and micropumps ($\text{P}$).  Each well ($\text{T}$) contain the representation of a test tube in a macro-experimental view.  Information between wells gets transfered through a stackable microtube data bus, labeled $B_1$ and $B_2$.  The microtube data bus provides transfer of buffer solution and preparation of wells.  
-
-%			<Paragraph> Operating the machine
-Control of the machine in Figure \ref{molecularSchematic} requires the transfer of buffer solutions along with molecular encodings between tubes.  Activating a micropump permits flow through the tube and directed movement of solutions through an internal configuration.  For example, directing the pumps $\text{P}_1$ and $\text{P}_{n+1}$ from $\text{B}_1$ to $\text{B}_2$ permit the contents of $\text{T}_1$ to be mixed with $\text{B}_2$.  Once this transfer occurs, then $\text{P}_{n+1}$ can be closed.  Subsequent operations may be performed with multiple tubes, and the contents directed to specified storage.  
-
-%			<Paragraph> On reading and writing
-Nanopores allow for reading and writing of genetic sequences.  In the molecular computing architecture the read and write cycle occurs in a isolated tube.  As a molecule passes through the nanopore, a current is induced according to the nucleotide present in the pore.  We cannot yet practically write molecules with nanopores.  Writing with nanopores requires modification of a molecular state, and can theoretically be accomplished \cite{dnaTransistorIBMpressrelease}.  The nanopore will consist of a full read-write component and provide an interface for external control.
-
-%			<Paragraph> Interface with existing architectures 
-Integration with existing computing architectures provides an interface to the user and a synergetic medium for general purpose computation.  Molecular computing can perform many tasks in parallel, however each operation may take orders of magnitude longer than conventional architectures.  For example, a conventional computer architecture may be used to verify valid configurations for {\sc Satisfiability} but cannot easily compute all valid configurations.  The computation of all configurations for a {\sc Satisfiability} problem instance may be executed as a combinatorial molecular process, and the solution written to a conventional computing medium.  This interface requires design and interaction with the user by leveraging the architecture as a dual computing environment.   

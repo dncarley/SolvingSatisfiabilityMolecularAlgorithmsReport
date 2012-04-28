@@ -10,12 +10,6 @@
 \newblock Expression of animal virus genomes.
 \newblock {\em Bacteriol Rev 35}, 3 (1971), 235--41.
 
-\bibitem{Braich02solutionof}
-{\sc Braich, R.~S., Chelyapov, N., Johnson, C., Rothemund, P. W.~K., and
-  Adleman, L.}
-\newblock Solution of a 20-variable 3-{\sc sat} problem on a {DNA} computer.
-\newblock {\em Science 296\/} (2002), 499--502.
-
 \bibitem{Cook:1971:CTP:800157.805047}
 {\sc Cook, S.~A.}
 \newblock The complexity of theorem-proving procedures.
@@ -34,11 +28,6 @@
 {\sc Doherty, P., and Kvarnstr{\"o}m, J.}
 \newblock {\em The Handbook of Knowledge Representation}.
 \newblock Elsevier, 2008.
-
-\bibitem{faulhammer2000mol}
-{\sc Faulhammer, D., Cukras, A., Lipton, R., and Landweber, L.}
-\newblock Molecular computation: {RNA} solutions to chess problems.
-\newblock {\em Proc Natl Acad Sci U S A 97}, 4 (2000), 1385--9.
 
 \bibitem{feynman1959}
 {\sc Feynman, R.}
@@ -69,21 +58,10 @@
 \newblock The {\sc sat} phase transition.
 \newblock In {\em ECAI\/} (1994), John Wiley {\&} Sons, pp.~105--109.
 
-\bibitem{Heng_Aksimentiev_Ho_Marks_Grinkova_Sligar_Schulten_Timp_2006}
-{\sc Heng, J.~B., Aksimentiev, A., Ho, C., Marks, P., Grinkova, Y.~V., Sligar,
-  S., Schulten, K., and Timp, G.}
-\newblock The electromechanics of {DNA} in a synthetic nanopore.
-\newblock {\em Biophysical Journal 90}, 3 (2006), 1098--106.
-
 \bibitem{levin1973}
 {\sc Levin, L.}
 \newblock Universal search problems (in {R}ussian).
 \newblock {\em Problemy Peredachi Informatsii 9}, 3 (1973), 115--116.
-
-\bibitem{Liao_Lee_Liu_Hsieh_Luo_2005}
-{\sc Liao, C.-S., Lee, G.-B., Liu, H.-S., Hsieh, T.-M., and Luo, C.-H.}
-\newblock Miniature {RT}--{PCR} system for diagnosis of {RNA}-based viruses.
-\newblock {\em Nucleic Acids Research 33}, 18 (2005), e156.
 
 \bibitem{ionTorrent}
 {\sc {L}ife {T}echnologies}.
@@ -122,11 +100,6 @@
 {\sc {O}xford~{N}anopore {T}echnologies}.
 \newblock {O}xford {N}anopore {T}echnologies.
 \newblock Accessed from \url{http://www.nanoporetech.com/}.
-
-\bibitem{nanoporeChapter11}
-{\sc Peng, H., Luan, B., and Stolovitzky, G.}
-\newblock {\em Nanopores: Sensing and Fundamental Biological Interactions}.
-\newblock Springer, 2011, ch.~11.
 
 \bibitem{satcompetition}
 {\sc {SATC}omp~{O}rganizing committee}.
