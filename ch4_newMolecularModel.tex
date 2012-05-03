@@ -19,14 +19,16 @@ Initially the algorithm starts with the variable assignments of a clause.  Evalu
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
-Item & Return state & State \\ \hline 
+Case & Return state & State \\ \hline 
 1	& $v \cdot s$ & if $v$ is less than all elements in $s$ \\ 
 & &  \\ \hline
 2	& $s \cdot v$ & if $v$ is greater than all elements in $s$ \\ 
 & &  \\ \hline
 3	& $s_1 \cdot v \cdot s_2$ & if $v$ is between two elements in $s$ \\ 
 & &  \\ \hline
-4	& $\emptyset$ & if $v$ conflicts with $-v$ in $s$\\ \hline
+4	& $\emptyset$ & if $v$ conflicts with $-v$ in $s$\\
+& &  \\ \hline
+5	& $s$ & if $v$ exists in $s$\\ \hline
 \end{tabular}
 \end{center}
 \label{distributionInsertTable}
@@ -36,9 +38,9 @@ Item & Return state & State \\ \hline
 
 %		<Paragraph> Describe execution
 		
-During this phase, each variable from a disjunctive clause gets considered, incrementally constructing a partial solution space.  Items (1), (2), and (3) place a variable $v$ into an existing sequence $s$.  Each of these cases represents when the variable $v$ get inserted in a non-decreasing sequence.
+During this phase, each variable from a disjunctive clause gets considered, incrementally constructing a partial solution space.  Cases (1), (2), and (3) place a variable $v$ into an existing sequence $s$.  Each of these cases represents when the variable $v$ get inserted in a non-decreasing sequence.
 
-A variable conflict occurs when both positive and negative assignments of a variable occur in a sequence $s$.  In this case, the sequence $s$ gets removed from the set potential solutions.
+A variable conflict occurs when both positive and negative assignments of a variable occur in a sequence $s$.  In this case (4), the sequence $s$ gets removed from the set potential solutions.  If the sequence $s$ contains the variable $v$, case (5), then the existing sequence $s$ gets returned unmodified.
 
 Redundant vectors get removed after insertion of the next disjunctive clause.  Any remaining witnesses in the solution space contain non-conflicting variable assignments.  This does not immediately require that each witness to be a complete satisfiable assignment. Satisfiable witnesses remain in a non-empty satisfying solution space.
 		
@@ -53,7 +55,7 @@ Vectors that are of equal magnitude of the number of variables in the problem in
 		
 	\subsection{Pseudocode for Distribution algorithm}
 
-Algorithms 4.1.1 and 4.1.2 provide pseudocode for the Distribution algorithm.  
+Algorithms 4.1.1 and 4.1.2 provide pseudocode for the Distribution algorithm.  Appendix B lists a detailed execution trace for the Distribution algorithm.
 
 
 \input{./algorithms/distributionAlgorithm.tex}

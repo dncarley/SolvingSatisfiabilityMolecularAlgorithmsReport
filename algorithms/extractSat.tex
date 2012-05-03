@@ -1,0 +1,24 @@
+
+
+\begin{pseudocode}{ExtractSat}{\phi}
+
+n \text{ number of variables in } \phi \\
+\\
+	T \GETS \text{\sc CombinatorialGenerate}(n)\\
+
+	\FOREACH \text{clause } C \text{ in } \phi \DO
+		\BEGIN
+			T_C \GETS \emptyset \\
+		
+			\FOREACH \text{variable } v \text{ in } C \DO
+				\BEGIN 
+					T_T \GETS \text{extract}(T, v) \\
+					T_C \GETS \text{mix}(T_C, T_T)
+				\END \\
+			T \GETS T_C \\
+		\END \\
+		
+	\IF T = \emptyset
+		\THEN \RETURN{\texttt{UNSATISFIABLE}}\\
+	\RETURN{\texttt{SATISFIABLE}}
+\end{pseudocode}

@@ -1,30 +1,22 @@
-\begin{pseudocode}{Insert Variable}{v, s}
-\\
-	\IF s = \emptyset \THEN
-		T_R \GETS \{v\}	
-		
-	\ELSEIF v < s \THEN
-		T_R \GETS \text{append}(v, s)
-		
-	\ELSEIF v > s \THEN
-		T_R \GETS \text{append}(s, v)
-
-	\ELSE 
+\begin{pseudocode}{Insert Variable}{T, v}
+	T_R \GETS \emptyset \\
+	\FOREACH \text{ string } s \text{ in } T \DO
 		\BEGIN
-			\text{Find the position } i \text{ for } v \text{ in } s\\
-			\IF v = s_i \THEN
-				\BEGIN			
-				\IF v \text{ polarity is } s_i \text{ polarity, } 
-				T_R \GETS \{s\}
-				\ELSE
-				T_R \GETS \emptyset
-				\ELSEIF s_i > v \THEN
+			\CASE(1): v < s \THEN
+				s' \GETS \text{append}(v, s)\\
+			\CASE(2): v > s \THEN
+				s' \GETS \text{append}(s, v)\\
+			\CASE(3): s_1 < v < s_2 \THEN
 				\BEGIN
-					[s', s''] \GETS \text{splice}(s, s_i)\\
-					s' \GETS \text{append}(s', v)\\
-					T_R  \GETS \text{append}(s', s'')\\
-				\END
-				\END
+				[s_1, s_2] \GETS \text{splice}(s, v)\\
+				s_1 \GETS \text{append}(s_1, v)\\
+				s' \GETS \text{append}(s_1, s_2)\\
+				\END \\
+			\CASE(4): \neg v \in s \THEN
+				s' \GETS \emptyset \\
+			\CASE(5): v \in s \THEN
+				s' \GETS s\\
+			T_R \GETS \text{mix}(T_R, s') \\
 		\END \\
 	\RETURN{T_R}
 \end{pseudocode}
@@ -40,16 +32,13 @@ T \GETS \{ C_1 \} \\
 
 \FOR i \GETS 2 \text{ to } m \DO
 	\BEGIN 
-	\FOR j \GETS 1 \text{ to } k \DO
+		T_C \GETS \emptyset \\
+	\FOREACH \text{variable } v \text{ in } C_i \DO
 		\BEGIN
-			T_j \GETS T\\
-			x_j \GETS C_{i,j}\\
-			\FOREACH \text{string } s \text{ in } T_j \DO		
-				T_j \GETS \text{mix}(T_j, \text{{\sc Insert Variable}}( x_j, s))\\
+			T_I \GETS \text{\sc Insert Variable}(T, v)\\
+			T_C \GETS \text{mix}(T_C, T_I)\\
 		\END\\
-	\FOR j \GETS 1 \text{ to } k \DO
-		T \GETS \text{mix}( T, T_j)\\
-
+		T \GETS T_C\\
 	\END
 \\
 \RETURN{detect(T)}

@@ -46,14 +46,14 @@
 
 
 \begin{pseudocode}{Ogihara and Ray's Algorithm}{\phi}
-m \text{ number of clauses}\\
-n \text{ number of variables}\\
+
+n \text{ number of variables in } \phi \\
 \text{Each variable of the reordered clause can be accessed by $v_1$, $v_2$, and $v_3$}\\
 \\
 \text{Reorder variables by most frequent to least frequent literal appearance}\\
 \text{Reorder each clause in increasing literal order}\\
 \\
-T \GETS \{ POS \cdot POS, POS \cdot NEG, NEG \cdot POS,  NEG \cdot NEG\} \\
+T \GETS \{ [+x_1 \cdot +x_2], [+x_1 \cdot -x_2], [-x_1 \cdot +x_2],  [-x_1 \cdot -x_2]\} \\
 
 \FOREACH \text{variable } x_i \text{ in } 3 \leq i \leq n \DO
 	\BEGIN
@@ -64,21 +64,21 @@ T \GETS \{ POS \cdot POS, POS \cdot NEG, NEG \cdot POS,  NEG \cdot NEG\} \\
 			[v_1, v_2, v_3] \GETS C\\
 			\IF x_i = v_3  \THEN
 				\BEGIN
-					T_{P1} \GETS \text{extract}(T_N, POS, v_1)\\
-					T_{N1} \GETS \text{extract}(T_N, NEG, v_1)\\				
-					T_{P2} \GETS \text{extract}(T_{N1}, POS, v_2)\\
+					T_{P1} \GETS \text{extract}(T_N, v_1)\\
+					T_{N1} \GETS \text{extract}(T_N, -v_1)\\				
+					T_{P2} \GETS \text{extract}(T_{N1}, v_2)\\
 					T_{N} \GETS \text{mix}(T_{P1}, T_{P2})
 				\END \\  
 			\IF \neg x_i = v_3 \THEN
 				\BEGIN
-					T_{P1} \GETS \text{extract}(T_P, NEG, v_1)\\
-					T_{N1} \GETS \text{extract}(T_P, POS, v_1)\\				
-					T_{P2} \GETS \text{extract}(T_{N1}, NEG, v_2)\\
+					T_{P1} \GETS \text{extract}(T_P, v_1)\\
+					T_{N1} \GETS \text{extract}(T_P, -v_1)\\				
+					T_{P2} \GETS \text{extract}(T_{N1}, v_2)\\
 					T_{P} \GETS \text{mix}(T_{P1}, T_{P2})
 				\END\\
 		\END\\
-		T_P \GETS \text{append}(T_P, POS)\\
-		T_N \GETS \text{append}(T_N, NEG)\\
+		T_P \GETS \text{append}(T_P, +x_i)\\
+		T_N \GETS \text{append}(T_N, -x_i)\\
 		T \GETS \text{mix}(T_P, T_N)\\
 	\END\\
 \RETURN{\text{detect}(T)}

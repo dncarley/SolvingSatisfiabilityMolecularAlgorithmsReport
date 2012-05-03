@@ -1,0 +1,30 @@
+
+
+\begin{pseudocode}{CheckSat}{\phi, B}
+
+	\FOREACH \text{clause } C \text{ in } \phi \DO
+		\BEGIN
+			test\_clause \GETS False \\
+		
+			\FOREACH \text{variable } v \text{ in } C \DO
+				\BEGIN
+					\IF v \in B 
+						\THEN test\_clause \GETS True \\
+				\END \\
+			\IF test\_clause = False
+				\THEN \RETURN{False} \\
+		\END \\
+	\RETURN{True}
+\end{pseudocode}
+
+\begin{pseudocode}{BruteSat}{\phi}
+	n \text{ number of variables in }\phi \\
+\\
+	\FOR t \GETS 1 \text{ to } 2^n \DO
+		\BEGIN
+			\IF \text{\sc CheckSat}(\phi, t) 
+				\THEN	\RETURN{\texttt{SATISFIABLE}} \\
+
+		\END \\
+	\RETURN{\texttt{UNSATISFIABLE}}
+\end{pseudocode}

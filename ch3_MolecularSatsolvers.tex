@@ -10,7 +10,7 @@ Introduced in 1995 by Richard Lipton \cite{Lipton95usingdna}, this algorithm cre
 	\subsection{Description of Lipton's algorithm}
 		
 %		<Paragraph> Describe preconditions
-Lipton's algorithm consists of two main procedures.  The first phase constructs a combinatorial space of $2^n$ independent vectors.  Second, the combinatorial space gets reduced based on the input CNF instance. 		
+Lipton's algorithm consists of two main procedures.  The first phase constructs a combinatorial space of $2^n$ independent vectors.  Second, the combinatorial space gets filtered based on the input CNF instance. 		
 
 %		<Paragraph> Describe setup
 The function {\sc Combinatorial Generate}$(n)$ implements the split-mix synthesis technique \cite{furka1982, furkaBook}.  It returns a gel consisting of $2^n$ independent oligos that correspond to a unique vector space.  The space begins construction with an initial medium.  An iterative loop elongates a growing solution with the split-mix synthesis.  Each split corresponds with appending the tubes with a truth and false assignment.  The two tubes are mixed and amplified to contain equimolar portions.  
@@ -20,7 +20,7 @@ The amplification process gets modeled with a purification step.  This eliminate
 
 %		<Paragraph> Describe Output
 From the combinatorial space, we will begin to filter satisfying solutions to the input CNF formula.  For each clause, we extract each of the variables present in the solution space.  A disjunctive set $T_C$ contains the satisfied string instances for each clause.  {\sc Lipton's Algorithm} iterates over each of the clauses.  From the selected clause, the variables get extracted from the combinatorial space.  Once complete, the remaining space, $T$, contains satisfiable instances for $\phi$.
-%\par Introduced in 1995 by Lipton \cite{Lipton95usingdna}, this algorithm creates an exponential search space for the CNF expression.  Once the space is created, each variable is evaluated and the space is reduced to only the solutions that satisfy all remaining strings.  This algorithm is analogous to a conventional brute-force search for all solutions.
+%\par Introduced in 1995 by Lipton \cite{Lipton95usingdna}, this algorithm creates an exponential search space for the CNF expression.  Once the space is created, each variable is evaluated and the space is filtered to only the solutions that satisfy all remaining strings.  This algorithm is analogous to a conventional brute-force search for all solutions.
 %
 %
 %%%%%
@@ -39,7 +39,7 @@ From the combinatorial space, we will begin to filter satisfying solutions to th
 	\subsection{Pseudocode for Lipton's algorithm}
 	
 %	<Paragraph> Introduce pseudocode
-Algorithms 3.1.1 and 3.1.2 provide pseudocode for Lipton's algorithm.  
+Algorithms 3.1.1 and 3.1.2 provide pseudocode for Lipton's algorithm.  Appendix B lists a detailed execution trace for Lipton's algorithm.
 	
 	\input{./algorithms/liptonsAlgorithm.tex}
 
@@ -60,9 +60,9 @@ Prior to execution of the algorithm it requires two attributes of CNF input:
 \item All clauses must be sorted by variable
 \end{enumerate}
 
-Considering only $3$-{\sc Sat} expressions ensure attribute (1) gets fufilled.  If models of $k$-{\sc Sat} with $k > 3$, then a reduction to $3$-{\sc Sat} must occur prior to execution.
+Attribute (1) gets fulfilled by considering only $3$-{\sc Sat} expressions.  If models of $k$-{\sc Sat} with $k > 3$, then a polynomial time reduction to $3$-{\sc Sat} must occur prior to execution.
 
-Prior to execution of the algorithm, the parsing of the DIMACS CNF input gets sorted.  This step ensures that attribute (2) gets satisfied.  Providing the weak ordering
+Attribute (2) gets fulfilled by sorting the clauses prior to execution; providing the weak ordering
 
 \[
 v_1 < \cdots < v_n,
@@ -82,9 +82,7 @@ Expanding each partial assignment iterates over each clause in the input CNF.  C
 x_u < x_v < x_w.
 \]
 
-{\sc Ogihara and Ray's Algorithm} evaluates each subsequent variable and determines possible assignments.  The possible assignments for the variables $v_1$ and $v_2$ get extracted if $v_3$ matches.  Effectively pruning only potential solutions.  These potential solutions $T_P$ and $T_N$ get appended with the positive ($POS$) or negative ($NEG$) string assignments.  The algorithm continues until each variable gets evaluated.  
-
-The remaining space $T$, once the algorithm terminates, contains all solutions for the CNF instance $\phi$.
+{\sc Ogihara and Ray's Algorithm} evaluates each subsequent variable and determines possible assignments.  The possible assignments for the variables $v_1$ and $v_2$ get extracted if $v_3$ matches.  Effectively pruning only potential solutions.  These potential solutions $T_P$ and $T_N$ get appended with the positive or negative string assignments.  The algorithm continues until each variable gets evaluated.  The remaining space $T$ contains all solutions for the CNF instance $\phi$ after the algorithm terminates.
 
 
 
@@ -124,8 +122,8 @@ The remaining space $T$, once the algorithm terminates, contains all solutions f
 
 %	<Paragraph> Introduce pseudocode
 	
-Algorithm 3.2.1 provides pseudocode for Ogihara and Ray's algorithm.
-	
+Algorithm 3.2.1 provides pseudocode for Ogihara and Ray's algorithm.  Appendix B lists a detailed execution trace for Ogihara and Ray's algorithm.
+
 	
 	\input{./algorithms/ogiharaAlgorithm.tex}
 

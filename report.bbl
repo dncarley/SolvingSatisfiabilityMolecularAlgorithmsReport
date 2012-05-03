@@ -53,10 +53,21 @@
   Techniques}.
 \newblock -, 2007.
 
+\bibitem{Garaj2010}
+{\sc Garaj, S., Hubbard, W., Reina, A., Kong, J., Branton, D., and Golovchenko,
+  J.~A.}
+\newblock {Graphene as a subnanometre trans-electrode membrane}.
+\newblock {\em Nature 467}, 7312 (Sept. 2010), 190--193.
+
 \bibitem{Gent94thesat}
 {\sc Gent, I.~P., and Walsh, T.}
 \newblock The {\sc sat} phase transition.
 \newblock In {\em ECAI\/} (1994), John Wiley {\&} Sons, pp.~105--109.
+
+\bibitem{dnaComputingModels2008}
+{\sc Ignatova, Z., Martinez-Perez, I., and Zimmerman, K.-H.}
+\newblock {\em DNA Computing Models}.
+\newblock Springer, 2008.
 
 \bibitem{levin1973}
 {\sc Levin, L.}

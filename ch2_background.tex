@@ -4,13 +4,13 @@
 
 This chapter provides a background on molecular computation techniques.  We begin with an introduction to nanotechnology and then provide an example of encoding information with molecular matter.  Following this example, we introduce Adleman's molecular operators for solving an instance of {\sc Hamiltonian Path}.  The operators provide a base instruction set for molecular computing, and provide the primitives to construct molecular algorithms.
 
-Finally, we provide an introduction to {\sc Satisfiability}.  We define {\sc Satisfiability} as a circuit.  We then view {\sc Satisfiability} as a language.  We also discuss practical matters related to efficiently evaluating {\sc Satisfiability}, such as how to encode input and output, and how to classify instances of {\sc Satisfiability} for the test cases that we consider.
+In the second half of this chapter, we provide an introduction to {\sc Satisfiability}.  We define {\sc Satisfiability} as a circuit.  We then view {\sc Satisfiability} as a language.  We also discuss practical matters related to efficiently evaluating {\sc Satisfiability}, such as how to encode input and output, and how to classify instances of {\sc Satisfiability} for the test cases that we consider.
 
 \section{On nanotechnology and construction of molecules}
 
 %		<Paragraph> Richard Feynman [introduces] nanotechnology
 		
-	Richard Feynman founded the field of nanotechnology in his 1959 talk `There's Plenty of Room at the Bottom' \cite{feynman1959}.  Examples of applied nanotechnology include the manufacturing of graphene \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006} and DNA nanopores \cite{dnaTransistorIBMpressrelease}. Graphene consists of an arrangement of carbon atoms that provides desirable physical and electrical properties \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006}. DNA nanopores create a physical channel for threading DNA for read and write operations.  Diverse applications continue to take advantage of the properties of nanotechnology.  Gene sequencing technologies provide an example of applied nanotechnology \cite{ionTorrent, oxfordNanopore}.  					
+	Richard Feynman founded the field of nanotechnology in his 1959 talk `There's Plenty of Room at the Bottom' \cite{feynman1959}.  Examples of applied nanotechnology include the manufacturing of graphene \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006} and DNA nanopores \cite{dnaTransistorIBMpressrelease}. Graphene consists of a planer arrangement of carbon atoms that provides desirable physical and electrical properties \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006}. DNA nanopores create a physical channel reading genetic sequences \cite{Garaj2010}.  Gene sequencing technologies provide an example of applied nanotechnology \cite{Garaj2010, ionTorrent, oxfordNanopore}.  					
 			%The work has driven the fields of molecular and quantum computation, VLSI circuit construction, and continues with innovative design and applications into many everyday processes.
 		
 %		<Paragraph> DNA substrate [builds] molecular definition
@@ -46,12 +46,12 @@ Representing an integer sequence requires a systematic mapping of an oligonucleo
 \begin{tabular}{|c|c|c|}
 \hline
  \textbf{Integer} & \textbf{Oligonucleotide} & \textbf{Reverse-complement}\\ \hline
-0 & $5'$TCTCCC$3'$ & $3'$AGAGGG$5'$ \\
-1 & $5'$AAACCC$3'$ & $3'$TTTGGG$5'$ \\
-2 & $5'$GGTAAA$3'$ & $3'$CCATTT$5'$ \\
-3 & $5'$CCCTCC$3'$ & $3'$GGGAGG$5'$ \\
-4 & $5'$CTTTTC$3'$ & $3'$GAAAAG$5'$ \\
-5 & $5'$CCTTCC$3'$ & $3'$GGAAGG$5'$ \\ \hline
+0 & $5'$\texttt{TCTCCC}$3'$ & $3'$\texttt{AGAGGG}$5'$ \\
+1 & $5'$\texttt{AAACCC}$3'$ & $3'$\texttt{TTTGGG}$5'$ \\
+2 & $5'$\texttt{GGTAAA}$3'$ & $3'$\texttt{CCATTT}$5'$ \\
+3 & $5'$\texttt{CCCTCC}$3'$ & $3'$\texttt{GGGAGG}$5'$ \\
+4 & $5'$\texttt{CTTTTC}$3'$ & $3'$\texttt{GAAAAG}$5'$ \\
+5 & $5'$\texttt{CCTTCC}$3'$ & $3'$\texttt{GGAAGG}$5'$ \\ \hline
 \end{tabular}
 \end{center}
 \label{integer2OligoTable}
@@ -65,7 +65,7 @@ S = [1, 3, 4, 3, 2, 0]
 \]
 and 
 \[
-O_1 = 5'\text{AAACCC}\mid \text{CCCTCC}\mid \text{CTTTTC}\mid \text{CCCTCC}\mid \text{GGTAAA}\mid \text{TCTCCC}3'.
+O_1 = 5'\texttt{AAACCC}\mid \texttt{CCCTCC}\mid \texttt{CTTTTC}\mid \texttt{CCCTCC}\mid \texttt{GGTAAA}\mid \texttt{TCTCCC}3'.
 \]
 Recovering the sequence $S$ from $O_1$ can be done several ways.  Because the definition of the sequence exists, we may use the reverse complement to match sequences.  Another method splits the sequence $O_1$ on the encoding width.  In this case, the encoding width is six base pairs.  Gene sequencing tools permit reading the sequence and interpretation of the data with Table \ref{integer2OligoTable}.
 
@@ -92,47 +92,47 @@ Given an undirected graph $G$, does there exist a path that visits every vertex 
 
 Adleman's encoding for graphs uses oligonucleotides for defining each vertex.  The vertex representation shares a similar definition for our example of encoding a sequence of integers in Table \ref{integer2OligoTable}.  Representing edges requires a definition of a reverse-complement oligonucleotide; this string connects the suffix of the vertex $v_i$ with the prefix of $v_j$.  For example, let us consider an example for appending $v_2$ to $v_1$.  Let, e.g.,
 \begin{align*}
- v_1 &= 5'\text{ATCTTT}3' \\
- v_2 &= 5'\text{CCTATA}3'.
+ v_1 &= 5'\texttt{ATCTTT}3' \\
+ v_2 &= 5'\texttt{CCTATA}3'.
 \end{align*}
 
 \noindent From the definition of $v_1$ and $v_2$, we can construct an edge $e_{1,2}$ as
 \[
-e_{1,2} = 3'\text{AAAGGA}5'.
+e_{1,2} = 3'\texttt{AAAGGA}5'.
 \]
 
 \noindent Appending $v_2$ to $v_1$ gets accomplished by first attaching the edge $e_{1,2}$ to the vertex $v_1$
 \begin{align*}
- 5'\text{ATC}&\text{TTT}3' \\
-  3'&\text{AAAGGA}5'.
+ 5'\texttt{ATC}&\texttt{TTT}3' \\
+  3'&\texttt{AAAGGA}5'.
 \end{align*}
 
 \noindent Next we attach $v_2$ to the resulting complex, yielding
 \begin{align*}
- 5'\text{ATCTTT}|&\text{CCTATA}3'\\
-  3'\text{AAA}&\text{GGA}5'.
+ 5'\texttt{ATCTTT}|&\texttt{CCTATA}3'\\
+  3'\texttt{AAA}&\texttt{GGA}5'.
 \end{align*}
 
 \noindent Finally the edge may be removed and we have the sequence
 \[
-v_1 \cdot v_2 = 5'\text{ATCTTT}|\text{CCTATA}3'.
+v_1 \cdot v_2 = 5'\texttt{ATCTTT}|\texttt{CCTATA}3'.
 \]
 
-The sequence $v_1 \cdot v_2$ represents the path $v_1$ to $v_2$, and can be obtained with the \textit{append} operation.  Possible solutions get stored in a test tube $T$.  $T$ begins as an empty tube.  For solving {\sc Hamitonian Path}, we introduce equimolar portions of each oligonucleotide vertex for a starting configuration with the \textit{mix} operation.
+The sequence $v_1 \cdot v_2$ represents the path $v_1$ to $v_2$, and can be obtained with the \textit{append} operation.  A test tube $T$ stores possible solutions.  The tube $T$ starts as an empty tube.  For solving {\sc Hamitonian Path}, we introduce equimolar portions of each oligonucleotide vertex for a starting configuration with the \textit{mix} operation.
 
 \begin{definition}
 \textit{Mix}\\
-$ T \leftarrow \text{mix}( T_1, T_2)$ --- combines two test tubes of information.  The output consists of a single set $T = T_1 \cup T_2$.
+$ T \leftarrow \text{mix}( T_1, \ldots , T_n)$ --- combine $n$ test tubes of information.  The output consists of a single set $T = T_1 \cup \cdots \cup T_n$.
 \end{definition}
 
-A small initial set may be amplified with \textit{polymerase chain reaction} (PCR).  PCR thermocycles the contents of the tube to replicate the contents. Possible paths get randomly generated by introducing the vertex representation to the contents.  We create this representation elongating the initial vertex with a fixed path length.
+A small initial set may be amplified with \textit{polymerase chain reaction} (PCR).  PCR thermocycles the contents of the tube to replicate the contents.  Introducing the each vertex representation to the contents randomly generates all potential paths.  We create this representation elongating the initial vertex with a fixed path length.
 
 \textit{Append} attaches a string to each string contained in a test tube.  \textit{Split} portions a tube into multiple portions.  We will use split-mix synthesis as a technique for generation of combinatorial space in Chapter 3.
 %A possible path is created by randomly appending sequences to create a uniform statistical distribution of all paths.  
 
 \begin{definition}
 \textit{Append}\\
-$T' \leftarrow \text{append}( T, a)$ --- the concatenation of the oligonucleotide $a$ with each element in $T$.  
+$T' \leftarrow \text{append}( T, s)$ --- the concatenation of the oligonucleotide $s$ with each element in $T$.  
 \end{definition}
 
 \begin{definition}
@@ -140,11 +140,11 @@ $T' \leftarrow \text{append}( T, a)$ --- the concatenation of the oligonucleotid
 $[T', T''] \leftarrow \text{split}( T)$ --- distributes $T$ into two tubes.  Each of the resulting tubes, $T'$ and $T''$,  contain the same representative elements of $T$.
 \end{definition}
 
-From the tube $T$, we keep paths that begin with $V_{in}$ and end with $V_{out}$.  This ensures that the initial and terminal conditions for the graph get satisified.  Extracting only strings from $T$ that match these conditions reduces the number of potential strings.
+The initial and terminal conditions for the graph get fulfilled by extracting, from the tube $T$, only paths that begin with $V_{in}$ and end with $V_{out}$.  Extracting only strings from $T$ that match these conditions constrain the number of potential strings to only those that satisfy the conditions of the graph instance.
 
 \begin{definition}
 \textit{Extract}\\
-$ T' \leftarrow \text{extract}( T, a, x)$ --- separates all oligonucleotides from $T$ containing the sequence $a$ at position $x$.  The output consists of a set $T'$ of those oligonucleotides containing $a$ at position $x$.
+$ T' \leftarrow \text{extract}( T, s)$ --- separates all oligonucleotides from $T$ containing the sequence $s$.  The output consists of a set $T'$ of those oligonucleotides containing $s$.
 \end{definition}
 
 The tube $T$ consists of possible encodings that have the correct starting and ending vertices. We select only strings with length $n$, where $n$ is the number of vertices in $G$, to ensure that all vertices get traversed.  This can be performed with \textit{gel electrophoresis}, a technique for sorting molecules by mass.
@@ -288,7 +288,14 @@ The {\sc Sat} phase transition is a region where both satisfiable and unsatisfia
 There are several methods for constructing {\sc Satisfiability} instances.  We consider techniques for constructing instances based on random assignment, combinatorial, and real applications from industry.  The instance type demonstrate properties of {\sc Satisfiability} and provide heuristics for certain input.
 	
 %		<Paragraph> {\sc Satisfiability} instance [generated] from random assignment
-A random $k$-{\sc Sat} expression consists of $m$ clauses with $k$ literals per-clause from  $n$ variables \cite{wilsonKsat}. Variable assignments get distributed with probability $Prob\left(\frac{1}{n}\right)$.  The positive or negative variable polarity get assigned with a probability $Prob\left(\frac{1}{2}\right)$.
+A random $k$-{\sc Sat} expression consists of $m$ clauses with $k$ literals per-clause from  $n$ variables \cite{wilsonKsat}. Variable assignments get distributed with probability 
+\[
+Prob\left(\frac{1}{n}\right).
+\]
+\noindent The positive or negative variable polarity get assigned with a probability 
+\[
+Prob\left(\frac{1}{2}\right).
+\]
 
 %Random $k$-{\sc Sat} are generated with \texttt{ksat.c} \cite{wilsonKsat}.  A hash of the clause representation ensures that all clauses are independent \cite{wilsonKsat}.
 

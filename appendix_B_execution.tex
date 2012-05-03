@@ -1,0 +1,271 @@
+
+\chapter{Molecular algorithm trace}
+
+\section{Example {\sc Satisfiability} instance}
+
+
+\[
+ \phi = (x_1 \vee x_2 \vee \neg x_3) \wedge  (x_2 \vee x_3 \vee \neg x_4) \wedge (\neg x_1 \vee \neg x_3 \vee \neg x_4)
+\]
+
+
+\section{Lipton's Algorithm}
+
+\[
+T  = \text{{\sc Combinatorial Generate}}(4)
+\]
+
+\[
+T = 
+\]
+\begin{verbatim}
+	TTTT FTTT TFTT FFTT TTFT FTFT TFFT FFFT
+	TTTF FTTF TFTF FFTF TTFF FTFF TFFF FFFF
+\end{verbatim}
+	
+Next select Clause 1:
+
+\[
+C_1 = (x_1 \vee x_2 \vee \neg x_3)
+\]
+
+\begin{verbatim}
+	TTTT FTTT TFTT FFTT TTFT FTFT TFFT FFFT
+	TTTF FTTF TFTF FFTF TTFF FTFF TFFF FFFF
+\end{verbatim}
+	
+	Extract $x_1$:
+
+\begin{verbatim}
+		TTTT      TFTT      TTFT      TFFT     
+		TTTF      TFTF      TTFF      TFFF     
+\end{verbatim}
+
+	Extract $x_2$:
+\begin{verbatim}
+		TTTT FTTT           TTFT FTFT          
+		TTTF FTTF           TTFF FTFF          
+\end{verbatim}
+
+	Extract $\neg x_3$:
+\begin{verbatim}	
+		                    TTFT FTFT TFFT FFFT
+		                    TTFF FTFF TFFF FFFF
+\end{verbatim}		                    
+
+	Mix contents:
+
+\begin{verbatim}	
+		TTTT FTTT TFTT      TTFT FTFT TFFT FFFT
+		TTTF FTTF TFTF      TTFF FTFF TFFF FFFF
+\end{verbatim}		
+
+Next select Clause 2:
+
+\[
+C_2 = (x_2 \vee x_3 \vee \neg x_4)
+\]
+
+\begin{verbatim}
+	TTTT FTTT TFTT      TTFT FTFT TFFT FFFT
+	TTTF FTTF TFTF      TTFF FTFF TFFF FFFF
+\end{verbatim}		
+
+	Extract $x_2$:
+\begin{verbatim}
+		TTTT FTTT           TTFT FTFT          
+		TTTF FTTF           TTFF FTFF          
+\end{verbatim}	
+
+	Extract $x_3$:
+\begin{verbatim}	
+		TTTT FTTT TFTT                         
+		TTTF FTTF TFTF                         
+\end{verbatim}	
+
+	Extract $\neg x_4$:
+\begin{verbatim}
+		                                       
+		TTTF FTTF TFTF      TTFF FTFF TFFF FFFF	
+\end{verbatim}
+
+	Mix contents:
+\begin{verbatim}
+		TTTT FTTT TFTT      TTFT FTFT          
+		TTTF FTTF TFTF      TTFF FTFF TFFF FFFF
+\end{verbatim}
+
+Finally, select Clause 3:	
+\[
+C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
+\]
+\begin{verbatim}
+	TTTT FTTT TFTT      TTFT FTFT          
+	TTTF FTTF TFTF      TTFF FTFF TFFF FFFF
+\end{verbatim}	
+	Extract $\neg x_1$:
+\begin{verbatim}
+		     FTTT                FTFT          
+		     FTTF                FTFF      FFFF
+\end{verbatim}
+
+	Extract $\neg x_3$:
+\begin{verbatim}
+		                    TTFT FTFT          
+		                    TTFF FTFF TFFF FFFF
+\end{verbatim}	
+
+	Extract $x_4$:
+\begin{verbatim}
+		TTTT FTTT TFTT      TTFT FTFT          
+		                                       
+\end{verbatim}
+
+	Mix contents:
+\begin{verbatim}
+		TTTT FTTT TFTT      TTFT FTFT          
+		     FTTF           TTFF FTFF TFFF FFFF
+\end{verbatim}
+
+
+
+
+
+\section{Ogihara and Ray's Algorithm}
+
+Initialize the tube $T$ with initial vector assignments for variables $x_1$ and $x_2$
+\[
+	T = \{\texttt{TT}, \texttt{TF}, \texttt{FT}, \texttt{FF}\}
+\]
+
+\noindent Iterate variable $x_3$:
+\[
+C_1 = (x_1 \vee x_2 \vee \neg x_3)
+\]
+
+\noindent $\neg x_3$ matches $v_3$
+
+\begin{align*}
+T_{P1} &= \{\texttt{TT}, \texttt{TF}\}\\
+T_{N1} &= \{\texttt{FT}, \texttt{FF}\}\\
+T_{P2} &= \{\texttt{FT}\}\\
+T_P &= \{\texttt{TT}, \texttt{TF}, \texttt{FT}\}
+\end{align*}
+
+\[
+C_2 = (x_2 \vee x_3 \vee \neg x_4)
+\]
+\noindent $x_3$ or $\neg x_3$ does not match $v_3$
+
+\[
+C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
+\]
+\noindent $x_3$ or $\neg x_3$ does not match $v_3$
+
+\noindent Append
+
+\begin{align*}
+T_P &= \{\texttt{TTT}, \texttt{TFT}, \texttt{FTT}\}\\
+T_N &= \{\texttt{TTF}, \texttt{TFF}, \texttt{FTF}, \texttt{FFF}\}
+\end{align*}
+
+\noindent Mix
+
+\[
+T = \{\texttt{TTT}, \texttt{TFT}, \texttt{FTT}, \texttt{TTF}, \texttt{TFF}, \texttt{FTF}, \texttt{FFF}\}
+\]
+
+
+\noindent Iterate variable $x_4$:
+\[
+C_1 = (x_1 \vee x_2 \vee \neg x_3)
+\]
+
+\noindent $x_4$ or $\neg x_4$ does not match $v_3$
+
+\[
+C_2 = (x_2 \vee x_3 \vee \neg x_4)
+\]
+\noindent $\neg x_4$ matchs $v_3$
+
+\begin{align*}
+T_{P1} &= \{\texttt{TTT}, \texttt{FTT}, \texttt{TTF}, \texttt{FTF}\}\\
+T_{N1} &= \{\texttt{TFT}, \texttt{TFF}, \texttt{FFF}\}\\
+T_{P2} &= \{\texttt{TFT}\}\\
+T_P &= \{\texttt{TTT}, \texttt{FTT}, \texttt{TTF}, \texttt{FTF}, \texttt{TFT}\}
+\end{align*}
+
+\[
+C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
+\]
+\noindent $x_4$ matches $v_3$
+
+\begin{align*}
+T_{P1} &= \{\texttt{FTT}, \texttt{FTF}, \texttt{FFF}\}\\
+T_{N1} &= \{\texttt{TTT}, \texttt{TFT}, \texttt{TTF}, \texttt{TFF}\}\\
+T_{P2} &= \{\texttt{TTF}, \texttt{TFF}\}\\
+T_N &= \{\texttt{FTT}, \texttt{FTF}, \texttt{FFF}, \texttt{TTF}, \texttt{TFF}\}
+\end{align*}
+
+\noindent Append
+
+\begin{align*}
+T_P &= \{\texttt{TTT}, \texttt{TFT}, \texttt{FTT}\}\\
+T_N &= \{\texttt{TTF}, \texttt{TFF}, \texttt{FTF}, \texttt{FFF}\}
+\end{align*}
+
+\noindent Mix
+
+\[
+T = \{\texttt{TTT}, \texttt{TFT}, \texttt{FTT}, \texttt{TTF}, \texttt{TFF}, \texttt{FTF}, \texttt{FFF}\}
+\]
+
+
+\section{Distribution Algorithm}
+
+Initialize the tube $T$ with the variables from the first clause
+\[
+	T = \{[1], [2], [-3]\}
+\]	
+
+\noindent Select Clause 2
+
+
+\par $T_1 =	\text{{\sc InsertVariable}}(T, 2)$
+\[
+		T_1 =  \{[1,2], [2], [2,-3]\}
+\]
+\par $T_2 =	\text{{\sc InsertVariable}}(T, 3)$
+\[	
+		T_1 =  \{[1,3], [2,3]\}	
+\]
+\par $T_3 =	\text{{\sc InsertVariable}}(T, -4)$
+\[	
+		T_3 =  \{[1,-4], [2,-4], [-3,-4]\}			
+\]		
+\par $T = \text{mix}(T_1, T_2, T_3)$
+\[	
+		T = \{[1,2], [2], [2,-3], [1,3], [2,3], [1,-4], [2,-4], [-3,-4]\}
+\]		
+
+\noindent Select Clause 3
+	
+\par $T_1 = 	\text{{\sc InsertVariable}}(T, -1)$
+\[
+		T_1 = \{[-1,2], [-1,2,-3], [-1,2,3], [-1,2,-4], [-1,-3,-4]\}
+\]	
+\par $T_2 =	\text{{\sc InsertVariable}}(T, -3)$
+\[
+		T_2 = \{[1,2,-3], [2,-3], [2,-3], [1,-3,-4], [2,-3,-4], [-3,-4]\}
+\]
+\par $T_2 =	\text{{\sc InsertVariable}}(T, 4)$
+\[
+		T_3 = \{[1,2,4], [2,4], [2,-3,4], [1,3,4], [2,3,4]\}
+\]
+\par $T = mix(T_1, T_2, T_3)$
+\begin{align*}
+		T = \{&[-1,2], [-1,2,-3], [-1,2,3], [-1,2,-4], [-1,-3,-4],\\
+			  &[1,2,-3], [2,-3], [1,-3,-4], [2,-3,-4], [-3,-4],\\
+			  &[1,2,4], [2,4], [2,-3,4], [1,3,4], [2,3,4]\}
+\end{align*}
+

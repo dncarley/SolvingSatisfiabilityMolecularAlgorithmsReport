@@ -1,8 +1,8 @@
 \chapter{Molecular Simulation: A system for molecular computation}
 
-%	<Paragraph> Decribe overview of chapter contents
+%	<Paragraph> Describe overview of chapter contents
 
-This chapter introduces Molecular Simulation: A system for molecular computation.  We provide an overview of the software and download location for Molecular Simulation and its documentation. We provide tools for use with Molecular Simulation.  This includes automated documentation, Perl execution scripts, and visualization for output data.  We provide examples for Molecular Simulation's input and output.  Invocation of Molecular Simulation from the command line provides user configurable options.  The next chapter describes the usage of Molecular Simulation with automated execution.
+This chapter introduces Molecular Simulation: A system for molecular computation.  We provide an overview of the software and download location for Molecular Simulation and its documentation. We provide tools for use with Molecular Simulation.  This includes Perl execution scripts and visualization for output data.  We provide examples for Molecular Simulation's input and output.  Invocation of Molecular Simulation from the command line provides user configurable options.  The next chapter describes the usage of Molecular Simulation with automated execution.
 	
 	\section{Overview}
 	
@@ -15,8 +15,11 @@ Molecular Simulation may be executed directly or invoked with the assistance of 
 This program is a simulated molecular lab for experimenting with DNA operations. Implementation of three molecular algorithms for solving {\sc Satisfiability} include Lipton's algorithm, Ogihara and Ray's algorithm, and the Distribution algorithm.  Chapters 3 and 4 provide a background and pseudocode for these algorithms.		
 %		<Paragraph> Reference download and documentation locations
 
-Molecular Simulation can be downloaded from \url{http://www.cs.rit.edu/~dnc6813/project/project.html}.  The archive contains example DIMACS CNF testbench and example instances.  This document and the online documentation may be used independently for getting started.
-
+	\section{Download}
+	\noindent Molecular Simulation can be downloaded from:
+	
+	\url{https://github.com/dncarley/MolecularSimulation}. 
+	
  	\section{Requirements}
  	
  	Requirements for Molecular Simulation are specified in this section.  This includes the hardware and software requirements for running Molecular Simulation on your system.
@@ -34,20 +37,14 @@ Molecular Simulation can be downloaded from \url{http://www.cs.rit.edu/~dnc6813/
 
 	\section{Documentation}
 
-Molecular Simulation allows the user to execute DIMACS CNF input.  Usage for algorithm implementation permits the user to design and test new molecular algorithms.
+\noindent The project website contains detailed documentation for Molecular Simulation.  The documentation provides an overview of Molecular Simulation that may be used independently of Chapters 5 and 6 for getting started.  The online documentation provides detailed datatype, function, and class definitions.
 
-Detailed documentation can be accessed from the project website.  This includes an overview of Molecular Simulation along with detailed class and function documentation.  Any modifications to this software should use this as a starting point in development. 
-		
+
 	\section{Tools}
 	
 %		<Paragraph> Describe external tools
-This project uses several tools for automating tasks and execution.  In this section, we describe the tools for documentation, automated execution, and output visualization for Molecular Simulation.
+This project uses several tools for automating tasks and execution.  In this section, we introduce tools to automate execution and visualize output from Molecular Simulation.
 		
-		\subsection{Doxygen}
-		
-%			<Paragraph> Describe Doxygen formatted documentation
-
-\texttt{Doxygen} can be used to generate automated documentation for Molecular Simulation.  The online and offline documentation get generated from Doxygen formatted documentation.  Download and learn \texttt{Doxygen} at \url{http://www.stack.nl/~dimitri/doxygen/}.			
 		\subsection{Perl utilities}
 		
 %			<Paragraph> Describe Perl utilities				
@@ -82,7 +79,11 @@ The source directory includes several \texttt{Perl} scripts to assist in buildin
 		
 %			<Paragraph> Describe Modified visualization from Ben Fry
 
-We adopt a modified plot for visualization of output data.  Ben Fry's example in Chapter 4 of Visualizing Data\cite{fryVisualizingData} provides a framework for importing output from Molecular Simulation.  We provide the modified Processing source in the Molecular Simulation archive.  The visualization directory contains a README for usage.
+A {\sc Sat} datapoint visualization for Molecular Simulation's output can be downloaded from:
+
+\url{https://github.com/dncarley/VisualizeSatDatapoints}
+
+\noindent Ben Fry's example in Chapter 4 of \textit{Visualizing Data} \cite{fryVisualizingData} provides a framework for importing output from Molecular Simulation.  The visualization project directory contains a README for usage.  
 
 %			<Paragraph> Discuss implementation
 %In the following sections, we provide the output format for Molecular Simulation.  We explore several use cases, including a native desktop and online Javascript applications.
@@ -92,7 +93,7 @@ We adopt a modified plot for visualization of output data.  Ben Fry's example in
 	
 %		<Paragraph> Describe DIMACS CNF 
 
-Input to Molecular Simulation consists of a DIMACS CNF file. The definition of the \texttt{*.cnf} filetype can be accessed from \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/doc/}.		
+Input to Molecular Simulation consists of a DIMACS CNF file. The definition of the \texttt{*.cnf} filetype can be accessed from: \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/doc/}.		
 %		<Verbatim> Show input example
 
 \begin{verbatim}
@@ -119,7 +120,7 @@ c
 	
 %		<Paragraph> Describe Sat Competition output
 
-Output from Molecular Simulation, by default, conforms to the 2011 Sat Competition rules.  The rules can be accessed from \url{http://www.satcompetition.org/2011/rules.pdf}.
+Output from Molecular Simulation, by default, conforms to the 2011 {\sc Sat} Competition rules.  The rules can be accessed from: \url{http://www.satcompetition.org/2011/rules.pdf}.
 
 
 %		<Verbatim> Show output example
@@ -134,8 +135,10 @@ c
 v -3 -9 11 13 0
 c
 c A satisfiable witness begins with a `v' and ends with a `0'.
-c     Between the `v' and `0' is a sequence of integers encoding a satisfiable assignment.
+c     A sequence of integers, between `v' and `0', encodes a satisfiable assignment.
 \end{verbatim}
+
+\FloatBarrier
 
 %		<Paragraph> Describe Output Options
 Table \ref{outputTableDefiniton} describes an extended custom output.  This output reports parameters for metric performance evaluation.
