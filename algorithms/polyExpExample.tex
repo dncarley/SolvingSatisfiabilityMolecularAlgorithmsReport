@@ -19,8 +19,9 @@
 
 \begin{pseudocode}{BruteSat}{\phi}
 	n \text{ number of variables in }\phi \\
+	t \text{ is bit vector representing a witness candidate}  \\
 \\
-	\FOR t \GETS 1 \text{ to } 2^n \DO
+	\FOR t \GETS 0 \text{ to } 2^n-1 \DO
 		\BEGIN
 			\IF \text{\sc CheckSat}(\phi, t) 
 				\THEN	\RETURN{\texttt{SATISFIABLE}} \\
