@@ -2,11 +2,15 @@
 
 %<Paragraph> Introduce two molecular algorithms for {\sc Satisfiability}
 
-In this chapter, we introduce two molecular algorithms for {\sc Satisfiability}.  These algorithms are distinct in the resolution of a {\sc Satisfiability} instance.  Lipton's algorithm requires a space to be constructed before execution, where Ogihara and Ray's algorithm constructs a valid space during execution.  Following the description, we explore the physical implementation and simulation of these algorithms.
+In this chapter, we introduce two molecular algorithms for {\sc Satisfiability}.  These algorithms are distinct in the resolution of a {\sc Satisfiability} instance.  Lipton's algorithm requires a combinatorial space of all witness candidates to be constructed before execution.  Ogihara and Ray's algorithm constructs a set of witness candidates during execution.  Following the description, we explore physical implementation and simulation frameworks for these algorithms.
 \section{Lipton's algorithm for {\sc Satisfiability}}
 
 %	<Paragraph> Introduce Lipton's algorithm
-Introduced in 1995 by Richard Lipton \cite{Lipton95usingdna}, this algorithm creates an exponential search space for the CNF expression.  Each variable gets evaluated with the combinatorial space, reducing the space on each iteration.  The satisfiable configurations are present in the remaining space.  This algorithm is analogous to a conventional brute-force search for all solutions. 	
+
+Introduced in 1995 by Richard Lipton \cite{Lipton95usingdna}, this algorithm filters satisfiable witnesses from a combinatorial space of all witness candidates.  Lipton's algorithm is analogous to a conventional brute-force search for all witnesses for a {\sc Satisfiability} instance.
+
+The algorithm begins by creating a combinatorial space of DNA configurations.  These configurations are filtered by extracting potential solutions for each clause.  The instance $\phi$ has satisfiable witnesses if $T$ is non-empty.
+
 	\subsection{Description of Lipton's algorithm}
 		
 %		<Paragraph> Describe preconditions
