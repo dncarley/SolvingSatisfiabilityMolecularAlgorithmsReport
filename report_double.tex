@@ -1,0 +1,69 @@
+\documentclass[11pt]{report}
+\usepackage{setspace}
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{pseudocode}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{multicol}
+\usepackage{placeins}
+\usepackage{etoolbox}
+\usepackage{url}
+\usepackage{hyperref}
+\patchcmd{\quote}{\rightmargin}{\leftmargin 15em \rightmargin}{}{}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\widowpenalty=300
+\clubpenalty=300
+
+\hypersetup{
+	colorlinks,%
+	citecolor=black,%
+	filecolor=black,%
+	linkcolor=black,%
+	urlcolor=black
+}
+
+\newtheorem{definition}{Definition}[section]
+
+\doublespacing
+
+\begin{document}
+
+\input{title.tex}
+
+\thispagestyle{empty} 
+\begin{center}
+	\begin{abstract}
+Molecular computation uses techniques from molecular biology and combinatorial chemistry to perform generalized computations.  We explore, via simulation, three distinct molecular algorithms for solving {\sc Satisfiability}.  The simulation measures the number of molecular operations for solving {\sc Satisfiability}. The test input consists of a set of random $3$-{\sc Sat} instances distributed over a range of clause-variable ratios ($\alpha = [0.2, 14.0]$). 
+	\end{abstract}
+\end{center}
+
+\pagenumbering{roman}
+\tableofcontents
+
+\clearpage
+\pagenumbering{arabic}
+\input{ch1_introduction.tex}
+\input{ch2_background.tex}
+\input{ch3_MolecularSatsolvers.tex}
+\input{ch4_newMolecularModel.tex}
+\input{ch5_MolecularSimulation.tex}
+\input{ch6_ExperimentalSetup.tex}
+\input{ch7_Results}
+\input{ch8_Conclusions.tex}
+
+\newpage
+\addcontentsline{toc}{chapter}{Bibliography} 
+\bibliographystyle{acm}
+\bibliography{./refAll}
+
+\appendix
+\input{appendix_A_source.tex}
+\input{appendix_B_execution.tex}
+
+\end{document}
