@@ -2,24 +2,34 @@
 \chapter{A new molecular algorithm for {\sc Satisfiability}}
 
 %<Paragraph> Introduce 
-This chapter introduces a new molecular algorithm for {\sc Satisfiability}.  The distribution algorithm parses an input CNF expression into growing and self regulated set of possible combinations.
+This chapter introduces a new molecular algorithm for {\sc Satisfiability}.  The Distribution algorithm distributes variables from a CNF instance into a set of non-conflicting witnesses.
+
 \section{Distribution algorithm for {\sc Satisfiability}}
 
 %	<Paragraph> Introduce Distribution algorithm	
-The distribution algorithm parses an input CNF expression into growing and self regulated set of possible combinations.  A possible combination begins with all members of the first clause.  Variables get inserted into an expanding set of valid assignments.  A clause gets eliminated when an assignment contains a conflict.
+
+The Distribution algorithm initially consists of single variable witnesses from a single clause.  Variables from each clause get distributed into non-conflicting configurations.  A witness candidate conflicts when a configuration contains both $x_i$ and $\neg x_i$.  In this case the configuration gets removed from the set of non-conflicting witnesses.  
+
+
+
 	\subsection{Description of the Distribution algorithm}
 		
 %		<Paragraph> Describe preconditions	
 %		<Paragraph> Describe setup
+
+The {\sc Distribution Algorithm} starts with the variable assignments of a clause.
+
+\input{./algorithms/distributionAlgorithm.tex}
+
 		
-Initially the algorithm starts with the variable assignments of a clause.  Evaluation of subsequent clauses extends the solution space with the {\sc Insert Variable} subroutine.  During each insertion, the variable gets inserted into a potential solution vector.  Table \ref{distributionInsertTable} lists the four possibilities for variable assignment.
+Evaluation of subsequent clauses extends the solution space using the {\sc Insert Variable} subroutine.  During each insertion, the variable gets inserted into a potential solution vector.  Table \ref{distributionInsertTable} lists the four possibilities for variable assignment.
 
 \begin{table}[htdp]
 \caption{Configurations for the {\sc Insert Variable} subroutine}
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
-Case & Return state & State \\ \hline 
+\textbf{Case} & \textbf{Return configuration} & \textbf{State} \\ \hline 
 1	& $v \cdot s$ & if $v$ is less than all elements in $s$ \\ 
 & &  \\ \hline
 2	& $s \cdot v$ & if $v$ is greater than all elements in $s$ \\ 
@@ -40,25 +50,80 @@ Case & Return state & State \\ \hline
 		
 During this phase, each variable from a disjunctive clause gets considered, incrementally constructing a partial solution space.  Cases (1), (2), and (3) place a variable $v$ into an existing sequence $s$.  Each of these cases represents when the variable $v$ get inserted in a non-decreasing sequence.
 
+\input{./algorithms/insertVariable.tex}
+
+
 A variable conflict occurs when both positive and negative assignments of a variable occur in a sequence $s$.  In this case (4), the sequence $s$ gets removed from the set potential solutions.  If the sequence $s$ contains the variable $v$, case (5), then the existing sequence $s$ gets returned unmodified.
 
-Redundant vectors get removed after insertion of the next disjunctive clause.  Any remaining witnesses in the solution space contain non-conflicting variable assignments.  This does not immediately require that each witness to be a complete satisfiable assignment. Satisfiable witnesses remain in a non-empty satisfying solution space.
-		
-		
-
-%		<Paragraph> Describe Output
 
 
+%Redundant vectors get removed after insertion of the next disjunctive clause.  Any remaining witnesses in the solution space contain non-conflicting variable assignments.  This does not immediately require that each witness to be a complete satisfiable assignment. Satisfiable witnesses remain in a non-empty satisfying solution space.
 
-Vectors that are of equal magnitude of the number of variables in the problem instance are satisfiable witnesses.  However, there may exist solutions that span only the required satisfiable assignments; that is activate each of the independent clauses with at least one non-conflicting assignment.  This assignment may be the minimum witness for the expression, in the case that the backbone consists of the variables of the maximum witness.
+For example, let us consider the CNF instance
+\[
+\phi = (x_1 \vee x_2) \wedge (x_1 \vee \neg x_2 \vee x_3).
+\]		
 
-		
-	\subsection{Pseudocode for Distribution algorithm}
+The Distribution algorithm begins with the first clause.  We have the set of witnesses
 
-Algorithms 4.1.1 and 4.1.2 provide pseudocode for the Distribution algorithm.  Appendix B lists a detailed execution trace for the Distribution algorithm.
+\[
+T = \{ [x_1], [x_2] \}.
+\] 
+
+Next, variables from the second clause get inserted into the set of non-conflicting witnesses in $T$.
+\[
+T_C = \emptyset
+\]
+
+\noindent First insert $x_1$ into $T$
+\[
+T_I = \{ [x_1], [x_1, x_2] \}.
+\] 
+
+\noindent The witness $[x_1]$ contains $x_1$, and the idempotent witness $[x_1]$ is returned.  The witness $[x_1, x_2]$ requires $x_1$ to satisfy the second clause.
+
+Mix the contents of $T_I$ into the set of clause witnesses $T_C$
+\[
+T_C = \{ [x_1], [x_1, x_2] \}.
+\]
+
+\noindent Next insert $\neg x_2$ into $T$
+\[
+T_I = \{ [x_1, \neg x_2] \}.
+\] 
+
+\noindent The witness $[x_1, \neg x_2]$ requires $\neg x_2$ to satisfy the second clause.  The witness candidate $[x_2, \neg x_2]$ contains a conflict and gets removed from the set of potential witnesses.
+
+Mix the contents of $T_I$ into the set of clause witnesses $T_C$
+\[
+T_C = \{ [x_1], [x_1, x_2], [x_1, \neg x_2] \}.
+\]
 
 
-\input{./algorithms/distributionAlgorithm.tex}
+Finally insert the variable $x_3$ into $T$
+
+\[
+T_I = \{ [x_1, x_3], [x_2, x_3] \}.
+\] 
+
+\noindent In this case, the variable $x_3$ is required to satisfy the second clause.  The variable gets inserted into the configurations without redundant or conflicting assignment.
+
+Mix the contents of $T_I$ into the set of clause witnesses $T_C$
+\[
+T_C = \{ [x_1], [x_1, x_2], [x_1, \neg x_2], [x_1, x_3], [x_2, x_3] \}.
+\]
+
+The contents of $T_C$ get assigned to $T$.
+
+\[
+T = \{ [x_1], [x_1, x_2], [x_1, \neg x_2], [x_1, x_3], [x_2, x_3] \}.
+\]
+
+The set $T$ contains non-conflicting witnesses for the observed clauses.  Once the algorithm terminates, $T$ contains non-conflicting witnesses for the CNF instance $\phi$. 
+	
+	\subsection{Detailed trace of the Distribution algorithm}
+
+Appendix B lists a detailed execution trace for the Distribution algorithm.
 
 
 %

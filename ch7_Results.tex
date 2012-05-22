@@ -18,9 +18,9 @@ This section provides results from the simulation.  We provide the analysis for 
 \reversemarginpar{
 \textbf{Append} is an operation that concatenates molecules. \\
 
-The Distribution algorithm is exponential in the number of appends.  The operation count for append depends on the parsing order of the \textsf{CNF} expression.\\
+The Distribution algorithm is exponential in the number of appends.  The operation count for append depends on the parsing order of the CNF instance.\\
 
-Lipton's and Ogihara-Ray's algorithms use a fixed amount of appends.  This depends on the number of variables and clauses present in the \textsf{CNF} expression.
+Lipton's and Ogihara-Ray's algorithms use a fixed amount of appends.  This depends on the number of variables and clauses present in the CNF instance.
 }
 
 \begin{center}
@@ -90,7 +90,7 @@ Ogihara-Ray's algorithm requires a constant amount of mixes on $\alpha$.
 \reversemarginpar{
 \textbf{Purify} is an operation that ensures equal portions of each independent string.\\
 
-All three algorithms operate with a  linear  number of purifications on $\alpha$.  Ogihara-Ray's algorithm requires the greatest amount of purifications.  The purifications vary by a constant amount when compared with Lipton's and the Distribution algorithms.
+All three algorithms operate using a linear number of purifications on $\alpha$.  Ogihara-Ray's algorithm requires the greatest amount of purifications.  The purifications vary by a constant amount when compared to Lipton's and the Distribution algorithms.
 
  }
 
@@ -112,7 +112,7 @@ All three algorithms operate with a  linear  number of purifications on $\alpha$
 \reversemarginpar{
 \textbf{Splice} is an operation that inserts a string at a targeted location.\\
 
-The Distribution algorithm is exponential in the number of splices.  The number of splices depends on the parsing order of the \textsf{CNF} expression.  Each split requires reassembly, accomplished with two appends.  Figure \ref{appendFig} shows the number of appends.\\
+The Distribution algorithm is exponential in the number of splices.  The number of splices depends on the parsing order of the CNF instance.  Each split requires reassembly, accomplished using two appends.  Figure \ref{appendFig} shows the number of appends.\\
 
 Lipton's and Ogihara-Ray's algorithms do not require splice the splice operator.
 }
@@ -162,7 +162,7 @@ Lipton's and Ogihara-Ray's algorithms are constant in splits based the number of
 
 Ogihara-Ray's algorithm requires the least amount of time.  In cases where the {\sc Satisfiability} instance is under-constrained, where more possible solutions occur, the algorithm takes the greatest amount of time.  Less pruning occurs in over-constrained instances, reducing the execution time of test instances.
 
-Lipton's algorithm executes in exponential time with $\alpha \approx [4.2, 8.2]$ taking the longest.  This is within the phase-transition region for $3$-{\sc Sat}.\\
+Lipton's algorithm executes in exponential time $\alpha \approx [4.2, 8.2]$ (the phase transition region for 3-{\sc Sat}) taking the longest.
 
 The Distribution algorithm executes in exponential time, and performs better than Lipton's algorithm for low conflict ratios.  However over the entire sweep performs worse than both Lipton's and Ogihara-Ray's algorithms.  It shares the same $\alpha \approx [4.2, 8.2]$ during the $3$-{\sc Sat} phase-transition.
 }

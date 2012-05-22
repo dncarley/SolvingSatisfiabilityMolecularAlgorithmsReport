@@ -8,7 +8,7 @@ This chapter describes the use of Molecular Simulation for evaluation of a set o
 
 %		<Paragraph> Describe architecture
 
-In this section, we describe prerequisites for executing a test bench with Molecular Simulation.  Molecular Simulation requires a 64-bit architecture with a UNIX like system with \texttt{gcc} and \texttt{Perl}.  The target system must meet the minimum requirements.  
+In this section, we describe prerequisites for executing a test bench using Molecular Simulation.  Molecular Simulation requires a 64-bit architecture with a UNIX like system with \texttt{gcc} and \texttt{Perl}.  The target system must meet the minimum requirements.  
 
 Building Molecular Simulation can be performed by invoking the \texttt{Perl} script \texttt{build.pl} from the command line.
 
@@ -25,7 +25,7 @@ Building Molecular Simulation can be performed by invoking the \texttt{Perl} scr
 
 %		<Paragraph> Random $k$-{\sc Sat} instances
 
-	We will create a sweep of random $k$-{\sc Sat} instances to observe {\sc Sat} phase transition.  David Wilson's \texttt{ksat.c} generates random $k$-{\sc Sat} instances in DIMACS CNF format.  The program takes four arguments to create a unique DIMACS CNF instance.  Invocation of the program can be performed with the following command.
+	We will create a sweep of random $k$-{\sc Sat} instances to observe {\sc Sat} phase transition.  David Wilson's \texttt{ksat.c} generates random $k$-{\sc Sat} instances in DIMACS CNF format.  The program takes four arguments to create a unique DIMACS CNF instance.  Invocation of the program can be performed using the following command.
 
 \begin{center}
 
@@ -71,7 +71,7 @@ DIMACS CNF benchmarks are available for download from: \url{ftp://dimacs.rutgers
 %		<Paragraph> Select input CNF file
 The previous chapter described a single execution of Molecular Simulation.  Now we provide the automated invocation for processing datasets with each of the algorithms.
 
-The provided Perl script \texttt{executeMolecularSat.pl} allows execution for a directory of DIMACS CNF input.  Executing the script from the command line without arguments processes the experimental setup and saves output to the same directory.
+The provided \texttt{Perl} script \texttt{executeMolecularSat.pl} allows execution for a directory of DIMACS CNF input.  Executing the script from the command line without arguments processes the experimental setup and saves output to the same directory.
 
 \[
 \texttt{ \$ perl executeMolecularSat.pl [options]}
@@ -120,11 +120,11 @@ The output can be analyzed after the automated tests have completed.  The output
 
 %			<Paragraph> Save output to file
 
-	Molecular Simulation, by default, writes output to standard output on the console.  With the \texttt{-f} option, output may be saved to a file.  With the \texttt{-f} option specified, output gets saved with \texttt{[filename]-<a>.out}.  The \texttt{[filename]} consists of the DIMACS CNF name and \texttt{<a>} specifies the algorithm type: \texttt{d}, \texttt{l} or \texttt{o}.
+	Molecular Simulation, by default, writes output to standard output on the console.  The \texttt{-f} option saves output to a file as \texttt{[filename]-<a>.out}.  The \texttt{[filename]} consists of the DIMACS CNF name and \texttt{<a>} specifies the algorithm type: \texttt{d}, \texttt{l} or \texttt{o}.
 
 %			<Paragraph> View output on terminal
 %			<Paragraph> Verbose output
 	Output directed to standard output conforms to the {\sc Sat} Competition rules.  This output may be used during testing, or redirected to an external stream.  The debug option \texttt{-debug} provides detailed information about the execution.  The debug option writes verbose content based on the program execution.  
 
 %		<Paragraph> Output metrics
-	Reading output metrics from the saved output, as defined in Table \ref{outputTableDefiniton}, allows for analysis of collected data.  The data visualization reads a directory of output and condenses it as a \texttt{*.tsv} file.  Subsequent datapoint browsing and the online view use the \texttt{*.tsv} file for condensed reading and transmission.  In the next chapter, we provide the results of the experimental setup and discuss the design decisions for a general purpose molecular computer.  
+	Reading output metrics from the saved output, as defined in Table \ref{outputTableDefiniton}, allows for analysis of collected data.  The data visualization reads a directory of output and condenses it as a \texttt{*.tsv} file.  Subsequent datapoint browsing and the online view use the \texttt{*.tsv} file for condensed reading and transmission.  In the next chapter, we provide the results of the experimental setup.

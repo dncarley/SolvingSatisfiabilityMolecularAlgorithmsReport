@@ -10,6 +10,12 @@
 \newblock Expression of animal virus genomes.
 \newblock {\em Bacteriol Rev 35}, 3 (1971), 235--41.
 
+\bibitem{Braich02solutionof}
+{\sc Braich, R.~S., Chelyapov, N., Johnson, C., Rothemund, P. W.~K., and
+  Adleman, L.}
+\newblock Solution of a 20-variable 3-{\sc sat} problem on a {DNA} computer.
+\newblock {\em Science 296\/} (2002), 499--502.
+
 \bibitem{Cook:1971:CTP:800157.805047}
 {\sc Cook, S.~A.}
 \newblock The complexity of theorem-proving procedures.

@@ -2,52 +2,101 @@
 
 %<Paragraph> Introduce two molecular algorithms for {\sc Satisfiability}
 
-In this chapter, we introduce two molecular algorithms for {\sc Satisfiability}.  These algorithms are distinct in the resolution of a {\sc Satisfiability} instance.  Lipton's algorithm requires a combinatorial space of all witness candidates to be constructed before execution.  Ogihara and Ray's algorithm constructs a set of witness candidates during execution.  Following the description, we explore physical implementation and simulation frameworks for these algorithms.
+In this chapter, we introduce two molecular algorithms for {\sc Satisfiability}.  These algorithms construct a set of all witnesses for {\sc Satisfiability} instances.  Lipton's algorithm requires a combinatorial space of all witness candidates to be constructed before execution.  Ogihara and Ray's algorithm constructs a set of witness candidates during execution.  Following the description, we explore physical implementation and simulation frameworks for these algorithms.
 \section{Lipton's algorithm for {\sc Satisfiability}}
 
 %	<Paragraph> Introduce Lipton's algorithm
 
 Introduced in 1995 by Richard Lipton \cite{Lipton95usingdna}, this algorithm filters satisfiable witnesses from a combinatorial space of all witness candidates.  Lipton's algorithm is analogous to a conventional brute-force search for all witnesses for a {\sc Satisfiability} instance.
 
-The algorithm begins by creating a combinatorial space of DNA configurations.  These configurations are filtered by extracting potential solutions for each clause.  The instance $\phi$ has satisfiable witnesses if $T$ is non-empty.
+The algorithm first constructs a combinatorial space containing oligonucleotide configurations for all potential witness candidates.  Evaluation of a {\sc Satisfiability} instance extracts witnesses for the current clause.  Reading each clause constrains the contents of the tube $T$ to only those configurations that satisfy the current clause.  The algorithm terminates with a set of witnesses for the CNF input $\phi$.  If $\phi$ is unsatisfiable, then $T = \emptyset$.  
 
 	\subsection{Description of Lipton's algorithm}
 		
-%		<Paragraph> Describe preconditions
-Lipton's algorithm consists of two main procedures.  The first phase constructs a combinatorial space of $2^n$ independent vectors.  Second, the combinatorial space gets filtered based on the input CNF instance. 		
-
 %		<Paragraph> Describe setup
-The function {\sc Combinatorial Generate}$(n)$ implements the split-mix synthesis technique \cite{furka1982, furkaBook}.  It returns a gel consisting of $2^n$ independent oligos that correspond to a unique vector space.  The space begins construction with an initial medium.  An iterative loop elongates a growing solution with the split-mix synthesis.  Each split corresponds with appending the tubes with a truth and false assignment.  The two tubes are mixed and amplified to contain equimolar portions.  
+The function {\sc Combinatorial Generate}$(n)$ implements the split-mix synthesis technique \cite{furka1982, furkaBook}.  {\sc Combinatorial Generate} returns a tube $T_{comb}$ consisting of $2^n$ oligonucleotides that represent potential witness candidates.  The tube $T_{comb}$ begins with an initial medium denoted by $start$.  An iterative loop extends $T_{comb}$ using split-mix synthesis.  Each split corresponds with appending the tubes with a truth and false assignment.  The two tubes are mixed and amplified to contain equimolar portions.  
+
+
+	\input{./algorithms/combinatorialGenerate.tex}
+\FloatBarrier
+
+Let us consider an example execution of {\sc Combinatorial Generate} with $n = 2$.
+
+\noindent The tube $T_{comb}$ begins as an empty tube.  We introduce a $start$ configuration (\texttt{S}) to the tube $T_{comb}$.
+
+\noindent Contents of $T_{comb}$
+\[
+T_{comb} = \{ \texttt{S} \}.
+\]
+
+\noindent Iteration $v = 1$
+
+First split the contents of $T_{comb}$.  We have
+
+\begin{align*}
+ T_1 &= \{ \texttt{S} \}, \text{ and} \\
+ T_2 &= \{ \texttt{S} \}.
+\end{align*}
+
+Next append each of the tubes with a positive (\texttt{T}) and negative (\texttt{F}) assignment for the variable $v_1$.  We have
+
+\begin{align*}
+ T_1 &= \{ \texttt{ST} \}, \text{ and} \\
+ T_2 &= \{ \texttt{SF} \}.
+\end{align*}
+
+Mix the contents of $T_1$ and $T_2$ to form $T_{comb}$ for the next iteration.  We have
+\[
+T_{comb} = \{\texttt{ST}, \texttt{SF}\}.
+\]
+
+
+\noindent Iteration $v = 2$
+
+Split the contents of $T_{comb}$.  We have
+
+\begin{align*}
+ T_1 &= \{\texttt{ST}, \texttt{SF}\}, \text{ and} \\
+ T_2 &= \{\texttt{ST}, \texttt{SF}\}.
+\end{align*}
+
+Next append each of the tubes with a positive (\texttt{T}) and negative (\texttt{F}) assignment for the variable $v_2$.  We have
+
+\begin{align*}
+ T_1 &= \{\texttt{STT}, \texttt{SFT}\}, \text{ and} \\
+ T_2 &= \{\texttt{STF}, \texttt{SFF}\}.
+\end{align*}
+
+Mix the contents of $T_1$ and $T_2$ to form $T_{comb}$ for the final iteration.  The algorithm {\sc Combinatorial Generate} returns the following tube
+\[
+T_{comb} = \{\texttt{STT}, \texttt{SFT}, \texttt{STF}, \texttt{SFF}\}.
+\]
+
+
+%%%%%%%%%%%%%%%%%
+
+{\sc Combinatorial Generate} generates all witness candidates for a {\sc Satisfiability} instance.  {\sc Lipton's Algorithm} filters, from a combinatorial space $T$, configurations that represent witnesses for the input $\phi$.
 
 %		<Paragraph> Describe execution
-The amplification process gets modeled with a purification step.  This eliminates all redundant strings for the simulated implementation.  After the iteration completes, the complete combinatorial space gets returned. This space consists of $2^n$ vectors of length $n$. 
+%The amplification process gets modeled with a purification step.  This eliminates all redundant strings for the simulated implementation.  After the iteration completes, the complete combinatorial space gets returned. This space consists of $2^n$ vectors of length $n$. 
+
+	\input{./algorithms/liptonsAlgorithm.tex}
+\FloatBarrier
+
+{\sc Lipton's Algorithm} iterates over each of the $m$ clauses.  The tube $T_C$ stores an incremental set of witnesses for each clause $C$.  The contents of $T_C$ incrementally grows with configurations from $T$ that satisfy the variable $v$.  Once the entire clause $C$ has been evaluated, $T_C$ contains configurations that witness the observed conditions.  The contents of $T_C$ are stored as $T$ for the next clause; $T$ now contains configurations that witness all previous clauses.  Once complete, the tube $T$ contains satisfiable instances for $\phi$.  
 
 %		<Paragraph> Describe Output
-From the combinatorial space, we will begin to filter satisfying solutions to the input CNF formula.  For each clause, we extract each of the variables present in the solution space.  A disjunctive set $T_C$ contains the satisfied string instances for each clause.  {\sc Lipton's Algorithm} iterates over each of the clauses.  From the selected clause, the variables get extracted from the combinatorial space.  Once complete, the remaining space, $T$, contains satisfiable instances for $\phi$.
-%\par Introduced in 1995 by Lipton \cite{Lipton95usingdna}, this algorithm creates an exponential search space for the CNF expression.  Once the space is created, each variable is evaluated and the space is filtered to only the solutions that satisfy all remaining strings.  This algorithm is analogous to a conventional brute-force search for all solutions.
-%
-%
-%%%%%
-%\subsection{Description}
-%This algorithm consists of two main procedures.  Upon execution of the algorithm a combinatorial space of $2^n$ independent vectors encoding possible solutions.
-%
-%Construction of this space employs a technique from combinatorial chemistry, split-mix synthesis.  Split-mix synthesis was invented in 1982 by \'{A}rp\'{a}d Furka, and later adopted to assist in the generation of synthetic molecules \cite{furka1982}.
-%
-%The function {\sc Combinatorial Generate}$(n)$ implements the split-mix synthesis technique.  It returns a gel consisting of $2^n$ independent oligos that correspond to a unique vector space.  The space begins construction with an initial medium.  Upon each iteration the space is amplified and split into two equal portions.  Each set of sequences is then extended by a value representing a truth and a false assignment to a variable.  
-%
-%Upon each iteration the gel is purified, that is eliminate all redundant strings.  Once each variable extends the growing vector space, a complete representation of the space is returned.  This space consists of $2^n$ vectors of length $n$.
-%
-%From the combinatorial space, we will begin to filter satisfying solutions to the input CNF formula.  For each clause, we extract each of the variables present in the solution space.  A disjunctive set $T_C$ contains the satisfied string instances for each clause.  This process continues until each of the clauses are read and its variables are extracted.  The remaining space, $T$, contains satisfiable instances for $\phi$.
-%
-	
-	\subsection{Pseudocode for Lipton's algorithm}
-	
-%	<Paragraph> Introduce pseudocode
-Algorithms 3.1.1 and 3.1.2 provide pseudocode for Lipton's algorithm.  Appendix B lists a detailed execution trace for Lipton's algorithm.
-	
-	\input{./algorithms/liptonsAlgorithm.tex}
 
 	
+	\subsection{Detailed trace of Lipton's algorithm}
+	
+%	<Paragraph> Introduce pseudocode
+Appendix B lists a detailed execution trace for Lipton's algorithm.
+	
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Ogihara and Ray's algorithm for {\sc Satisfiability}}
 
 %	<Paragraph> Introduce Ogihara and Ray's algorithm
@@ -57,95 +106,118 @@ Ogihara and Ray's algorithm consist of a breadth-first evaluation of clauses fro
 \subsection{Description of Ogihara and Ray's algorithm}
 		
 %		<Paragraph> Describe preconditions
-Prior to execution of the algorithm it requires two attributes of CNF input:
+Ogihara and Ray's algorithm requires two attributes for CNF input:
 
 \begin{enumerate}
 \item All clauses consist of exactly three literals
 \item All clauses must be sorted by variable
 \end{enumerate}
 
-Attribute (1) gets fulfilled by considering only $3$-{\sc Sat} expressions.  If models of $k$-{\sc Sat} with $k > 3$, then a polynomial time reduction to $3$-{\sc Sat} must occur prior to execution.
+Considering only $3$-{\sc Sat} instances fulfills Attribute (1).  If models of $k$-{\sc Sat} with $k > 3$, then a polynomial time reduction to $3$-{\sc Sat} must occur prior to execution.
 
-Attribute (2) gets fulfilled by sorting the clauses prior to execution; providing the weak ordering
+Sorting the clauses fulfills Attribute (2).  The polarity of each variable may consist of a positive or negative assignment, providing the weak ordering
 
 \[
 v_1 < \cdots < v_n,
 \]
 
-where the polarity of each variable may consist of a positive or negative assignment.
-
-%		<Paragraph> Describe setup
-
 The initial tube consists of potential states for the first two variables.
 
 %		<Paragraph> Describe execution
 
-Expanding each partial assignment iterates over each clause in the input CNF.  Construction of satisfiable expressions consider the possibilities of the clause ordering
+Expanding each partial assignment iterates over each clause in the input CNF.  Construction of witness candidates consider the possibilities of the clause ordering
 
 \[
 x_u < x_v < x_w.
 \]
 
-{\sc Ogihara and Ray's Algorithm} evaluates each subsequent variable and determines possible assignments.  The possible assignments for the variables $v_1$ and $v_2$ get extracted if $v_3$ matches.  Effectively pruning only potential solutions.  These potential solutions $T_P$ and $T_N$ get appended with the positive or negative string assignments.  The algorithm continues until each variable gets evaluated.  The remaining space $T$ contains all solutions for the CNF instance $\phi$ after the algorithm terminates.
+Ogihara and Ray's algorithm evaluates each subsequent variable and determines possible assignments.  The possible assignments for the variables $v_1$ and $v_2$ get extracted if $v_3$ matches.  Effectively pruning only potential solutions.  These potential solutions $T_P$ and $T_N$ get appended with the positive or negative string assignments.  The algorithm continues until each variable gets evaluated.  The remaining space $T$ contains all solutions for the CNF instance $\phi$ after the algorithm terminates.
+
+\input{./algorithms/ogiharaAlgorithm.tex}
+
+\FloatBarrier
+%		<Paragraph> Describe setup
+
+{\sc Ogihara and Ray's Algorithm} begins with four four initial witness candidates. 
+\[
+T = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
+\]
+
+For example, let us evaluate the clause
+\[
+C = x_1 \vee \neg x_2 \vee \neg x_3.
+\]
+
+On the first iteration, we compare the third ordered variable to $x_3$.  Since $\neg x_3 = v_3$, extract configurations that satisfy $v_1 \vee v_2$.  
+
+\begin{align*}
+T_P &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\} \\
+T_N &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\} 
+\end{align*}
+
+\noindent From $T$, select configurations that satisfy $v_1 = x_1$
+\[
+T_{P1} = \{ \texttt{STT}, \texttt{STF} \}.
+\]
+\noindent From $T$, Select configurations that satisfy $\neg v_1 = \neg x_1$
+\[
+T_{N1} = \{ \texttt{SFT}, \texttt{SFF} \}.
+\]
+\noindent From $T_{N1}$, select configurations that satisfy $v_2 = \neg x_2$
+\[
+T_{P2} = \{ \texttt{SFF} \}.
+\]
+
+\noindent Mix the contents of $T_{P1}$ and $T_{P2}$ as the contents of $T_P$
+\[
+T_P = \{ \texttt{STT}, \texttt{STF}, \texttt{SFF} \}.
+\]
+
+\noindent We have 
+
+\begin{align*}
+T_P &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFF} \}, \\
+T_N &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}.
+\end{align*}
 
 
-%		<Paragraph> Describe Output
+Finally append assignments that satisfy the current variable with $T_P$ and $T_F$.
+
+\begin{align*}
+T_P &= \text{append}(T_P, \texttt{F}) \\
+	&= \{ \texttt{STTF}, \texttt{STFF}, \texttt{SFFF} \}
+\end{align*}
+
+\begin{align*}
+T_N &= \text{append}(T_N, \texttt{T}) \\
+	&= \{ \texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{SFFT}\}
+\end{align*}
 
 
-%\par Originally introduced in 1996 by Ogihara \cite{Ogihara:1996:BFS:898228}, and extended in 1997 with Ray \cite{Ogihara97dna-basedparallel}, this algorithm builds a solution space with a breadth-first search evaluation.  Prior to execution to the algorithm, each of the clauses variable's in the CNF expression are sorted.  Experimental results of a physical algorithm implementation for this algorithm was conducted by Yoshida et al. [23].
-%
-%
-%%%%%
-%\subsection{Description}
-%Ogihara and Ray's algorithm consists of a breadth-first evaluation of clauses from a CNF formula.  Prior to execution of the algorithm it requires two attributes of CNF input:
-%
-%\begin{enumerate}
-%\item All clauses consist of exactly three literals
-%\item All clauses must be sorted by variable
-%\end{enumerate}
-%
-%Attribute (1) is ensured by considering only $3$-{\sc Sat} expressions.  If models of $k$-{\sc Sat} with $k > 3$, then a reduction to $3$-{\sc Sat} must occur prior to execution.
-%
-%Attribute (2) is ensured prior to execution of the algorithm.  This is done during the parsing of the DIMACS CNF input.  Further, we only provide valid $3$-CNF input.  Sorting ensures that the weak ordering is maintained
-%\[
-%v_1 < \cdots < v_n,
-%\]
-%
-%where the polarity of each variable may consist of a positive or negative valuation.
-%
-%An initial tube is created with a base representation for the first two variables.
-%
-%Expanding each partial assignment iterates over each clause in the input CNF.  Construction of satisfiable expressions consider the possibilities of the clause ordering
-%\[
-%x_u < x_v < x_w.
-%\]
-%
+\noindent Mix the contents of $T_P$ and $T_N$ to form the set of configurations that witness the clause. 
+\[
+T = \{ \texttt{STTF}, \texttt{STFF}, \texttt{SFFF},  \texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{SFFT}\}
+\]
 		
-	\subsection{Pseudocode for Ogihara and Ray's algorithm}
-
-%	<Paragraph> Introduce pseudocode
+	\subsection{Detailed trace of Ogihara and Ray's algorithm}
 	
-Algorithm 3.2.1 provides pseudocode for Ogihara and Ray's algorithm.  Appendix B lists a detailed execution trace for Ogihara and Ray's algorithm.
-
-	
-	\input{./algorithms/ogiharaAlgorithm.tex}
-
-	
+Appendix B lists a detailed execution trace for Ogihara and Ray's algorithm.
 
 \section{Implementations of molecular {\sc Satisfiability} solvers}
 
-	In this section, we describe physical and simulated implementations for molecular {\sc Satisfiability} algorithms.  This includes simulation of Lipton's and Ogihara and Ray's algorithms.  We see a physical implementation of Ogihara and Ray's algorithm with manual laboratory procedures.
+We introduce existing implementations of molecular {\sc Satisfiability} solvers.  Physical implementations apply molecular biology techniques using real molecules.  Simulation frameworks use standard computation to simulate molecular biology techniques.
 
 	\subsection{Physical implementations}
 	
 %	<Paragraph> Describe laboratory 
 
-Yoshida and Suyama implemented Ogihara and Ray's algorithm with manual molecular biology techniques \cite{dnaBasedImplemetation_Yoshida2000}.  This experiment solved a 3-CNF instance with four variables and 10 clauses.
+Yoshida and Suyama implemented Ogihara and Ray's algorithm using manual molecular biology techniques \cite{dnaBasedImplemetation_Yoshida2000}.  This experiment solved a 3-CNF instance with four variables and 10 clauses.
 
+Braich et al. implemented a molecular computer to filter solutions for a 3-{\sc Sat} instance \cite{Braich02solutionof}.  This experiment solved a 3-CNF instance with 20 variables and 24 clauses.
 	
-	\subsection{Simulations}
+	\subsection{Simulation frameworks}
 
 %		<Paragraph> Describe computer simulation 
-Martín-Mateos et al. introduced a simulation for Lipton's algorithm \cite{MartinMateos02molecularcomputation}.   Molecular operations get implemented with ACL2, a Common Lisp variant.  The framework for this system implemented test cases for Lipton's algorithm.
+Martín-Mateos et al. introduced a simulation for Lipton's algorithm \cite{MartinMateos02molecularcomputation}.   Molecular operations get implemented in \texttt{ACL2}, a Common Lisp variant.  The framework for this system implemented test cases for Lipton's algorithm.
 
-Ogihara provides test results for implementation of his original molecular algorithm \cite{Ogihara:1996:BFS:898228}.  This simulation provides a comparison with Lipton's algorithm for practical length restrictions.
+Ogihara provides test results for implementation of his original molecular algorithm \cite{Ogihara:1996:BFS:898228}.  This simulation provides a comparison to Lipton's algorithm for practical length restrictions.

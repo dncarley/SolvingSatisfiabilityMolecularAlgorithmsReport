@@ -2,7 +2,7 @@
 
 %This chapter provides a a brief introduction to molecular computation.  
 
-Molecular computing uses parallel interactions between genetic molecules, such as DNA or RNA, to perform computational tasks.  We provide an experimental system for simulating three molecular algorithms.  In this chapter we discuss the process of solving a combinatorial problem with both standard or molecular models of computation.  This discussion includes an introduction to simulating molecular algorithms.  We conclude the chapter with the contents of this report.
+Molecular computation uses parallel interactions between genetic molecules, such as DNA or RNA, to perform computational tasks.  We provide an experimental system for simulating three molecular algorithms.  In this chapter we discuss the process of solving a combinatorial problem with both standard or molecular models of computation.  This discussion includes an introduction to simulating molecular algorithms.  We conclude the chapter with the contents of this report.
 %Finally, we provide an introduction to physical gene sequencing techniques for generalized molecular computation.  
 
 \section{Introduction to molecular computation}
@@ -11,11 +11,11 @@ Molecular computing uses parallel interactions between genetic molecules, such a
 %				<active sentence> <idea>:{Exp space in polynomial time}
 				%	A machine built with exponential space constructs configurations for a NP-complete problem instance in polynomial time.  In this project, we present a simulation system for solving {\sc Satisfiability} with molecular algorithms. 
 				
-\textsf{NP-complete} problems, such as {\sc Satisfiability}, may be verified in polynomial time with the aid of a short proof called a \textit{witness}; \textsf{NP-complete} problems may be solved by checking the state for all possible \textit{witness candidates}.  In a standard computing environment, brute force search can check all $2^n$ witness candidates in exponential time.
+\textsf{NP-complete} problems, such as {\sc Satisfiability}, may be verified in polynomial time with the aid of a short proof called a \textit{witness}; \textsf{NP-complete} problems may be solved by checking the state from all possible \textit{witness candidates}.  In a standard computation environment, brute force search can check all $2^n$ witness candidates in exponential time.
 
-Molecular computing requires exponential space to represent all witness candidates.  This combinatorial space of witness candidates can be filtered in polynomial time with parallel molecular operators.
+Molecular computation requires exponential space to represent all witness candidates.  This combinatorial space of witness candidates can be filtered in polynomial time with parallel molecular operators.
 
-Conjunctive normal form (CNF) can be used to represent {\sc Satisfiability} instances as a structured input format for Boolean formulas.  A CNF expression $\phi$ consists of a conjunctive set of $m$ Boolean disjunctive clauses.  The expression $\phi$ consists of $n$ independent Boolean variables.  We have, e.g.,
+Conjunctive normal form (CNF) can be used to represent {\sc Satisfiability} instances as a structured input format for Boolean formulas.  A CNF instance $\phi$ consists of a conjunctive set of $m$ Boolean disjunctive clauses.  The instance $\phi$ consists of $n$ independent Boolean variables.  We have, e.g.,
 \[
 \phi = C_1 \wedge C_2 \wedge \cdots \wedge C_m, 
 \]
@@ -24,7 +24,7 @@ where each clause $C_i$ contains $k$ disjunctive Boolean variables
 C_i = (v_1 \vee v_2 \vee \cdots \vee v_k).
 \]
 
-A potentially satisfying witness for a {\sc Satisfiability} instance is a Boolean assignment to the variables that make the formula true.  Such a witness can be represented as an $n$-bit Boolean vector.  Validating a witness candidate for a {\sc Satisfiability} instance may be verified in polynomial time with $\text{\sc CheckSat}(\phi, B)$ (Algorithm 1.1.1 below).  $\text{\sc CheckSat}(\phi, B)$ iterates over each of the clauses $C$ in the expression $\phi$.  The $test\_clause$ variable gets set to $False$, assuming that the clause cannot be satisfied.  If the clause can be satisfied with the input configuration $B$, then the algorithm continues.  If each of the $m$ clauses can be satisfied, then $\text{\sc CheckSat}(\phi, B)$ returns $True$; otherwise the algorithm returns $False$.
+A potentially satisfying witness for a {\sc Satisfiability} instance is a Boolean assignment to the variables that make the formula true.  Such a witness can be represented as an $n$-bit Boolean vector.  Validating a witness candidate for a {\sc Satisfiability} instance may be verified in polynomial time with $\text{\sc CheckSat}(\phi, B)$ (Algorithm 1.1.1 below).  $\text{\sc CheckSat}(\phi, B)$ iterates over each of the clauses $C$ in the CNF instance $\phi$.  The $test\_clause$ variable gets set to $False$, assuming that the clause cannot be satisfied.  If the clause can be satisfied with the input configuration $B$, then the algorithm continues.  If each of the $m$ clauses can be satisfied, then $\text{\sc CheckSat}(\phi, B)$ returns $True$; otherwise the algorithm returns $False$.
 
 \input{./algorithms/polyExpExample.tex}
 
@@ -52,9 +52,9 @@ We consider Lipton's algorithm in detail in Chapter 3.  However, the $\text{\sc 
 
 We consider three molecular algorithms for solving {\sc Satisfiability}: Lipton's algorithm \cite{Lipton95usingdna}, Ogihara and Ray's algorithm \cite{Ogihara:1996:BFS:898228, Ogihara97dna-basedparallel}, and a new algorithm, introduced here, that we call the `Distribution' algorithm.  Lipton's algorithm begins with a combinatorial space of all $n$-bit witness candidates and filters the combinatorial space so that only those that satisfy the input formula remain.  Ogihara and Ray's algorithm constructs a space of witness candidates with a heuristic search.  The Distribution algorithm expands a set of witnesses with non-conflicting variables from each clause.  Chapters 3 and 4 discuss the implementation of these algorithms.
 
-This project introduces a system for simulating three molecular algorithms for solving {\sc Satisfiability}.  The system provides standard operations for molecular computing that we introduce in Chapter 2.  It also records runtime metrics, including counts of molecular operators, solution memory footprints, and execution times.  These metrics let us analyze algorithmic performance of each molecular algorithm.
+This project introduces a system for simulating three molecular algorithms for solving {\sc Satisfiability}.  The system provides standard operations for molecular computation that we introduce in Chapter 2.  It also records runtime metrics, including counts of molecular operators, solution memory footprints, and execution times.  These metrics let us analyze algorithmic performance of each molecular algorithm.
 
-Molecular Simulation, the simulation system introduced in this project, automates execution of DIMACS CNF instances.  Simulation of each of the algorithms measures metrics for a set of randomly generated $3$-{\sc Sat} expressions.  The $3$-{\sc Sat} instances span discrete clause-variable ratios from 0.2 to 14.0 in increments of 0.2, creating a sweep of {\sc Satisfiability} instances.  This experimental setup generates {\sc Satisfiability} problem instances with both \texttt{SATISFIABLE} and \texttt{UNSATISFIABLE} configurations.
+Molecular Simulation, the simulation system introduced in this project, automates execution of DIMACS CNF instances.  Simulation of each of the algorithms measures metrics for a set of randomly generated $3$-{\sc Sat} instances.  The $3$-{\sc Sat} instances span discrete clause-variable ratios from 0.2 to 14.0 in increments of 0.2, creating a sweep of {\sc Satisfiability} instances.  This experimental setup generates {\sc Satisfiability} problem instances with both \texttt{SATISFIABLE} and \texttt{UNSATISFIABLE} configurations.
 %		<Paragraph> Introduce physical machine
 
 \section{Report Overview}

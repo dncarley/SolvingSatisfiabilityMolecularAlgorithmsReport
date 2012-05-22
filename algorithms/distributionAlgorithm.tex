@@ -1,32 +1,9 @@
-\begin{pseudocode}{Insert Variable}{T, v}
-	T_R \GETS \emptyset \\
-	\FOREACH \text{ string } s \text{ in } T \DO
-		\BEGIN
-			\CASE(1): v < s \THEN
-				s' \GETS \text{append}(v, s)\\
-			\CASE(2): v > s \THEN
-				s' \GETS \text{append}(s, v)\\
-			\CASE(3): s_1 < v < s_2 \THEN
-				\BEGIN
-				[s_1, s_2] \GETS \text{splice}(s, v)\\
-				s_1 \GETS \text{append}(s_1, v)\\
-				s' \GETS \text{append}(s_1, s_2)\\
-				\END \\
-			\CASE(4): \neg v \in s \THEN
-				s' \GETS \emptyset \\
-			\CASE(5): v \in s \THEN
-				s' \GETS s\\
-			T_R \GETS \text{mix}(T_R, s') \\
-		\END \\
-	\RETURN{T_R}
-\end{pseudocode}
 
-\begin{pseudocode}{Distribution Sat}{\phi}
+\begin{pseudocode}{Distribution Algorithm}{\phi}
 
 m \text{ number of clauses}\\
 k \text{ number of variables in each clause}\\
 \\
-
 \text{Initialize with the variables from the first clause}\\
 T \GETS \{ C_1 \} \\
 
@@ -43,5 +20,3 @@ T \GETS \{ C_1 \} \\
 \\
 \RETURN{detect(T)}
 \end{pseudocode}
-
-

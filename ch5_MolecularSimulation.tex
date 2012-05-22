@@ -2,7 +2,7 @@
 
 %	<Paragraph> Describe overview of chapter contents
 
-This chapter introduces Molecular Simulation: A system for molecular computation.  We provide an overview of the software and download location for Molecular Simulation and its documentation. We provide tools for use with Molecular Simulation.  This includes Perl execution scripts and visualization for output data.  We provide examples for Molecular Simulation's input and output.  Invocation of Molecular Simulation from the command line provides user configurable options.  The next chapter describes the usage of Molecular Simulation with automated execution.
+This chapter introduces Molecular Simulation: A system for molecular computation.  We provide an overview of the software and download location for Molecular Simulation and its documentation. We provide tools for use with Molecular Simulation.  This includes \texttt{Perl} execution scripts and visualization for output data.  We provide examples for Molecular Simulation's input and output.  Invocation of Molecular Simulation from the command line provides user configurable options.  The next chapter describes the usage of Molecular Simulation with automated execution.
 	
 	\section{Overview}
 	
@@ -45,7 +45,7 @@ This program is a simulated molecular lab for experimenting with DNA operations.
 %		<Paragraph> Describe external tools
 This project uses several tools for automating tasks and execution.  In this section, we introduce tools to automate execution and visualize output from Molecular Simulation.
 		
-		\subsection{Perl utilities}
+		\subsection{\texttt{Perl} utilities}
 		
 %			<Paragraph> Describe Perl utilities				
 			
@@ -58,12 +58,12 @@ The source directory includes several \texttt{Perl} scripts to assist in buildin
 \begin{tabular}{| l | l | p{5.7cm} |}
 \hline
 
-\textbf{Perl script} & \textbf{Usage} & \textbf{Description} \\ \hline 
+\textbf{\texttt{Perl} script} & \textbf{Usage} & \textbf{Description} \\ \hline 
 \texttt{build.pl} & \texttt{\$ perl build.pl} & Compiles Molecular Simulation and generates an executable in the directory \texttt{./execute/simulation}.\\ 
 & & \\
 \texttt{buildGenerate.pl} &\texttt{\$ perl buildGenerate.pl} &  Generates a sweep of CNF formulas over a range of $k$-{\sc Sat} ratios.  Program uses a modified random $k$-{\sc Sat} generator from Microsoft Research.\\ 
 & & \\
-\texttt{executeMolecularSat.pl} &\texttt{\$ perl executeMolecularSat.pl}  & Executes Molecular Simulation for a directory of {\sc Satisfiability} expressions with desired algorithms.  If no options are specified, then each of the three algorithms are executed and output is generated in the same test directory. \\ 
+\texttt{executeMolecularSat.pl} &\texttt{\$ perl executeMolecularSat.pl}  & Executes Molecular Simulation for a directory of {\sc Satisfiability} instances with desired algorithms.  If no options are specified, then each of the three algorithms are executed and output is generated in the same test directory. \\ 
 & & \\
 \texttt{runSimulation.pl} & \texttt{\$ perl runSimulation.pl} & Executes \texttt{build.pl} followed by \texttt{executeMolecularSat.pl}.  Any command line arguments get passed to \texttt{executeMolecularSat.pl}\\ \hline
 
@@ -157,8 +157,8 @@ Table \ref{outputTableDefiniton} describes an extended custom output.  This outp
 \texttt{c splitCount:}	&	Display the number of \texttt{splits} required during algorithm execution.\\ 
 \texttt{c spliceCount:}&	Display the number of \texttt{splices} required during algorithm execution.\\ 
 \texttt{c purifyCount:}&	Display the number of \texttt{purifications} required during algorithm execution.\\ 
-\texttt{c numVar:}	&	Display the number of \texttt{variables} in the input CNF expression.\\ 
-\texttt{c numClause:}	&	Display the number of \texttt{clauses} in the input CNF expression.\\ \hline
+\texttt{c numVar:}	&	Display the number of \texttt{variables} in the input CNF instance.\\ 
+\texttt{c numClause:}	&	Display the number of \texttt{clauses} in the input CNF instance.\\ \hline
 
 \end{tabular}
 \end{center}
@@ -214,4 +214,4 @@ Let us consider an example.  Suppose that we would like to execute Ogihara and R
 \]
 		
 %		<Paragraph> Describe next chapter
-In the next chapter, we will describe the automation for a random $k$-{\sc Sat} sweep with each of the algorithms.  The provided Perl scripts are the recommended method for building and execution of Molecular Simulation.
+In the next chapter, we will describe the automation for a random $k$-{\sc Sat} sweep with each of the algorithms.  The provided \texttt{Perl} scripts are the recommended method for building and execution of Molecular Simulation.

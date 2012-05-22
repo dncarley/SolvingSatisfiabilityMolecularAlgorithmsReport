@@ -2,7 +2,7 @@
 
 %<Paragraph> Overview of background
 
-This chapter provides a background on molecular computation techniques.  We begin with an introduction to nanotechnology and then provide an example of how information is encoded with molecular matter.  Following this example, we introduce Adleman's molecular operators for solving an instance of {\sc Hamiltonian Path}.  The operators provide an instruction set for molecular computation, and provide the primitives for constructing molecular algorithms.
+This chapter provides a background on molecular computation techniques.  We begin with an introduction to nanotechnology and then provide an example of how information is encoded using molecular matter.  Following this example, we introduce Adleman's molecular operators for solving an instance of {\sc Hamiltonian Path}.  The operators provide an instruction set for molecular computation, and provide the primitives for constructing molecular algorithms.
 
 In the second half of this chapter, we provide an introduction to {\sc Satisfiability}.  We define {\sc Satisfiability} as a circuit.  We then view {\sc Satisfiability} as a language.  We also discuss practical matters related to efficiently evaluating {\sc Satisfiability}, such as how to encode input and output, and how to classify instances of {\sc Satisfiability} in the tests that we perform.
 
@@ -20,12 +20,10 @@ Smaller and cost-effective DNA sequencers provide the ability to read the conten
 \section{On microbiology and computation}
 
 %	<Paragraph> Microbiology [studies] molecular life
-	
 	Microbiology studies the interactions among organic molecules.  In this project, we explore the use of applied genetics as a means for generalized computation.  Molecular computation encodes data as sequences of DNA or RNA.  
 
 %	<Paragraph> Each string [builds] structure from proteins
-	Arbitrary encodings that represent mappings from variables to physical oligonucleotides may have undesirable structure and functionality.  Conventional techniques for DNA computing employ variable mappings from a library of oligonucleotides.
-	%These strings avoid undesirable configurations, such as, self-complementary sequences that form hairpins \cite{dnaComputingModels2008}.
+	Arbitrary encodings that represent mappings from variables to physical oligonucleotides may have undesirable structure and functionality.  Conventional techniques from molecular computation employ variable mappings from a library of oligonucleotides.
 	
 %	<Paragraph> Genetic alphabet [defines] life
 		
@@ -86,7 +84,7 @@ Given an undirected graph $G$, does there exist a path that visits every vertex 
 %
 
 
-Adleman uses oligonucleotides for defining each vertex for encoding a graph.  His scheme for encoding a graph's vertices shares a similar definition for our example of encoding a sequence of integers, given in Table \ref{integer2OligoTable}.  Representing edges requires a reverse-complement oligonucleotide, this string connects the suffix of the vertex $v_i$ with the prefix of $v_j$.  Let us consider an example.  Let
+Adleman uses oligonucleotides for defining each vertex for encoding a graph.  His scheme for encoding a graph's vertices shares a similar definition from our example of encoding a sequence of integers, given in Table \ref{integer2OligoTable}.  Representing edges requires a reverse-complement oligonucleotide, this string connects the suffix of the vertex $v_i$ with the prefix of $v_j$.  Let us consider an example.  Let
 \begin{align*}
  v_1 &= 5'\texttt{ATCTTT}3' \\
  v_2 &= 5'\texttt{CCTATA}3'.
@@ -121,7 +119,7 @@ The sequence $v_1 \cdot v_2$ represents the path $v_1$ to $v_2$, and can be obta
 $ T \leftarrow \text{mix}( T_1, \ldots , T_n)$ --- combine $n$ test tubes of information.  The output consists of a single set $T = T_1 \cup \cdots \cup T_n$.
 \end{definition}
 
-A small initial set may be amplified with \textit{polymerase chain reaction} (PCR).  PCR thermocycles the contents of the tube to replicate the contents.  Introducing each vertex representation to the contents randomly generates all potential paths.  A set of DNA configurations are generated to represent the set of all witness candidates for Hamiltonian Paths in a graph instance.  This set of DNA configurations will be filtered to only include configurations that witness Hamiltonian Paths in $G$.
+A small initial set may be amplified using \textit{polymerase chain reaction} (PCR).  PCR thermocycles the contents of the tube to replicate the contents.  Introducing each vertex representation to the contents randomly generates all potential paths.  A set of DNA configurations are generated to represent the set of all witness candidates for Hamiltonian Paths in a graph instance.  This set of DNA configurations will be filtered to only include configurations that witness Hamiltonian Paths in $G$.
 
 \textit{Append} attaches a string to each string contained in a test tube.  \textit{Split} portions a tube into multiple portions.  In Chapter 3, we will use split-mix synthesis as a means for generating a combinatorial space.
 %A possible path is created by randomly appending sequences to create a uniform statistical distribution of all paths.  
@@ -143,9 +141,9 @@ The initial and terminal conditions for the graph get fulfilled by extracting, f
 $ T' \leftarrow \text{extract}( T, s)$ --- separates all oligonucleotides from $T$ containing the sequence $s$.  The output consists of a set $T'$ of those oligonucleotides containing $s$.
 \end{definition}
 
-The tube $T$ consists of possible encodings that have the correct starting and ending vertices. We select only strings of length $n$, where $n$ is the number of vertices in $G$, to ensure that all vertices get traversed.  This can be performed with \textit{gel electrophoresis}, a technique for sorting molecules by mass.  Next, we ensure that each vertex occurs exactly once.  If a vertex occurs multiple times in a path, then the string representation gets discarded.
+The tube $T$ consists of possible encodings that have the correct starting and ending vertices. We select only strings of length $n$, where $n$ is the number of vertices in $G$, to ensure that all vertices get traversed.  This can be performed using \textit{gel electrophoresis}, a technique for sorting molecules by mass.  Next, we ensure that each vertex occurs exactly once.  If a vertex occurs multiple times in a path, then the string representation gets discarded.
 
-Finally, we check $T$ with \textit{detect} to determine if any valid paths remain.  If valid paths exist, then each string may be read for the path assignment.
+Finally, we check $T$ using \textit{detect} to determine if any valid paths remain.  If valid paths exist, then each string may be read for the path assignment.
 
 \begin{definition}
 \textit{Detect}\\
@@ -191,7 +189,7 @@ Cook and Levin independently introduced the canonical instance of a \textsf{NP-c
 
 %	<Paragraph>	Define {\sc Satisfiability} with circuit 
 
-Evaluation of a {\sc Satisfiability} instance requires validating a witness candidate with the instance definition.  We introduce {\sc Satisfiability} evaluation with a circuit.  Let us consider a three-layered circuit for {\sc Satisfiability}.  This circuit consists of $n$ inverters, $m$ \textbf{OR} gates, and one \textbf{AND} gate with $m$-fan-in.  This circuit behaves according to the internal wiring of the input expression $\phi$. Figure \ref{blackBoxSat} contains a schematic for {\sc Satisfiability}.	
+Evaluation of a {\sc Satisfiability} instance requires validating a witness candidate with the instance definition.  We introduce {\sc Satisfiability} evaluation with a circuit.  Let us consider a three-layered circuit for {\sc Satisfiability}.  This circuit consists of $n$ inverters, $m$ \textbf{OR} gates, and one \textbf{AND} gate with $m$-fan-in.  This circuit behaves according to the internal wiring of the input CNF instance $\phi$. Figure \ref{blackBoxSat} contains a schematic for {\sc Satisfiability}.	
 
 %	<Figure>	Circuit description
 \begin{figure}[htbp]
@@ -216,7 +214,7 @@ Conjunctive Normal Form consists of the intersection of sets of disjunctive lite
 
 \begin{definition}
 $k$-CNF\\
-Consists of a CNF expression with each disjunctive clause containing $k$ literals.
+Consists of a CNF instance with each disjunctive clause containing $k$ literals.
 \end{definition}
 
 \begin{definition}
@@ -259,13 +257,13 @@ DIMACS CNF provides a standard input for {\sc Satisfiability} \cite{dimacsFormat
 	\subsection{Metrics for classifying {\sc Satisfiability}}
 
 %		<Paragraph> Describe metrics
-{\sc Sat} phase transition and {\sc Sat} backbones are two classifying metrics for {\sc Satisfiability}.  These metrics may be used to classify {\sc Satisfiability} expressions.  We will use these metrics in the next section for defining a collection of random $k$-{\sc Sat} instances.
+{\sc Sat} phase transition and {\sc Sat} backbones are two classifying metrics for {\sc Satisfiability}.  These metrics may be used to classify {\sc Satisfiability} instances.  We will use these metrics in the next section for defining a collection of random $k$-{\sc Sat} instances.
 		
 %		<Paragraph> {\sc Sat} phase transition
 
 \begin{definition}
 {\sc Sat} phase transition\\
-The ratio of $m$ clauses to $n$ variables $\alpha = m/n$ provides a characterization for where phase transitions may occur in the space of all $k$-CNF formula \cite{Doherty08thehandbook,Gent94thesat}.
+The ratio of $m$ clauses to $n$ variables $\alpha = m/n$ provides a characterization where phase transitions may occur in the space of all $k$-CNF formula \cite{Doherty08thehandbook,Gent94thesat}.
 \end{definition}
 
 The {\sc Sat} phase transition is a region where both satisfiable and unsatisfiable instances are likely.  This region separates trivially satisfiable and over-constrained unsatisfiable {\sc Satisfiable} problem instances.  
@@ -277,12 +275,12 @@ The {\sc Sat} phase transition is a region where both satisfiable and unsatisfia
 
 \end{definition}
 
-{\sc Sat} backbones contain a set of variables that occur in all satisfiable witnesses for an input expression.  If there are no such variables in the set of all witnesses for a problem instance, then the set is empty.
+{\sc Sat} backbones contain a set of variables that occur in all satisfiable witnesses for an input instance.  If there are no such variables in the set of all witnesses for a problem instance, then the set is empty.
 
 	\subsection{{\sc Satisfiability} instances}
 		
 %		<Paragraph> Various methods for [constructing] {\sc Satisfiability} instances
-There are several methods for generating {\sc Satisfiability} instances.  We consider three classes of {\sc Satisfiability} based on random assignment, combinatorial, and industrial applications.
+There are several methods for generating {\sc Satisfiability} instances.  We consider three classes of {\sc Satisfiability} instances \cite{satcompetition}: random assignment, combinatorial problems, and industrial applications.
 	
 \subsubsection{Random $k$-{\sc Sat}}
 %		<Paragraph> {\sc Satisfiability} instance [generated] from random assignment
@@ -295,9 +293,9 @@ A random $k$-{\sc Sat} instance consists of $m$ clauses with $k$ literals per-cl
 
 \subsubsection{Hard combinatorial {\sc Sat}}
 
-Combinatorial instances provide difficult benchmark cases.  These instances represent other \textsf{NP-complete} problems.  Including games and graph theoretic problems represented as {\sc Satisfiability}. 
+Combinatorial problem instances provide difficult benchmark cases.  These instances include games and graph theoretic problems represented as {\sc Satisfiability}. 
 		
 %		<Paragraph> {\sc Satisfiability} instance [applied] from real world problems
 \subsubsection{Industrial {\sc Sat} applications}
 
-Industrial processes apply {\sc Satisfiability} to solve real world problems, including circuit layout, planning, logistics, circuit fault testing, and many other industrial \textsf{NP-complete} problems.  Applications for industrial {\sc Sat} will often apply heuristics and approximation techniques to relax the problem.  This allows approximate solutions to be computed in an efficient amount of time.
+Industrial processes apply {\sc Satisfiability} to solve real world problems, including circuit layout, planning, logistics, circuit fault testing, and many other industrial \textsf{NP-complete} problems.  Industrial {\sc Sat} applications often apply heuristics and approximation techniques to relax the problem.  This allows approximate solutions to be computed in an efficient amount of time.
