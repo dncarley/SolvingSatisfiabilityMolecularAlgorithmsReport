@@ -1,17 +1,26 @@
 
-\begin{pseudocode}{Combinatorial Generate}{n}
-	T_{comb} \GETS \emptyset \\
-	T_{comb} \GETS \text{mix(}T_{comb}, start\text{)} \\ 
 
-	\FOR v \GETS 1 \text{ to } n \DO
-		\BEGIN
-		
-		[T_1,T_2] \GETS \text{split(} T_{comb}\text{)}\\
-		T_1 \GETS \text{append(}T_1, +v \text{)}\\
-		T_2 \GETS \text{append(}T_2, -v \text{)}\\
-		T_{comb} \GETS \text{mix(}T_1,T_2\text{)}\\
-	\END
-	\\
-	\RETURN {T_{comb}}
-\end{pseudocode}
 
+\begin{figure}[htbp]
+\begin{center}
+
+	\begin{pseudocode}{Combinatorial Generate}{n}
+		T_{comb} \GETS \emptyset \\
+		T_{comb} \GETS \text{mix(}T_{comb}, start\text{)} \\ 
+	
+		\FOR v \GETS 1 \text{ to } n \DO
+			\BEGIN
+			
+			[T_1,T_2] \GETS \text{split(} T_{comb}\text{)}\\
+			T_1 \GETS \text{append(}T_1, +v \text{)}\\
+			T_2 \GETS \text{append(}T_2, -v \text{)}\\
+			T_{comb} \GETS \text{mix(}T_1,T_2\text{)}\\
+		\END
+		\\
+		\RETURN {T_{comb}}
+	\end{pseudocode}
+
+\caption{{\sc Combinatorial Generate} constructs a combinatorial space consisting of $2^n$ molecular configurations in polynomial time.}
+\label{combinatorialGenerate}
+\end{center}
+\end{figure}

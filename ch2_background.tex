@@ -10,7 +10,7 @@ In the second half of this chapter, we provide an introduction to {\sc Satisfiab
 
 %		<Paragraph> Richard Feynman [introduces] nanotechnology
 		
-	Richard Feynman founded the field of nanotechnology in his 1959 talk `There's Plenty of Room at the Bottom' \cite{feynman1959}.  Examples of applied nanotechnology include the manufacturing of graphene \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006} and DNA nanopores \cite{dnaTransistorIBMpressrelease}. Graphene consists of a planer arrangement of carbon atoms that provides desirable physical and electrical properties \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006}.  DNA nanopores use graphene to create a physical channel for reading genetic sequences \cite{Garaj2010}.  Gene sequencing technologies provide an example of applied nanotechnology \cite{Garaj2010, ionTorrent, oxfordNanopore}.  					
+	Richard Feynman founded the field of nanotechnology in his 1959 talk ``There's Plenty of Room at the Bottom'' \cite{feynman1959}.  Examples of applied nanotechnology include the manufacturing of graphene \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006} and DNA nanopores \cite{dnaTransistorIBMpressrelease}. Graphene consists of a planer arrangement of carbon atoms that provides desirable physical and electrical properties \cite{Stankovich_Dikin_Dommett_Kohlhaas_Zimney_Stach_Piner_Nguyen_Ruoff_2006}.  DNA nanopores use graphene to create a physical channel for reading genetic sequences \cite{Garaj2010}.  Gene sequencing technologies provide an example of applied nanotechnology \cite{Garaj2010, ionTorrent, oxfordNanopore}.  					
 			%The work has driven the fields of molecular and quantum computation, VLSI circuit construction, and continues with innovative design and applications into many everyday processes.
 		
 %		<Paragraph> DNA substrate [builds] molecular definition
@@ -35,7 +35,7 @@ Smaller and cost-effective DNA sequencers provide the ability to read the conten
 
 
 \begin{table}[htdp]
-\caption{A mapping of the integers $[0,5]$ with arbitrary oligonucleotide definitions.}
+\caption{A mapping of the integers $[0,4]$ with arbitrary oligonucleotide definitions.}
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
@@ -44,27 +44,20 @@ Smaller and cost-effective DNA sequencers provide the ability to read the conten
 1 & $5'$\texttt{AAACCC}$3'$ & $3'$\texttt{TTTGGG}$5'$ \\
 2 & $5'$\texttt{GGTAAA}$3'$ & $3'$\texttt{CCATTT}$5'$ \\
 3 & $5'$\texttt{CCCTCC}$3'$ & $3'$\texttt{GGGAGG}$5'$ \\
-4 & $5'$\texttt{CTTTTC}$3'$ & $3'$\texttt{GAAAAG}$5'$ \\
-5 & $5'$\texttt{CCTTCC}$3'$ & $3'$\texttt{GGAAGG}$5'$ \\ \hline
+4 & $5'$\texttt{CTTTTC}$3'$ & $3'$\texttt{GAAAAG}$5'$ \\ \hline
 \end{tabular}
 \end{center}
 \label{integer2OligoTable}
 \end{table}%
 
-Suppose that we would like to encode the sequence of integers $S$ as an equivalent oligonucleotide representation $O_1$.  Representing an integer sequence requires a systematic mapping of an oligonucleotide entry with an integer counterpart.  A fixed width representation map independent sequences on a readable boundary.  Now we explore an example for encoding an integer sequence with a sequence of oligonucleotides with the definitions in Table \ref{integer2OligoTable}.
+Suppose that we would like to encode the sequence of integers $S = [1, 3, 4, 3, 2, 0]$ as an equivalent oligonucleotide representation with the definitions in Table \ref{integer2OligoTable}.  Gene sequencing tools permit one to read and decode data according to Table \ref{integer2OligoTable}.  The resulting oligonucleotide $O$ is defined
 
-We have, e.g., 
 \[
-S = [1, 3, 4, 3, 2, 0]
+O = 5'\texttt{AAACCC}\mid \texttt{CCCTCC}\mid \texttt{CTTTTC}\mid \texttt{CCCTCC}\mid \texttt{GGTAAA}\mid \texttt{TCTCCC}3'.
 \]
-and 
-\[
-O_1 = 5'\texttt{AAACCC}\mid \texttt{CCCTCC}\mid \texttt{CTTTTC}\mid \texttt{CCCTCC}\mid \texttt{GGTAAA}\mid \texttt{TCTCCC}3'.
-\]
-Recovering the sequence $S$ from $O_1$ can be done several ways.  Because the definition of the sequence exists, we may use the reverse complement to match sequences.  Another method splits the sequence $O_1$ on the encoding width.  In this case, the encoding width is six base pairs.  Gene sequencing tools permit one to read and decode data according to Table \ref{integer2OligoTable}.
 
 %	<Paragraph> Interactions of molecules [performs] computation
-Molecular computation encodes genetic information for both storing and operating on a problem state.  These operations include matching and replication.  Although this setting describes and artificial processes, DNA in natural settings also share the same mechanics that we exploit here.  Interactions between genetic molecules are the fundamental mechanism for generic computation with oligonucleotides.
+Molecular computation uses oligonucleotides for both storing and operating on a problem state.  These operations include matching and replication.  Although this setting describes artificial processes, DNA in natural settings undergoes the same transformations that we exploit here.  Interactions between genetic molecules are the fundamental mechanism for generic computation with oligonucleotides.
 	
 %	<Paragraph> Satisfiability [permits] universal computation
 In the following chapters, we describe molecular algorithms for {\sc Satisfiability}.  In the next section, we introduce techniques from Adleman's molecular toolbox \cite{Adleman:1994:MCS:189441.189442}.
@@ -78,13 +71,9 @@ In 1994, Leonard Adleman performed the first molecular computation using recombi
 \begin{definition}
 {\sc Hamiltonian Path} \\
 Given an undirected graph $G$, does there exist a path that visits every vertex exactly once?
-
 \end{definition}
 
-%
-
-
-Adleman uses oligonucleotides for defining each vertex for encoding a graph.  His scheme for encoding a graph's vertices shares a similar definition from our example of encoding a sequence of integers, given in Table \ref{integer2OligoTable}.  Representing edges requires a reverse-complement oligonucleotide, this string connects the suffix of the vertex $v_i$ with the prefix of $v_j$.  Let us consider an example.  Let
+Adleman uses oligonucleotides for defining each vertex for encoding a graph.  His scheme for encoding a graph's vertices shares a similar definition from our example of encoding a sequence of integers, given in Table \ref{integer2OligoTable}.  Representing edges requires a reverse-complement oligonucleotide, which connects the suffix of the vertex $v_i$ with the prefix of $v_j$.  Let us consider an example.  Let
 \begin{align*}
  v_1 &= 5'\texttt{ATCTTT}3' \\
  v_2 &= 5'\texttt{CCTATA}3'.
@@ -112,7 +101,7 @@ e_{1,2} = 3'\texttt{AAAGGA}5'.
 v_1 \cdot v_2 = 5'\texttt{ATCTTT}|\texttt{CCTATA}3'.
 \]
 
-The sequence $v_1 \cdot v_2$ represents the path $v_1$ to $v_2$, and can be obtained with the \textit{append} operation.  A test tube $T$ stores possible solutions.  The tube $T$ starts as an empty tube.  To solve {\sc Hamitonian Path}, we introduce equimolar portions of each oligonucleotide vertex for a starting configuration, using the \textit{mix} operation.
+The sequence $v_1 \cdot v_2$ represents the path $v_1$ to $v_2$, and can be obtained with the \textit{append} operation.  A test tube $T$ stores witness candidates.  The tube $T$ starts as an empty tube.  To solve {\sc Hamitonian Path}, we introduce equimolar portions of each oligonucleotide vertex for a starting configuration, using the \textit{mix} operation.
 
 \begin{definition}
 \textit{Mix}\\
@@ -131,7 +120,7 @@ $T' \leftarrow \text{append}( T, s)$ --- the concatenation of the oligonucleotid
 
 \begin{definition}
 \textit{Split}\\
-$[T', T''] \leftarrow \text{split}( T)$ --- distributes $T$ into two tubes.  Each of the resulting tubes, $T'$ and $T''$,  contain the same representative elements of $T$.
+$[T', T''] \leftarrow \text{split}( T)$ --- portions $T$ into two tubes.  Each of the resulting tubes, $T'$ and $T''$,  contain the same representative elements of $T$.
 \end{definition}
 
 The initial and terminal conditions for the graph get fulfilled by extracting, from the tube $T$, only paths that begin with $V_{in}$ and end with $V_{out}$.  Extracting only strings from $T$ that match these conditions constrain the number of potential strings to only those that satisfy the conditions of the graph instance.
@@ -141,9 +130,11 @@ The initial and terminal conditions for the graph get fulfilled by extracting, f
 $ T' \leftarrow \text{extract}( T, s)$ --- separates all oligonucleotides from $T$ containing the sequence $s$.  The output consists of a set $T'$ of those oligonucleotides containing $s$.
 \end{definition}
 
-The tube $T$ consists of possible encodings that have the correct starting and ending vertices. We select only strings of length $n$, where $n$ is the number of vertices in $G$, to ensure that all vertices get traversed.  This can be performed using \textit{gel electrophoresis}, a technique for sorting molecules by mass.  Next, we ensure that each vertex occurs exactly once.  If a vertex occurs multiple times in a path, then the string representation gets discarded.
+The tube $T$ consists of possible encodings that have the correct starting and ending vertices. We select only strings of length $n$, where $n$ is the number of vertices in $G$, to ensure that all vertices get traversed.  This can be performed using \textit{gel electrophoresis}, a technique for sorting molecules by mass.
 
-Finally, we check $T$ using \textit{detect} to determine if any valid paths remain.  If valid paths exist, then each string may be read for the path assignment.
+Next, we ensure that each vertex occurs exactly once.  If a vertex occurs multiple times in a path, then the string representation gets discarded.  This process ensures each vertex corresponds to a potential Hamiltonian Path.
+
+Once all of the vertices have been filtered, we check $T$ using \textit{detect} to determine if any valid paths remain.  If valid paths exist, then the oligonucleotide from $T$ may be read for the path assignment.
 
 \begin{definition}
 \textit{Detect}\\
@@ -155,7 +146,7 @@ $ \text{detect}( T)$ --- determine if any encodings are present in $T$.  The out
 In the following chapters, we will use the molecular operators for constructing molecular {\sc Satisfiability} solvers.  The Distribution algorithm, introduced in Chapter 4, requires the \textit{splice} operation.
 \begin{definition}
 \textit{Splice}\\
-$[a_1, a_2] \leftarrow \text{splice}(a, b)$ --- cuts an oligonucleotide $a = a_1 \cdot \overline{b} \cdot a_2$ with a subsequence $b$ into two pieces by a restriction enzyme.  These two pieces are $a_1$ and $a_2$.
+$[a_1, a_2] \leftarrow \text{splice}(a, b)$ --- cuts an oligonucleotide $a = a_1 \cdot b \cdot a_2$ with a subsequence $b$ into two pieces by a restriction enzyme.    These two pieces are $a_1$ and $a_2$.
 \end{definition}
 
 In the implementation of a simulation system, we avoid redundant string representations with the \textit{purify} operation.  This is a synthetic version of PCR.  Purify balances the space representation of molecules with a uniform distribution.
@@ -185,11 +176,11 @@ $T' \leftarrow \text{purify}(T)$ --- provides a uniform distribution from the co
 \]	
 \end{definition}
 
-Cook and Levin independently introduced the canonical instance of a \textsf{NP-complete} language {\sc Satisfiability} \cite{Cook:1971:CTP:800157.805047, levin1973}.  A \textsf{NP-complete} language is one that is in \textsf{NP} and \textsf{NP-hard}.  A \textsf{NP-hard} language is at least as hard as any problem in \textsf{NP}.
+Cook and Levin independently introduced the canonical instance of an \textsf{NP-complete} language {\sc Satisfiability} \cite{Cook:1971:CTP:800157.805047, levin1973}.  An \textsf{NP-complete} language is one that is in \textsf{NP} and \textsf{NP-hard}.  An \textsf{NP-hard} language is a decision problem that can be polynomial time reduced from any \textsf{NP} language \cite{sipser06}.  An \textsf{NP-hard} problem instance includes the {\sc Halting Problem} \cite{sipser06}, which determines if any program can terminate.  Witnesses for {\sc Satisfiability} can be expressed in a polynomial on the input $\phi$.  The output for {\sc Satisfiability} consists of either all witnesses or a single witness if the problem instance is satisfiable; otherwise the problem instance is unsatisfiable. 
 
 %	<Paragraph>	Define {\sc Satisfiability} with circuit 
 
-Evaluation of a {\sc Satisfiability} instance requires validating a witness candidate with the instance definition.  We introduce {\sc Satisfiability} evaluation with a circuit.  Let us consider a three-layered circuit for {\sc Satisfiability}.  This circuit consists of $n$ inverters, $m$ \textbf{OR} gates, and one \textbf{AND} gate with $m$-fan-in.  This circuit behaves according to the internal wiring of the input CNF instance $\phi$. Figure \ref{blackBoxSat} contains a schematic for {\sc Satisfiability}.	
+Validation of a {\sc Satisfiability} instance can use a witness candidate on a circuit.  Let us consider a circuit for {\sc Satisfiability} with three levels.  This circuit consists of $n$ inverters, $m$ \textbf{OR} gates, and one \textbf{AND} gate with $m$-fan-in.  This circuit behaves according to the internal wiring of the input CNF instance $\phi$. Figure \ref{blackBoxSat} contains a schematic for {\sc Satisfiability}.	
 
 %	<Figure>	Circuit description
 \begin{figure}[htbp]
@@ -205,7 +196,7 @@ Evaluation of a {\sc Satisfiability} instance requires validating a witness cand
 \FloatBarrier
 
 %	<Paragraph> Provide complexity of {\sc Satisfiability}
-The realization of {\sc Satisfiability} as a circuit shows two aspects of this problem.  {\sc Satisfiability} can be implemented as a circuit proportional to the input.  The worst case verification for all $2^n$ possible witness candidates may be verified with the circuit in Figure \ref{blackBoxSat}.  This circuit consists of the hardware equivalent version of the {\sc Satisfiability} validator {\sc CheckSat}, as shown in Chapter 1.  Subproblems of {\sc Satisfiability} include CNF, $k$-CNF, and $k$-{\sc Sat} problem definitions.
+The realization of {\sc Satisfiability} as a circuit shows two aspects of this problem.  {\sc Satisfiability} can be implemented as a circuit with the number of gates proportional to the problem size.  The worst case verification for all $2^n$ possible witness candidates may be performed with the circuit in Figure \ref{blackBoxSat}.  This circuit consists of the hardware equivalent version of the {\sc Satisfiability} validator {\sc CheckSat}, as shown in Chapter 1.  Subproblems of {\sc Satisfiability} include CNF, $k$-CNF, and $k$-{\sc Sat} problem definitions.
 
 \begin{definition}
 CNF\\
@@ -221,25 +212,21 @@ Consists of a CNF instance with each disjunctive clause containing $k$ literals.
 $k$-{\sc Sat}\\
 Problem variant of {\sc Satisfiability} where each clause consists of $k$ Boolean literals.  $k$-CNF formula provide an equivalent representation.
 \end{definition}
-
-%	<Paragraph> Motivate practical input and classifying metrics 
-
-The next section considers standards adopted for {\sc Satisfiability}.  This allows practitioners to apply {\sc Satisfiability} in various settings.  
 	
 \section{Evaluating {\sc Sat} Solvers}
 
 %	<Paragraph> Overview of evaluation
 	
-	In this section, we describe two standards for encoding the {\sc Satisfiability} problem that we adopt for the implementation.  This includes the input and output standards from the {\sc Satisfiability} Competition \cite{dimacsFormat, satcompetition}.  
+	In this section, we describe two standards for encoding the {\sc Satisfiability} problem that we adopt.  This includes the input and output from the {\sc Satisfiability} Competition \cite{dimacsFormat, satcompetition}.  
 	
-	Next, we introduce problem instance classification scheme for {\sc Satisfiability}.  Classification of {\sc Satisfiability} problem instances include randomly generated, combinatorial, and industrial \cite{satcompetition}.  Our experimental setup in Chapter 6 considers generation of random $k$-{\sc Sat} input.
+	Next, we introduce a problem instance classification scheme for {\sc Satisfiability}.  Classification of {\sc Satisfiability} problem instances include random, combinatorial, and industrial {\sc Sat} instances \cite{satcompetition}.  Our experiment in Chapter 6 generates random $k$-{\sc Sat} inputs.
 
 	\subsection{Input and output}
 	
 %		<Paragraph> {\sc Satisfiability} standards [provide] common interface
 	
 %  Conforming to standards allows datasets and common interfaces to be shared.  
- The {\sc Sat} Competition ranks implementations for {\sc Sat} solvers for evaluating {\sc Satisfiability} \cite{satcompetition}.  {\sc Sat} solvers demonstrate state-of-the-art techniques for solving three main tracks of {\sc Satisfiability} instances.  The tracks exhibit applications for {\sc Satisfiability}, including: industrial applications, hard combinatorial, and random problem instances.  The input and output standards for {\sc Satisfiability} allow common benchmarks for {\sc Sat} solvers.  We conform to the standards of this competition \url{http://www.satcompetition.org/}.  
+ The {\sc Sat} Competition ranks implementations of solvers for evaluating {\sc Satisfiability} \cite{satcompetition}.  {\sc Sat} solvers are evaluated on three categories of input: industrial, combinatorial, and random instances.  The input and output standards for {\sc Satisfiability} allow common benchmarks for {\sc Sat} solvers.  We conform to the standards of this competition \url{http://www.satcompetition.org/}.  
  
 
 	
@@ -252,12 +239,12 @@ DIMACS CNF provides a standard input for {\sc Satisfiability} \cite{dimacsFormat
 		
 %			<Paragraph> Sat Competition output [provides] standard output
 
-{\sc Sat} Competition output consists of the status for a DIMACS CNF input instance \cite{satcompetition}.  This includes the known state, either \texttt{SATISFIABLE}, \texttt{UNSATISFIABLE}, or \texttt{UNKNOWN}.  When a witnessing satisfying assignment occurs, the assignment is provided as a list of integers with the \texttt{SATISFIABLE} state.  We provide an example along with a custom interface in Section \ref{outputSection}.
+{\sc Sat} Competition output consists of the status of a DIMACS CNF input instance \cite{satcompetition}.  The status is provided for the instance as either \texttt{SATISFIABLE}, \texttt{UNSATISFIABLE}, or \texttt{UNKNOWN}.  If an instance can be determined as satisfiable, then a witness satisfying the instance gets included with the output status.  We provide an example along with custom output logging in Section \ref{outputSection}.
 	
 	\subsection{Metrics for classifying {\sc Satisfiability}}
 
 %		<Paragraph> Describe metrics
-{\sc Sat} phase transition and {\sc Sat} backbones are two classifying metrics for {\sc Satisfiability}.  These metrics may be used to classify {\sc Satisfiability} instances.  We will use these metrics in the next section for defining a collection of random $k$-{\sc Sat} instances.
+{\sc Sat} phase transition and {\sc Sat} backbones are two metrics for classifying {\sc Satisfiability}.  We will use these metrics in the next section for defining a collection of random $k$-{\sc Sat} instances.
 		
 %		<Paragraph> {\sc Sat} phase transition
 
@@ -266,12 +253,12 @@ DIMACS CNF provides a standard input for {\sc Satisfiability} \cite{dimacsFormat
 The ratio of $m$ clauses to $n$ variables $\alpha = m/n$ provides a characterization where phase transitions may occur in the space of all $k$-CNF formula \cite{Doherty08thehandbook,Gent94thesat}.
 \end{definition}
 
-The {\sc Sat} phase transition is a region where both satisfiable and unsatisfiable instances are likely.  This region separates trivially satisfiable and over-constrained unsatisfiable {\sc Satisfiable} problem instances.  
+The {\sc Sat} phase transition is a region where both satisfiable and unsatisfiable instances are likely \cite{Gent94thesat}.  This region separates trivially satisfiable and over-constrained unsatisfiable {\sc Satisfiable} problem instances.  {\sc Satisfiability} instances with low $\alpha$ are under-constrained and trivially satisfiable; those instances with high $\alpha$ are over-constrained and trivially unsatisfiable \cite{Gent94thesat}.
 		
 %		<Paragraph> {\sc Sat} backbones
 \begin{definition}
 {\sc Sat} backbones\\
-{\sc Sat} backbones are the variable assignments present in all of the satisfying assignments to {\sc Satisfiability} problem instances \cite{Zhang2001}. 
+{\sc Sat} backbones are the variable assignments present in all of the satisfying assignments to a {\sc Satisfiability} problem instance \cite{Zhang2001}. 
 
 \end{definition}
 
@@ -282,7 +269,7 @@ The {\sc Sat} phase transition is a region where both satisfiable and unsatisfia
 %		<Paragraph> Various methods for [constructing] {\sc Satisfiability} instances
 There are several methods for generating {\sc Satisfiability} instances.  We consider three classes of {\sc Satisfiability} instances \cite{satcompetition}: random assignment, combinatorial problems, and industrial applications.
 	
-\subsubsection{Random $k$-{\sc Sat}}
+\subsubsection{Random {\sc Sat}}
 %		<Paragraph> {\sc Satisfiability} instance [generated] from random assignment
 A random $k$-{\sc Sat} instance consists of $m$ clauses with $k$ literals per-clause from $n$ variables \cite{wilsonKsat}.  An instance is drawn uniformly over the set of variables without replacement.
 
@@ -296,6 +283,6 @@ A random $k$-{\sc Sat} instance consists of $m$ clauses with $k$ literals per-cl
 Combinatorial problem instances provide difficult benchmark cases.  These instances include games and graph theoretic problems represented as {\sc Satisfiability}. 
 		
 %		<Paragraph> {\sc Satisfiability} instance [applied] from real world problems
-\subsubsection{Industrial {\sc Sat} applications}
+\subsubsection{Industrial {\sc Sat}}
 
 Industrial processes apply {\sc Satisfiability} to solve real world problems, including circuit layout, planning, logistics, circuit fault testing, and many other industrial \textsf{NP-complete} problems.  Industrial {\sc Sat} applications often apply heuristics and approximation techniques to relax the problem.  This allows approximate solutions to be computed in an efficient amount of time.

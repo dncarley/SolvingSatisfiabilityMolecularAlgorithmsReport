@@ -1,22 +1,33 @@
-\begin{pseudocode}{Insert Variable}{T, v}
-	T_R \GETS \emptyset \\
-	\FOREACH \text{ string } s \text{ in } T \DO
-		\BEGIN
-			\CASE(1): v < s \THEN
-				s' \GETS \text{append}(v, s)\\
-			\CASE(2): v > s \THEN
-				s' \GETS \text{append}(s, v)\\
-			\CASE(3): s_1 < v < s_2 \THEN
-				\BEGIN
-				[s_1, s_2] \GETS \text{splice}(s, v)\\
-				s_1 \GETS \text{append}(s_1, v)\\
-				s' \GETS \text{append}(s_1, s_2)\\
-				\END \\
-			\CASE(4): \neg v \in s \THEN
-				s' \GETS \emptyset \\
-			\CASE(5): v \in s \THEN
-				s' \GETS s\\
-			T_R \GETS \text{mix}(T_R, s') \\
-		\END \\
-	\RETURN{T_R}
-\end{pseudocode}
+
+
+\begin{figure}[htbp]
+\begin{center}
+
+	\begin{pseudocode}{Insert Variable}{T, v}
+		T_R \GETS \emptyset \\
+		\FOREACH \text{ string } s \text{ in } T \DO
+			\BEGIN
+				\CASE(1): v < s \THEN
+					s' \GETS \text{append}(v, s)\\
+				\CASE(2): v > s \THEN
+					s' \GETS \text{append}(s, v)\\
+				\CASE(3): s_1 < v < s_2 \THEN
+					\BEGIN
+					[s_1, s_2] \GETS \text{splice}(s, v)\\
+					s_1 \GETS \text{append}(s_1, v)\\
+					s' \GETS \text{append}(s_1, s_2)\\
+					\END \\
+				\CASE(4): \neg v \in s \THEN
+					s' \GETS \emptyset \\
+				\CASE(5): v \in s \THEN
+					s' \GETS s\\
+				T_R \GETS \text{mix}(T_R, s') \\
+			\END \\
+		\RETURN{T_R}
+	\end{pseudocode}
+
+\caption{{\sc Insert Variable} maintains the variable assignment $v$ to a set of witness candidates contained in $T$.  An ordering of variables is maintained for each oligonucleotide $s$.  Cases (1), (2), and (3) insert the variable assignment $v$ into a witness configuration.  Case (4) eliminates conflicting assignments those containing positive and negative literal assignments for a variable.  Case (5) does not extend the witness contained in $T$ if the variable assignment is redundant.}
+\label{insertVariableAlgorithm}
+\end{center}
+\end{figure}
+

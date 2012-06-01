@@ -1,0 +1,22 @@
+
+
+\begin{figure}[htbp]
+\begin{center}
+
+\begin{pseudocode}{BruteSat}{\phi}
+	n \text{ number of variables in }\phi \\
+	t \text{ is bit-vector representing a witness candidate}  \\
+\\
+	\FOR t \GETS 0 \text{ to } 2^n-1 \DO
+		\BEGIN
+			\IF \text{\sc CheckSat}(\phi, t) 
+				\THEN	\RETURN{\texttt{SATISFIABLE}} \\
+
+		\END \\
+	\RETURN{\texttt{UNSATISFIABLE}}
+\end{pseudocode}
+
+\caption{$\text{\sc BruteSat}(\phi)$ tests a maximum of $2^n$ Boolean witness candiates, using the $\text{\sc CheckSat}(\phi, B)$ algorithm.  If the test configuration $t$ satisfies the input instance $\phi$, then the algorithm returns \texttt{SATISFIABLE}; otherwise the algorithm returns \texttt{UNSATISFIABLE}.}
+\label{bruteSat}
+\end{center}
+\end{figure}

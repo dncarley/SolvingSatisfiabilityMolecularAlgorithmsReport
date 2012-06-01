@@ -83,7 +83,6 @@ T_{comb} = \{\texttt{STT}, \texttt{SFT}, \texttt{STF}, \texttt{SFF}\}.
 	\input{./algorithms/liptonsAlgorithm.tex}
 \FloatBarrier
 
-{\sc Lipton's Algorithm} iterates over each of the $m$ clauses.  The tube $T_C$ stores an incremental set of witnesses for each clause $C$.  The contents of $T_C$ incrementally grows with configurations from $T$ that satisfy the variable $v$.  Once the entire clause $C$ has been evaluated, $T_C$ contains configurations that witness the observed conditions.  The contents of $T_C$ are stored as $T$ for the next clause; $T$ now contains configurations that witness all previous clauses.  Once complete, the tube $T$ contains satisfiable instances for $\phi$.  
 
 %		<Paragraph> Describe Output
 
@@ -130,8 +129,6 @@ Expanding each partial assignment iterates over each clause in the input CNF.  C
 \[
 x_u < x_v < x_w.
 \]
-
-Ogihara and Ray's algorithm evaluates each subsequent variable and determines possible assignments.  The possible assignments for the variables $v_1$ and $v_2$ get extracted if $v_3$ matches.  Effectively pruning only potential solutions.  These potential solutions $T_P$ and $T_N$ get appended with the positive or negative string assignments.  The algorithm continues until each variable gets evaluated.  The remaining space $T$ contains all solutions for the CNF instance $\phi$ after the algorithm terminates.
 
 \input{./algorithms/ogiharaAlgorithm.tex}
 

@@ -1,85 +1,48 @@
-%\begin{pseudocode}{Ogihara's Algorithm}{\phi}
-%
-%
-%\FOREACH \text{variable } i \text{ in } 1 \leq i \leq n \DO
-%	\BEGIN
-%	\FOREACH \text{clause } C \DO
-%		\BEGIN
-%		[x_j < x_k < x_{\ell}] \GETS C\\	
-%
-%		\text{Assume } x_i \text{ is a positive literal}\\
-%			\IF i = k \THEN
-%			\BEGIN
-%				T_P \GETS \text{extract(}T, POS, j\text{)}
-%			\END 
-%			\ELSEIF i = \ell \THEN
-%			\BEGIN
-%				T_P \GETS \text{extract(}T, POS, j\text{)}\\
-%				T_P'\GETS \text{extract(}T, POS, k\text{)}\\
-%				T_P \GETS \text{mix(} T_P, T_P'\text{)}\\
-%			\END
-%		\\
-%		\text{Assume } x_i \text{ is a negative literal}\\
-%			\IF i = k \THEN
-%			\BEGIN
-%				T_N \GETS \text{extract(}T, NEG, j\text{)}
-%			\END 
-%			\ELSEIF i = \ell \THEN
-%			\BEGIN
-%				T_N \GETS \text{extract(}T, NEG, j\text{)}\\
-%				T_N'\GETS \text{extract(}T, NEG, k\text{)}\\
-%				T_N \GETS \text{mix(} T_N, T_N'\text{)}\\
-%			\END
-%		\END			\\
-%		T_P \GETS \text{append}(T_P, POS), T_N \GETS \text{append}(T_N, NEG)\\
-%		T \GETS \text{append}(T, POS), T \GETS \text{append}(T, NEG)\\		
-%		T\GETS  \text{mix}(T, T_P)\\
-%		T\GETS  \text{mix}(T, T_N) \\		
-%		
-%		\text{Remove partial assignments that do not satisfy } \phi\\
-%
-%	\END
-%
-%\\
-%\RETURN{\text{detect}(T)}
-%\end{pseudocode}
 
+\begin{figure}[htbp]
+\begin{center}
 
-\begin{pseudocode}{Ogihara and Ray's Algorithm}{\phi}
-
-n \text{ number of variables in } \phi \\
-\text{Each variable of the reordered clause can be accessed by $v_1$, $v_2$, and $v_3$}\\
-\\
-\text{Reorder variables by most frequent to least frequent literal appearance}\\
-\text{Reorder each clause in increasing literal order}\\
-\\
-T \GETS \{ [+x_1 \cdot +x_2], [+x_1 \cdot -x_2], [-x_1 \cdot +x_2],  [-x_1 \cdot -x_2]\} \\
-
-\FOREACH \text{variable } x_i \text{ in } 3 \leq i \leq n \DO
-	\BEGIN
-	[T_P, T_N] \GETS \text{split}(T)\\
-
-	\FOREACH \text{clause } C \text{ in } \phi \DO
+	\begin{pseudocode}{Ogihara and Ray's Algorithm}{\phi}
+	
+	n \text{ number of variables in } \phi \\
+	\text{Each variable of the reordered clause can be accessed by $v_1$, $v_2$, and $v_3$}\\
+	\\
+	\text{Reorder variables by most frequent to least frequent literal appearance}\\
+	\text{Reorder each clause in increasing literal order}\\
+	\\
+	T \GETS \{ [+x_1 \cdot +x_2], [+x_1 \cdot -x_2], [-x_1 \cdot +x_2],  [-x_1 \cdot -x_2]\} \\
+	
+	\FOREACH \text{variable } x_i \text{ in } 3 \leq i \leq n \DO
 		\BEGIN
-			[v_1, v_2, v_3] \GETS C\\
-			\IF x_i = v_3  \THEN
-				\BEGIN
-					T_{P1} \GETS \text{extract}(T_N, v_1)\\
-					T_{N1} \GETS \text{extract}(T_N, -v_1)\\				
-					T_{P2} \GETS \text{extract}(T_{N1}, v_2)\\
-					T_{N} \GETS \text{mix}(T_{P1}, T_{P2})
-				\END \\  
-			\IF \neg x_i = v_3 \THEN
-				\BEGIN
-					T_{P1} \GETS \text{extract}(T_P, v_1)\\
-					T_{N1} \GETS \text{extract}(T_P, -v_1)\\				
-					T_{P2} \GETS \text{extract}(T_{N1}, v_2)\\
-					T_{P} \GETS \text{mix}(T_{P1}, T_{P2})
-				\END\\
+		[T_P, T_N] \GETS \text{split}(T)\\
+	
+		\FOREACH \text{clause } C \text{ in } \phi \DO
+			\BEGIN
+				[v_1, v_2, v_3] \GETS C\\
+				\IF x_i = v_3  \THEN
+					\BEGIN
+						T_{P1} \GETS \text{extract}(T_N, v_1)\\
+						T_{N1} \GETS \text{extract}(T_N, -v_1)\\				
+						T_{P2} \GETS \text{extract}(T_{N1}, v_2)\\
+						T_{N} \GETS \text{mix}(T_{P1}, T_{P2})
+					\END \\  
+				\IF \neg x_i = v_3 \THEN
+					\BEGIN
+						T_{P1} \GETS \text{extract}(T_P, v_1)\\
+						T_{N1} \GETS \text{extract}(T_P, -v_1)\\				
+						T_{P2} \GETS \text{extract}(T_{N1}, v_2)\\
+						T_{P} \GETS \text{mix}(T_{P1}, T_{P2})
+					\END\\
+			\END\\
+			T_P \GETS \text{append}(T_P, +x_i)\\
+			T_N \GETS \text{append}(T_N, -x_i)\\
+			T \GETS \text{mix}(T_P, T_N)\\
 		\END\\
-		T_P \GETS \text{append}(T_P, +x_i)\\
-		T_N \GETS \text{append}(T_N, -x_i)\\
-		T \GETS \text{mix}(T_P, T_N)\\
-	\END\\
-\RETURN{\text{detect}(T)}
-\end{pseudocode}
+	\RETURN{\text{detect}(T)}
+	\end{pseudocode}
+
+\caption{{\sc Ogihara and Ray's Algorithm} evaluates each subsequent variable and determines possible assignments.  The possible assignments for the variables $v_1$ and $v_2$ get extracted if $v_3$ matches.  Effectively pruning only potential solutions.  These potential solutions $T_P$ and $T_N$ get appended with the positive or negative string assignments.  The algorithm continues until each variable gets evaluated.  The remaining space $T$ contains all solutions for the CNF instance $\phi$ after the algorithm terminates.}
+\label{ogiharaRayAlgorithm}
+\end{center}
+\end{figure}
+

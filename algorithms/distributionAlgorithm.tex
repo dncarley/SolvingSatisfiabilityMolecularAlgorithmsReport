@@ -1,22 +1,31 @@
 
-\begin{pseudocode}{Distribution Algorithm}{\phi}
+\begin{figure}[htbp]
+\begin{center}
 
-m \text{ number of clauses}\\
-k \text{ number of variables in each clause}\\
-\\
-\text{Initialize with the variables from the first clause}\\
-T \GETS \{ C_1 \} \\
+	\begin{pseudocode}{Distribution Algorithm}{\phi}
+	
+	m \text{ number of clauses}\\
+	k \text{ number of literals in each clause}\\
+	\\
+	\text{Initialize with the literals from the first clause}\\
+	T \GETS \{ C_1 \} \\
+	
+	\FOR i \GETS 2 \text{ to } m \DO
+		\BEGIN 
+			T_C \GETS \emptyset \\
+		\FOREACH \text{literal } \ell \text{ in } C_i \DO
+			\BEGIN
+				T_I \GETS \text{\sc Insert Variable}(T, \ell)\\
+				T_C \GETS \text{mix}(T_C, T_I)\\
+			\END\\
+			T \GETS T_C\\
+		\END
+	\\
+	\RETURN{detect(T)}
+	\end{pseudocode}
 
-\FOR i \GETS 2 \text{ to } m \DO
-	\BEGIN 
-		T_C \GETS \emptyset \\
-	\FOREACH \text{variable } v \text{ in } C_i \DO
-		\BEGIN
-			T_I \GETS \text{\sc Insert Variable}(T, v)\\
-			T_C \GETS \text{mix}(T_C, T_I)\\
-		\END\\
-		T \GETS T_C\\
-	\END
-\\
-\RETURN{detect(T)}
-\end{pseudocode}
+\caption{{\sc Distribution Algorithm} constructs a set of non-conflicting assignments for a CNF instance.  This algorithm inserts contents of each clause $C_i$ with the $Insert Variable$ subroutine.}
+\label{distributionAlgorithm}
+\end{center}
+\end{figure}
+

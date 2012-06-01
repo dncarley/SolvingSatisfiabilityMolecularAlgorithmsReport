@@ -1,29 +1,39 @@
 
-%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%
-\begin{pseudocode}{Lipton's Algorithm}{\phi}
-n \text{ number of variables in } \phi \\
-\\
-T \GETS \text{{\sc Combinatorial Generate}}(n) \\
-\FOREACH \text{clause } C \text{ in } \phi \DO
-	\BEGIN
-	T_c \GETS \emptyset \\
-	\FOREACH \text{variable } v \text{ in } C \DO
+
+
+\begin{figure}[htbp]
+\begin{center}
+
+	\begin{pseudocode}{Lipton's Algorithm}{\phi}
+	n \text{ number of variables in } \phi \\
+	\\
+	T \GETS \text{{\sc Combinatorial Generate}}(n) \\
+	\FOREACH \text{clause } C \text{ in } \phi \DO
 		\BEGIN
-			\IF v \text{ is a positive literal} \THEN
-				\BEGIN
-					T_P \GETS \text{extract}(T, +v)\\
-					T_c \GETS \text{mix}(T_P, T_c)						
-				\END
-			\ELSE
-				\BEGIN
-					T_N \GETS \text{extract}(T, -v)\\
-					T_c \GETS \text{mix}(T_N, T_c)						
-				\END
+		T_c \GETS \emptyset \\
+		\FOREACH \text{literal } \ell \text{ in } C \DO
+			\BEGIN
+				\IF \ell \text{ is a positive literal} \THEN
+					\BEGIN
+						T_P \GETS \text{extract}(T, +\ell)\\
+						T_c \GETS \text{mix}(T_P, T_c)						
+					\END
+				\ELSE
+					\BEGIN
+						T_N \GETS \text{extract}(T, -\ell)\\
+						T_c \GETS \text{mix}(T_N, T_c)						
+					\END
+			\END
+		\\
+		T \GETS T_c\\
 		\END
 	\\
-	T \GETS T_c\\
-	\END
-\\
-\RETURN{\text{detect}(T)}
-\end{pseudocode}
+	\RETURN{\text{detect}(T)}
+	\end{pseudocode}
+
+
+\caption{{\sc Lipton's Algorithm} iterates over each of the $m$ clauses.  The tube $T_C$ stores an incremental set of witnesses for each clause $C$.  The contents of $T_C$ incrementally grows with configurations from $T$ that satisfy the literal $\ell$.  Once the entire clause $C$ has been evaluated, $T_C$ contains configurations that witness the observed conditions.  The contents of $T_C$ are stored as $T$ for the next clause; $T$ now contains configurations that witness all previous clauses.  Once complete, the tube $T$ contains satisfiable instances for $\phi$.}
+\label{liptonAlgorithm}
+\end{center}
+\end{figure}
+
