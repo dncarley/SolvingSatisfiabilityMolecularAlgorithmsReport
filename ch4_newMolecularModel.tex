@@ -2,43 +2,40 @@
 \chapter{A new molecular algorithm for {\sc Satisfiability}}
 
 %<Paragraph> Introduce 
-This chapter introduces a new molecular algorithm for {\sc Satisfiability}.  The Distribution algorithm distributes variables from a CNF instance into a set of non-conflicting witnesses.
+This chapter introduces a new molecular algorithm for {\sc Satisfiability}.  The Distribution algorithm distributes literals from a CNF instance into a set of non-conflicting witnesses.
 
 \section{Distribution algorithm for {\sc Satisfiability}}
 
 %	<Paragraph> Introduce Distribution algorithm	
-
-The Distribution algorithm initially consists of single variable witnesses from a single clause.  Variables from each clause get distributed into non-conflicting configurations.  A witness candidate conflicts when a configuration contains both $x_i$ and $\neg x_i$.  In this case the configuration gets removed from the set of non-conflicting witnesses.  
-
-
+The Distribution algorithm initially consists of single literal witnesses from a single clause.  Literals from each clause get distributed into non-conflicting witness candidates.  A witness candidate conflicts when it contains both $x_i$ and $\neg x_i$.  In this case the configuration gets removed from the set of non-conflicting witnesses.  
 
 	\subsection{Description of the Distribution algorithm}
 		
 %		<Paragraph> Describe preconditions	
 %		<Paragraph> Describe setup
 
-The {\sc Distribution Algorithm} starts with the variable assignments of a clause.
+The {\sc Distribution Algorithm} (Algorithm 4.1.1) starts with the literal assignments of a clause.  Evaluation of subsequent clauses extends the solution space using the {\sc Insert Literal} subroutine (Algorithm 4.1.2).  During each insertion, the literal gets inserted into a potential solution vector.  Table \ref{distributionInsertTable} lists the five possibilities for literal assignment.
 
 \input{./algorithms/distributionAlgorithm.tex}
 
-		
-Evaluation of subsequent clauses extends the solution space using the {\sc Insert Variable} subroutine.  During each insertion, the variable gets inserted into a potential solution vector.  Table \ref{distributionInsertTable} lists the five possibilities for variable assignment.
+\FloatBarrier
+	
 
 \begin{table}[htdp]
-\caption{Configurations for the {\sc Insert Variable} subroutine}
+\caption{Configurations for the {\sc Insert Literal} subroutine}
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Case} & \textbf{Return configuration} & \textbf{State} \\ \hline 
-1	& $v \cdot s$ & if $v$ is less than all elements in $s$ \\ 
+1	& $\ell \cdot s$ & if $\ell$ is less than all elements in $s$ \\ 
 & &  \\ \hline
-2	& $s \cdot v$ & if $v$ is greater than all elements in $s$ \\ 
+2	& $s \cdot \ell$ & if $\ell$ is greater than all elements in $s$ \\ 
 & &  \\ \hline
-3	& $s_1 \cdot v \cdot s_2$ & if $v$ is between two elements in $s$ \\ 
+3	& $s_1 \cdot \ell \cdot s_2$ & if $\ell$ is between two elements in $s$ \\ 
 & &  \\ \hline
-4	& $\emptyset$ & if $v$ conflicts with $-v$ in $s$\\
+4	& $\emptyset$ & if $\ell$ conflicts with $\neg \ell$ in $s$\\
 & &  \\ \hline
-5	& $s$ & if $v$ exists in $s$\\ \hline
+5	& $s$ & if $\ell$ exists in $s$\\ \hline
 \end{tabular}
 \end{center}
 \label{distributionInsertTable}
@@ -48,16 +45,16 @@ Evaluation of subsequent clauses extends the solution space using the {\sc Inser
 
 %		<Paragraph> Describe execution
 		
-During this phase, each variable from a disjunctive clause gets considered, incrementally constructing a partial solution space.  Cases (1), (2), and (3) place a variable $v$ into an existing sequence $s$.  Each of these cases represents when the variable $v$ get inserted in a non-decreasing sequence.
+During this phase, each literal from a disjunctive clause gets considered, incrementally constructing a partial solution space.  Cases (1), (2), and (3) place a literal $\ell$ into an existing sequence $s$.  Each of these cases represents when the literal $\ell$ get inserted in a non-decreasing sequence.
 
 \input{./algorithms/insertVariable.tex}
 
 
-A variable conflict occurs when both positive and negative assignments of a variable occur in a sequence $s$.  In this case (4), the sequence $s$ gets removed from the set potential solutions.  If the sequence $s$ contains the variable $v$, case (5), then the existing sequence $s$ gets returned unmodified.
+A literal conflict occurs when both positive and negative assignments of a literal occur in a sequence $s$.  In this case (4), the sequence $s$ gets removed from the set potential solutions.  If the sequence $s$ contains the literal $\ell$, case (5), then the existing sequence $s$ gets returned unmodified.
 
 
 
-%Redundant vectors get removed after insertion of the next disjunctive clause.  Any remaining witnesses in the solution space contain non-conflicting variable assignments.  This does not immediately require that each witness to be a complete satisfiable assignment. Satisfiable witnesses remain in a non-empty satisfying solution space.
+%Redundant vectors get removed after insertion of the next disjunctive clause.  Any remaining witnesses in the solution space contain non-conflicting literal assignments.  This does not immediately require that each witness to be a complete satisfiable assignment. Satisfiable witnesses remain in a non-empty satisfying solution space.
 
 For example, let us consider the CNF instance
 \[
@@ -70,7 +67,7 @@ The Distribution algorithm begins with the first clause.  We have the set of wit
 T = \{ [x_1], [x_2] \}.
 \] 
 
-Next, variables from the second clause get inserted into the set of non-conflicting witnesses in $T$.
+Next, literals from the second clause get inserted into the set of non-conflicting witnesses in $T$.
 \[
 T_C = \emptyset
 \]
@@ -100,13 +97,13 @@ T_C = \{ [x_1], [x_1, x_2], [x_1, \neg x_2] \}.
 \]
 
 
-Finally insert the variable $x_3$ into $T$
+Finally insert the literal $x_3$ into $T$
 
 \[
 T_I = \{ [x_1, x_3], [x_2, x_3] \}.
 \] 
 
-\noindent In this case, the variable $x_3$ is required to satisfy the second clause.  The variable gets inserted into the configurations without redundant or conflicting assignment.
+\noindent In this case, the literal $x_3$ is required to satisfy the second clause.  The literal gets inserted into the configurations without redundant or conflicting assignment.
 
 Mix the contents of $T_I$ into the set of clause witnesses $T_C$
 \[

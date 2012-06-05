@@ -5,43 +5,40 @@
 	\begin{pseudocode}{Ogihara and Ray's Algorithm}{\phi}
 	
 	n \text{ number of variables in } \phi \\
-	\text{Each variable of the reordered clause can be accessed by $v_1$, $v_2$, and $v_3$}\\
+	\text{Access each sorted literal $[a,b,c]$ from the clause $C$}\\
 	\\
-	\text{Reorder variables by most frequent to least frequent literal appearance}\\
-	\text{Reorder each clause in increasing literal order}\\
-	\\
-	T \GETS \{ [+x_1 \cdot +x_2], [+x_1 \cdot -x_2], [-x_1 \cdot +x_2],  [-x_1 \cdot -x_2]\} \\
+	T \GETS \{ \texttt{STT}, \texttt{STF}, \texttt{SFT},  \texttt{SFF}\} \\
 	
-	\FOREACH \text{variable } x_i \text{ in } 3 \leq i \leq n \DO
+	\FOR v \GETS 3 \text{ to } n \DO
 		\BEGIN
 		[T_P, T_N] \GETS \text{split}(T)\\
 	
 		\FOREACH \text{clause } C \text{ in } \phi \DO
 			\BEGIN
-				[v_1, v_2, v_3] \GETS C\\
-				\IF x_i = v_3  \THEN
+				[a, b, c] \GETS C\\
+				\IF v_{\texttt{T}} = c  \THEN
 					\BEGIN
-						T_{P1} \GETS \text{extract}(T_N, v_1)\\
-						T_{N1} \GETS \text{extract}(T_N, -v_1)\\				
-						T_{P2} \GETS \text{extract}(T_{N1}, v_2)\\
+						T_{P1} \GETS \text{extract}(T_N, a_{\texttt{T}})\\
+						T_{N1} \GETS \text{extract}(T_N, a_{\texttt{F}})\\				
+						T_{P2} \GETS \text{extract}(T_{N1}, b_{\texttt{T}})\\
 						T_{N} \GETS \text{mix}(T_{P1}, T_{P2})
 					\END \\  
-				\IF \neg x_i = v_3 \THEN
+				\IF v_{\texttt{F}} = c \THEN
 					\BEGIN
-						T_{P1} \GETS \text{extract}(T_P, v_1)\\
-						T_{N1} \GETS \text{extract}(T_P, -v_1)\\				
-						T_{P2} \GETS \text{extract}(T_{N1}, v_2)\\
+						T_{P1} \GETS \text{extract}(T_P, a_{\texttt{T}})\\
+						T_{N1} \GETS \text{extract}(T_P, a_{\texttt{F}})\\				
+						T_{P2} \GETS \text{extract}(T_{N1}, b_{\texttt{T}})\\
 						T_{P} \GETS \text{mix}(T_{P1}, T_{P2})
 					\END\\
 			\END\\
-			T_P \GETS \text{append}(T_P, +x_i)\\
-			T_N \GETS \text{append}(T_N, -x_i)\\
+			T_P \GETS \text{append}(T_P, v_{\texttt{T}})\\
+			T_N \GETS \text{append}(T_N, v_{\texttt{F}})\\
 			T \GETS \text{mix}(T_P, T_N)\\
 		\END\\
 	\RETURN{\text{detect}(T)}
 	\end{pseudocode}
 
-\caption{{\sc Ogihara and Ray's Algorithm} evaluates each subsequent variable and determines possible assignments.  The possible assignments for the variables $v_1$ and $v_2$ get extracted if $v_3$ matches.  Effectively pruning only potential solutions.  These potential solutions $T_P$ and $T_N$ get appended with the positive or negative string assignments.  The algorithm continues until each variable gets evaluated.  The remaining space $T$ contains all solutions for the CNF instance $\phi$ after the algorithm terminates.}
+\caption{{\sc Ogihara and Ray's Algorithm} evaluates each subsequent variable and determines possible assignments.  The possible assignments for the variables $a$ and $b$ get extracted if $c$ matches the current variable $v$.  Effectively pruning only potential solutions.  These potential solutions $T_P$ and $T_N$ get appended with the positive or negative string assignments.  The algorithm continues until each variable gets evaluated.  The remaining space $T$ contains all solutions for the CNF instance $\phi$ after the algorithm terminates.}
 \label{ogiharaRayAlgorithm}
 \end{center}
 \end{figure}

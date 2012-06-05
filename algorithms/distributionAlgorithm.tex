@@ -15,7 +15,7 @@
 			T_C \GETS \emptyset \\
 		\FOREACH \text{literal } \ell \text{ in } C_i \DO
 			\BEGIN
-				T_I \GETS \text{\sc Insert Variable}(T, \ell)\\
+				T_I \GETS \text{\sc Insert Literal}(T, \ell)\\
 				T_C \GETS \text{mix}(T_C, T_I)\\
 			\END\\
 			T \GETS T_C\\
@@ -24,7 +24,7 @@
 	\RETURN{detect(T)}
 	\end{pseudocode}
 
-\caption{{\sc Distribution Algorithm} constructs a set of non-conflicting assignments for a CNF instance.  This algorithm inserts contents of each clause $C_i$ with the $Insert Variable$ subroutine.}
+\caption{{\sc Distribution Algorithm} constructs a set of non-conflicting assignments for a CNF instance.  This algorithm inserts contents of each clause $C_i$ into $T$ with the {\sc Insert Literal} subroutine.}
 \label{distributionAlgorithm}
 \end{center}
 \end{figure}

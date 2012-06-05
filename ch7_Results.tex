@@ -160,9 +160,9 @@ Lipton's and Ogihara-Ray's algorithms are constant in splits based the number of
 \reversemarginpar{
 \textbf{Time} is a measurement of algorithm execution in seconds.\\
 
-Ogihara-Ray's algorithm requires the least amount of time.  In cases where the {\sc Satisfiability} instance is under-constrained, where more possible solutions occur, the algorithm takes the greatest amount of time.  Less pruning occurs in over-constrained instances, reducing the execution time of test instances.
+Ogihara-Ray's algorithm requires the least amount of time.  In cases where the {\sc Satisfiability} instance is under-constrained, where more possible solutions occur, the algorithm takes the greatest amount of time.  Less pruning occurs in over-constrained instances, reducing the execution time of test instances.\\
 
-Lipton's algorithm executes in exponential time $\alpha \approx [4.2, 8.2]$ (the phase transition region for 3-{\sc Sat}) taking the longest.
+Lipton's algorithm executes in exponential time $\alpha \approx [4.2, 8.2]$ (the phase transition region for 3-{\sc Sat}) taking the longest.\\
 
 The Distribution algorithm executes in exponential time, and performs better than Lipton's algorithm for low conflict ratios.  However over the entire sweep performs worse than both Lipton's and Ogihara-Ray's algorithms.  It shares the same $\alpha \approx [4.2, 8.2]$ during the $3$-{\sc Sat} phase-transition.
 }
@@ -188,7 +188,7 @@ The Distribution algorithm executes in exponential time, and performs better tha
 
 Lipton's and Ogihara-Ray's algorithms share the same solution footprint.\\
 
-The Distribution algorithm contains a larger solution footprint after the trivially satisfiable instances with $\alpha \approx [0.2, 0.8]$.  The space provides a set of non-conflicting assignments from $\alpha \approx [0.8, 2.9]$.  Non-conflicting assignments consist of witnesses for only necessary variables. \\
+The Distribution algorithm contains a larger solution footprint after the trivially satisfiable instances with $\alpha \approx [0.2, 0.8]$.  The space provides a set of non-conflicting assignments from $\alpha \approx [0.8, 2.9]$.  Non-conflicting assignments consist of witnesses for only necessary literals. \\
 
 Each {\sc Satisfiability} instance has a constrained solution space during the phase-transition region.  All three algorithms share the same footprint.  There are no satisfiable instances in this test with $\alpha > 7.2$. The axis in Figure \ref{memoryFig} scales accordingly.
 }
