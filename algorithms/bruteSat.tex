@@ -7,7 +7,7 @@
 	n \text{ number of variables in }\phi \\
 	t \text{ is bit-vector representing a witness candidate}  \\
 \\
-	\FOR t \GETS 0 \text{ to } 2^n-1 \DO
+	\FOREACH t \in \{0, 1\}^n \DO
 		\BEGIN
 			\IF \text{\sc CheckSat}(\phi, t) 
 				\THEN	\RETURN{\texttt{SATISFIABLE}} \\

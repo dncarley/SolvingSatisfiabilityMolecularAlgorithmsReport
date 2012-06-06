@@ -50,14 +50,14 @@ Smaller and cost-effective DNA sequencers provide the ability to read the conten
 \label{integer2OligoTable}
 \end{table}%
 
-Suppose that we would like to encode the sequence of integers $S = [1, 3, 4, 3, 2, 0]$ as an equivalent oligonucleotide representation with the definitions in Table \ref{integer2OligoTable}.  Gene sequencing tools permit one to read and decode data according to Table \ref{integer2OligoTable}.  The resulting oligonucleotide $O$ is defined
+Suppose that we would like to encode the sequence of integers $S = [1, 3, 4, 3, 2, 0]$ as an equivalent oligonucleotide representation with the definitions in Table \ref{integer2OligoTable}.  Gene sequencing tools permit one to read and decode data according to Table \ref{integer2OligoTable}.  The resulting oligonucleotide $O$ is defined as
 
 \[
 O = 5'\texttt{AAACCC}\mid \texttt{CCCTCC}\mid \texttt{CTTTTC}\mid \texttt{CCCTCC}\mid \texttt{GGTAAA}\mid \texttt{TCTCCC}3'.
 \]
 
 %	<Paragraph> Interactions of molecules [performs] computation
-Molecular computation uses oligonucleotides for both storing and operating on a problem state.  These operations include matching and replication.  Although this setting describes artificial processes, DNA in natural settings undergoes the same transformations that we exploit here.  Interactions between genetic molecules are the fundamental mechanism for generic computation with oligonucleotides.
+Molecular computation uses oligonucleotides for both storing and operating on a problem state.  These operations include matching and replication.  Although this report describes artificial processes, DNA in natural settings undergoes the same transformations that we exploit here.  Interactions between genetic molecules are the fundamental mechanism for generic computation with oligonucleotides.
 	
 %	<Paragraph> Satisfiability [permits] universal computation
 In the following chapters, we describe molecular algorithms for {\sc Satisfiability}.  In the next section, we introduce techniques from Adleman's molecular toolbox \cite{Adleman:1994:MCS:189441.189442}.
@@ -176,27 +176,9 @@ $T' \leftarrow \text{purify}(T)$ --- provides a uniform distribution from the co
 \]	
 \end{definition}
 
-Cook and Levin independently introduced the canonical instance of an \textsf{NP-complete} language {\sc Satisfiability} \cite{Cook:1971:CTP:800157.805047, levin1973}.  An \textsf{NP-complete} language is one that is in \textsf{NP} and \textsf{NP-hard}.  An \textsf{NP-hard} language is a decision problem that can be polynomial time reduced from any \textsf{NP} language \cite{sipser06}.  An \textsf{NP-hard} problem instance includes the {\sc Halting Problem} \cite{sipser06}, which determines if any program can terminate.  Witnesses for {\sc Satisfiability} can be expressed in a polynomial on the input $\phi$.  The output for {\sc Satisfiability} consists of either all witnesses or a single witness if the problem instance is satisfiable; otherwise the problem instance is unsatisfiable. 
+Cook and Levin independently introduced the canonical instance of an \textsf{NP-complete} language {\sc Satisfiability} \cite{Cook:1971:CTP:800157.805047, levin1973}.  An \textsf{NP-complete} language is one that is in \textsf{NP} and \textsf{NP-hard}.  An \textsf{NP-hard} language is a decision problem that can be polynomial time reduced from any \textsf{NP} language \cite{sipser06}.  \textsf{NP-hard} problems includes the {\sc Halting Problem} \cite{sipser06}, which asks if a program on a given input can terminate.  Witnesses for {\sc Satisfiability} or any other \textsf{NP} problem are of length polynomial in the length of the input $\phi$.
 
-%	<Paragraph>	Define {\sc Satisfiability} with circuit 
-
-Validation of a {\sc Satisfiability} instance can use a witness candidate on a circuit.  Let us consider a circuit for {\sc Satisfiability} with three levels.  This circuit consists of $n$ inverters, $m$ \textbf{OR} gates, and one \textbf{AND} gate with $m$-fan-in.  This circuit behaves according to the internal wiring of the input CNF instance $\phi$. Figure \ref{blackBoxSat} contains a schematic for {\sc Satisfiability}.	
-
-%	<Figure>	Circuit description
-\begin{figure}[htbp]
-\begin{center}
-
-	\includegraphics[width=0.9\textwidth]{figures/circuitLabeled.jpg}
-
-\caption{A circuit describing {\sc Satisfiability}.}
-\label{blackBoxSat}
-\end{center}
-\end{figure}
-	
-\FloatBarrier
-
-%	<Paragraph> Provide complexity of {\sc Satisfiability}
-The realization of {\sc Satisfiability} as a circuit shows two aspects of this problem.  {\sc Satisfiability} can be implemented as a circuit with the number of gates proportional to the problem size.  The worst case verification for all $2^n$ possible witness candidates may be performed with the circuit in Figure \ref{blackBoxSat}.  This circuit consists of the hardware equivalent version of the {\sc Satisfiability} validator {\sc CheckSat}, as shown in Chapter 1.  Subproblems of {\sc Satisfiability} include CNF, $k$-CNF, and $k$-{\sc Sat} problem definitions.
+Standard forms for {\sc Satisfiability} include Boolean CNF, $k$-CNF, and $k$-{\sc Sat} problem definitions.
 
 \begin{definition}
 CNF\\
@@ -212,12 +194,32 @@ Consists of a CNF instance with each disjunctive clause containing $k$ literals.
 $k$-{\sc Sat}\\
 Problem variant of {\sc Satisfiability} where each clause consists of $k$ Boolean literals.  $k$-CNF formula provide an equivalent representation.
 \end{definition}
+
+%	<Paragraph>	Define {\sc Satisfiability} with circuit 
+
+One way to validate a {\sc Satisfiability} instance is to input witness candidates to a circuit.  Let us consider a circuit for a {\sc Satisfiability} instance having three levels.  This circuit consists of $n$ inverters, $m$ \textbf{OR} gates, and one \textbf{AND} gate with $m$-fan-in.  This circuit behaves according to the internal wiring of the input CNF instance $\phi$. Figure \ref{blackBoxSat} contains a schematic for {\sc Satisfiability}.	
+
+%	<Figure>	Circuit description
+\begin{figure}[htbp]
+\begin{center}
+
+	\includegraphics[width=0.9\textwidth]{figures/circuitLabeled.jpg}
+
+\caption{A circuit describing {\sc Satisfiability}.}
+\label{blackBoxSat}
+\end{center}
+\end{figure}
+	
+\FloatBarrier
+
+%	<Paragraph> Provide complexity of {\sc Satisfiability}
+The realization of {\sc Satisfiability} as a circuit reveals two aspects of this problem.  {\sc Satisfiability} can be implemented as a circuit with the number of gates proportional to the problem size.  The worst case verification for all $2^n$ possible witness candidates may be performed with the circuit in Figure \ref{blackBoxSat}.  This circuit consists of the hardware equivalent version of the {\sc Satisfiability} validator {\sc CheckSat}, as shown in Chapter 1.  
 	
 \section{Evaluating {\sc Sat} Solvers}
 
 %	<Paragraph> Overview of evaluation
 	
-	In this section, we describe two standards for encoding the {\sc Satisfiability} problem that we adopt.  This includes the input and output from the {\sc Satisfiability} Competition \cite{dimacsFormat, satcompetition}.  
+	In this section, we describe the standards for encoding the {\sc Satisfiability} problem that we adopt.  The standards come from from the {\sc Satisfiability} Competition \cite{dimacsFormat, satcompetition}.  
 	
 	Next, we introduce a problem instance classification scheme for {\sc Satisfiability}.  Classification of {\sc Satisfiability} problem instances include random, combinatorial, and industrial {\sc Sat} instances \cite{satcompetition}.  Our experiment in Chapter 6 generates random $k$-{\sc Sat} inputs.
 
@@ -248,12 +250,8 @@ DIMACS CNF provides a standard input for {\sc Satisfiability} \cite{dimacsFormat
 		
 %		<Paragraph> {\sc Sat} phase transition
 
-\begin{definition}
-{\sc Sat} phase transition\\
-The ratio of $m$ clauses to $n$ variables $\alpha = m/n$ provides a characterization where phase transitions may occur in the space of all $k$-CNF formula \cite{Doherty08thehandbook,Gent94thesat}.
-\end{definition}
 
-The {\sc Sat} phase transition is a region where both satisfiable and unsatisfiable instances are likely \cite{Gent94thesat}.  This region separates trivially satisfiable and over-constrained unsatisfiable {\sc Satisfiable} problem instances.  {\sc Satisfiability} instances with low $\alpha$ are under-constrained and trivially satisfiable; those instances with high $\alpha$ are over-constrained and trivially unsatisfiable \cite{Gent94thesat}.
+The ratio of $m$ clauses to $n$ variables $\alpha = m/n$ provides a characterization where phase transitions may occur in the space of all $k$-CNF formula \cite{Doherty08thehandbook,Gent94thesat}.  The {\sc Sat} phase transition is a region where both satisfiable and unsatisfiable instances are likely \cite{Gent94thesat}.  This region frequently separates trivially satisfiable and frequently over-constrained unsatisfiable {\sc Satisfiable} problem instances.  {\sc Satisfiability} instances with low $\alpha$ are frequently under-constrained and trivially satisfiable; those instances with high $\alpha$ are frequently over-constrained and trivially unsatisfiable \cite{Gent94thesat}.
 		
 %		<Paragraph> {\sc Sat} backbones
 \begin{definition}
@@ -267,11 +265,11 @@ The {\sc Sat} phase transition is a region where both satisfiable and unsatisfia
 	\subsection{{\sc Satisfiability} instances}
 		
 %		<Paragraph> Various methods for [constructing] {\sc Satisfiability} instances
-There are several methods for generating {\sc Satisfiability} instances.  We consider three classes of {\sc Satisfiability} instances \cite{satcompetition}: random assignment, combinatorial problems, and industrial applications.
+There are several methods for generating {\sc Satisfiability} instances.  We consider three classes \cite{satcompetition}: random assignment, combinatorial problems, and industrial applications.
 	
 \subsubsection{Random {\sc Sat}}
 %		<Paragraph> {\sc Satisfiability} instance [generated] from random assignment
-A random $k$-{\sc Sat} instance consists of $m$ clauses with $k$ literals per-clause from $n$ variables \cite{wilsonKsat}.  An instance is drawn uniformly over the set of variables without replacement.
+A random $k$-{\sc Sat} instance \cite{wilsonKsat}, for fixed $m$ and $n$, is one drawn uniformly from the set of all $k$-CNF formulas having $m$ clauses and $n$ variables.
 
 %Random $k$-{\sc Sat} are generated with \texttt{ksat.c} \cite{wilsonKsat}.  A hash of the clause representation ensures that all clauses are independent \cite{wilsonKsat}.
 %During generation of these formulas a hash is implemented to ensure that the random assignments ensure independent clauses and non-redundant variable assignments.  
@@ -280,9 +278,9 @@ A random $k$-{\sc Sat} instance consists of $m$ clauses with $k$ literals per-cl
 
 \subsubsection{Hard combinatorial {\sc Sat}}
 
-Combinatorial problem instances provide difficult benchmark cases.  These instances include games and graph theoretic problems represented as {\sc Satisfiability}. 
+Combinatorial problem instances are well known difficult benchmark cases.  These instances include games and graph theoretic problems represented as {\sc Satisfiability}. 
 		
 %		<Paragraph> {\sc Satisfiability} instance [applied] from real world problems
 \subsubsection{Industrial {\sc Sat}}
 
-Industrial processes apply {\sc Satisfiability} to solve real world problems, including circuit layout, planning, logistics, circuit fault testing, and many other industrial \textsf{NP-complete} problems.  Industrial {\sc Sat} applications often apply heuristics and approximation techniques to relax the problem.  This allows approximate solutions to be computed in an efficient amount of time.
+Industrial processes apply {\sc Satisfiability} to solve real world problems, including circuit layout, planning, logistics, circuit fault testing, and many other industrial \textsf{NP-complete} problems.  Industrial {\sc Sat} applications often apply heuristics and approximation techniques to relax the problem.  This allows approximate solutions to be computed efficiently with respect to time.

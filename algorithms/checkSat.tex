@@ -10,7 +10,7 @@
 			
 				\FOREACH \text{literal } \ell \text{ in } C \DO
 					\BEGIN
-						\IF \ell \in B 
+						\IF B \text{ satisfies } \ell 
 							\THEN test\_clause \GETS True \\
 					\END \\
 				\IF test\_clause = False
