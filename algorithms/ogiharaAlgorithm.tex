@@ -18,16 +18,16 @@
 				[a, b, c] \GETS C\\
 				\IF v_{\texttt{T}} = c  \THEN
 					\BEGIN
-						T_{P1} \GETS \text{extract}(T_N, a_{\texttt{T}})\\
-						T_{N1} \GETS \text{extract}(T_N, a_{\texttt{F}})\\				
-						T_{P2} \GETS \text{extract}(T_{N1}, b_{\texttt{T}})\\
+						T_{P1} \GETS \text{extract}(T_N, a_P)\\
+						T_{N1} \GETS \text{extract}(T_N, a_N)\\				
+						T_{P2} \GETS \text{extract}(T_{N1}, b_P)\\
 						T_{N} \GETS \text{mix}(T_{P1}, T_{P2})
 					\END \\  
 				\IF v_{\texttt{F}} = c \THEN
 					\BEGIN
-						T_{P1} \GETS \text{extract}(T_P, a_{\texttt{T}})\\
-						T_{N1} \GETS \text{extract}(T_P, a_{\texttt{F}})\\				
-						T_{P2} \GETS \text{extract}(T_{N1}, b_{\texttt{T}})\\
+						T_{P1} \GETS \text{extract}(T_P, a_P)\\
+						T_{N1} \GETS \text{extract}(T_P, a_N)\\				
+						T_{P2} \GETS \text{extract}(T_{N1}, b_P)\\
 						T_{P} \GETS \text{mix}(T_{P1}, T_{P2})
 					\END\\
 			\END\\

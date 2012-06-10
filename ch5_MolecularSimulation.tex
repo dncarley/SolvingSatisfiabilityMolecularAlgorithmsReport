@@ -72,9 +72,7 @@ The source directory includes several \texttt{Perl} scripts to assist in buildin
 \label{perlScriptTable}
 \end{table}%
 \end{center}
-			
-			
-			
+
 		\subsection{Data Visualization}
 		
 %			<Paragraph> Describe Modified visualization from Ben Fry
@@ -102,17 +100,16 @@ c
 c cnf input is designated with `p cnf'
 c    followed by number of variables <n>, and clauses <m>
 c
-p cnf <n> <m>
+p cnf 4 3
 c
 c A clause is represented by a sequence of <k> integers,
 c     separated by whitespace and ending with a `0'.
 c Each variable is represented by the integer sequence, 
 c    negative polarity is represented by `-'.
 c
--3 9 14 0
-6 -9 -12 0
--2 11 17 0
-3 -13 -17 0
+1 2 -3 0
+2 3 -4 0
+-1 -3 -4 0
 \end{verbatim}
 		
 	\section{Output}
@@ -132,7 +129,7 @@ c
 c A line beginning with a `s' marks the status.
 c This can be either `UNSATISFIABLE', `SATISFIABLE', or `UNKNOWN'.
 c
-v -3 -9 11 13 0
+v 1 2 -3 -4 0
 c
 c A satisfiable witness begins with a `v' and ends with a `0'.
 c     A sequence of integers, between `v' and `0', encodes a satisfiable assignment.
@@ -150,7 +147,7 @@ Table \ref{outputTableDefiniton} describes an extended custom output.  This outp
 \textbf{Parameter} & \textbf{Description} \\ \hline	
 \texttt{c algorithmType:}&	Display the algorithm type: \texttt{Lipton}, \texttt{Ogihara-Ray}, \texttt{Distribution}\\ 
 \texttt{c algorithmTime:}&	Display the algorithm execution time in seconds.\\ 
-\texttt{c solutionMemory:}& Display the solution space memory footprint in Bytes.	\\ 
+\texttt{c solutionMemory:}& Display the solution space memory in Bytes.	\\ 
 \texttt{c mixCount:}	&	Display the number of \texttt{mixes} required during algorithm execution.\\ 
 \texttt{c extractCount:}&	Display the number of \texttt{extracts} required during algorithm execution.\\ 
 \texttt{c appendCount:}&	Display the number of \texttt{appends} required during algorithm execution.\\ 

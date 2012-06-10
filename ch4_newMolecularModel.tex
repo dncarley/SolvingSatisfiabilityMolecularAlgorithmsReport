@@ -20,7 +20,6 @@ The {\sc Distribution Algorithm} (Algorithm 4.1.1) starts with the literal assig
 
 \FloatBarrier
 	
-
 \begin{table}[htdp]
 \caption{Configurations for the {\sc Insert Literal} subroutine}
 \begin{center}
@@ -49,10 +48,7 @@ During this phase, each literal from a disjunctive clause gets considered, incre
 
 \input{./algorithms/insertVariable.tex}
 
-
 A literal conflict occurs when both positive and negative assignments of a literal occur in a sequence $s$.  In this case (4), the sequence $s$ gets removed from the set potential solutions.  If the sequence $s$ contains the literal $\ell$, case (5), then the existing sequence $s$ gets returned unmodified.
-
-
 
 %Redundant vectors get removed after insertion of the next disjunctive clause.  Any remaining witnesses in the solution space contain non-conflicting literal assignments.  This does not immediately require that each witness to be a complete satisfiable assignment. Satisfiable witnesses remain in a non-empty satisfying solution space.
 
@@ -64,7 +60,7 @@ For example, let us consider the CNF instance
 The Distribution algorithm begins with the first clause.  We have the set of witnesses
 
 \[
-T = \{ [x_1], [x_2] \}.
+T = \{ \{x_1\}, \{x_2\} \}.
 \] 
 
 Next, literals from the second clause get inserted into the set of non-conflicting witnesses in $T$.
@@ -74,46 +70,45 @@ T_C = \emptyset
 
 \noindent First insert $x_1$ into $T$
 \[
-T_I = \{ [x_1], [x_1, x_2] \}.
+T_I = \{ \{x_1\}, \{x_1, x_2\} \}.
 \] 
 
-\noindent The witness $[x_1]$ contains $x_1$, and the idempotent witness $[x_1]$ is returned.  The witness $[x_1, x_2]$ requires $x_1$ to satisfy the second clause.
+\noindent The witness $\{x_1\}$ contains $x_1$, and the idempotent witness $\{x_1\}$ is returned.  The witness $\{x_1, x_2\}$ requires $x_1$ to satisfy the second clause.
 
 Mix the contents of $T_I$ into the set of clause witnesses $T_C$
 \[
-T_C = \{ [x_1], [x_1, x_2] \}.
+T_C = \{ \{x_1\}, \{x_1, x_2\} \}.
 \]
 
 \noindent Next insert $\neg x_2$ into $T$
 \[
-T_I = \{ [x_1, \neg x_2] \}.
+T_I = \{ \{x_1, \neg x_2\} \}.
 \] 
 
-\noindent The witness $[x_1, \neg x_2]$ requires $\neg x_2$ to satisfy the second clause.  The witness candidate $[x_2, \neg x_2]$ contains a conflict and gets removed from the set of potential witnesses.
+\noindent The witness $\{x_1, \neg x_2\}$ requires $\neg x_2$ to satisfy the second clause.  The witness candidate $\{x_2, \neg x_2\}$ contains a conflict and gets removed from the set of potential witnesses.
 
 Mix the contents of $T_I$ into the set of clause witnesses $T_C$
 \[
-T_C = \{ [x_1], [x_1, x_2], [x_1, \neg x_2] \}.
+T_C = \{ \{x_1\}, \{x_1, x_2\}, \{x_1, \neg x_2\} \}.
 \]
-
 
 Finally insert the literal $x_3$ into $T$
 
 \[
-T_I = \{ [x_1, x_3], [x_2, x_3] \}.
+T_I = \{ \{x_1, x_3\}, \{x_2, x_3\} \}.
 \] 
 
 \noindent In this case, the literal $x_3$ is required to satisfy the second clause.  The literal gets inserted into the configurations without redundant or conflicting assignment.
 
 Mix the contents of $T_I$ into the set of clause witnesses $T_C$
 \[
-T_C = \{ [x_1], [x_1, x_2], [x_1, \neg x_2], [x_1, x_3], [x_2, x_3] \}.
+T_C = \{ \{x_1\}, \{x_1, x_2\}, \{x_1, \neg x_2\}, \{x_1, x_3\}, \{x_2, x_3\} \}.
 \]
 
 The contents of $T_C$ get assigned to $T$.
 
 \[
-T = \{ [x_1], [x_1, x_2], [x_1, \neg x_2], [x_1, x_3], [x_2, x_3] \}.
+T = \{ \{x_1\}, \{x_1, x_2\}, \{x_1, \neg x_2\}, \{x_1, x_3\}, \{x_2, x_3\} \}.
 \]
 
 The set $T$ contains non-conflicting witnesses for the observed clauses.  Once the algorithm terminates, $T$ contains non-conflicting witnesses for the CNF instance $\phi$. 
@@ -122,11 +117,8 @@ The set $T$ contains non-conflicting witnesses for the observed clauses.  Once t
 
 Appendix B lists a detailed execution trace for the Distribution algorithm.
 
-
 %
 %\section{Simulation of distribution algorithm}
 %
 %\section{Physical construction of distribution algorithm}
 %	
-
-

@@ -19,8 +19,8 @@ T  = \text{{\sc Combinatorial Generate}}(4)
 T = 
 \]
 \begin{verbatim}
-	TTTT FTTT TFTT FFTT TTFT FTFT TFFT FFFT
-	TTTF FTTF TFTF FFTF TTFF FTFF TFFF FFFF
+	STTTT SFTTT STFTT SFFTT STTFT SFTFT STFFT SFFFT
+	STTTF SFTTF STFTF SFFTF STTFF SFTFF STFFF SFFFF
 \end{verbatim}
 	
 Next select Clause 1:
@@ -30,34 +30,34 @@ C_1 = (x_1 \vee x_2 \vee \neg x_3)
 \]
 
 \begin{verbatim}
-	TTTT FTTT TFTT FFTT TTFT FTFT TFFT FFFT
-	TTTF FTTF TFTF FFTF TTFF FTFF TFFF FFFF
+	STTTT SFTTT STFTT SFFTT STTFT SFTFT STFFT SFFFT
+	STTTF SFTTF STFTF SFFTF STTFF SFTFF STFFF SFFFF
 \end{verbatim}
 	
 	Extract $x_1$:
 
 \begin{verbatim}
-		TTTT      TFTT      TTFT      TFFT     
-		TTTF      TFTF      TTFF      TFFF     
+		STTTT      STFTT      STTFT      STFFT     
+		STTTF      STFTF      STTFF      STFFF     
 \end{verbatim}
 
 	Extract $x_2$:
 \begin{verbatim}
-		TTTT FTTT           TTFT FTFT          
-		TTTF FTTF           TTFF FTFF          
+		STTTT SFTTT           STTFT SFTFT          
+		STTTF SFTTF           STTFF SFTFF          
 \end{verbatim}
 
 	Extract $\neg x_3$:
 \begin{verbatim}	
-		                    TTFT FTFT TFFT FFFT
-		                    TTFF FTFF TFFF FFFF
+		                    STTFT SFTFT STFFT SFFFT
+		                    STTFF SFTFF STFFF SFFFF
 \end{verbatim}		                    
 
 	Mix contents:
 
 \begin{verbatim}	
-		TTTT FTTT TFTT      TTFT FTFT TFFT FFFT
-		TTTF FTTF TFTF      TTFF FTFF TFFF FFFF
+		STTTT SFTTT STFTT      STTFT SFTFT STFFT SFFFT
+		STTTF SFTTF STFTF      STTFF SFTFF STFFF SFFFF
 \end{verbatim}		
 
 Next select Clause 2:
@@ -67,32 +67,32 @@ C_2 = (x_2 \vee x_3 \vee \neg x_4)
 \]
 
 \begin{verbatim}
-	TTTT FTTT TFTT      TTFT FTFT TFFT FFFT
-	TTTF FTTF TFTF      TTFF FTFF TFFF FFFF
+	STTTT SFTTT STFTT      STTFT SFTFT STFFT SFFFT
+	STTTF SFTTF STFTF      STTFF SFTFF STFFF SFFFF
 \end{verbatim}		
 
 	Extract $x_2$:
 \begin{verbatim}
-		TTTT FTTT           TTFT FTFT          
-		TTTF FTTF           TTFF FTFF          
+		STTTT SFTTT           STTFT SFTFT          
+		STTTF SFTTF           STTFF SFTFF          
 \end{verbatim}	
 
 	Extract $x_3$:
 \begin{verbatim}	
-		TTTT FTTT TFTT                         
-		TTTF FTTF TFTF                         
+		STTTT SFTTT STFTT                         
+		STTTF SFTTF STFTF                         
 \end{verbatim}	
 
 	Extract $\neg x_4$:
 \begin{verbatim}
 		                                       
-		TTTF FTTF TFTF      TTFF FTFF TFFF FFFF	
+		STTTF SFTTF STFTF      STTFF SFTFF STFFF SFFFF	
 \end{verbatim}
 
 	Mix contents:
 \begin{verbatim}
-		TTTT FTTT TFTT      TTFT FTFT          
-		TTTF FTTF TFTF      TTFF FTFF TFFF FFFF
+		STTTT SFTTT STFTT      STTFT SFTFT          
+		STTTF SFTTF STFTF      STTFF SFTFF STFFF SFFFF
 \end{verbatim}
 
 Finally, select Clause 3:	
@@ -100,31 +100,31 @@ Finally, select Clause 3:
 C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
 \]
 \begin{verbatim}
-	TTTT FTTT TFTT      TTFT FTFT          
-	TTTF FTTF TFTF      TTFF FTFF TFFF FFFF
+	STTTT SFTTT STFTT      STTFT SFTFT          
+	STTTF SFTTF STFTF      STTFF SFTFF STFFF SFFFF
 \end{verbatim}	
 	Extract $\neg x_1$:
 \begin{verbatim}
-		     FTTT                FTFT          
-		     FTTF                FTFF      FFFF
+		     SFTTT                SFTFT          
+		     SFTTF                SFTFF      SFFFF
 \end{verbatim}
 
 	Extract $\neg x_3$:
 \begin{verbatim}
-		                    TTFT FTFT          
-		                    TTFF FTFF TFFF FFFF
+		                    STTFT SFTFT          
+		                    STTFF SFTFF STFFF SFFFF
 \end{verbatim}	
 
 	Extract $x_4$:
 \begin{verbatim}
-		TTTT FTTT TFTT      TTFT FTFT          
+		STTTT SFTTT STFTT      STTFT SFTFT          
 		                                       
 \end{verbatim}
 
 	Mix contents:
 \begin{verbatim}
-		TTTT FTTT TFTT      TTFT FTFT          
-		     FTTF           TTFF FTFF TFFF FFFF
+		STTTT SFTTT STFTT      STTFT SFTFT          
+		      SFTTF            STTFF SFTFF STFFF SFFFF
 \end{verbatim}
 
 

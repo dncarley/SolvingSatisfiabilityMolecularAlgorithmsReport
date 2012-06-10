@@ -15,7 +15,7 @@ Molecular computation uses interactions between genetic molecules, such as DNA o
 
 Molecular computation requires exponential space in order to represent all witness candidates.  This combinatorial space of witness candidates can be filtered in polynomial time by parallel molecular operators.
 
-A Boolean formula $\phi$ is said to be in Conjunctive Normal Form (CNF) if $\phi$ consists of a conjunctive set of Boolean disjunctive clauses.  We have, e.g.,
+A Boolean formula $\phi$ is said to be in Conjunctive Normal Form (CNF) if $\phi$ consists of a conjunctive set of Boolean disjunctive clauses.  (Throughout this report we use CNF instances $\phi$ with $n$ variables, $m$ clauses, and $k$ literals.)  We have, e.g.,
 \[
 \phi = C_1 \wedge C_2 \wedge \cdots \wedge C_m, 
 \]
@@ -24,7 +24,7 @@ where each clause $C_i$ contains $k$ disjunctive Boolean literals
 C_i = (v_1 \vee v_2 \vee \cdots \vee v_k).
 \]
 
-(Throughout this report we use CNF instances $\phi$ with $n$ variables, $m$ clauses, and $k$ literals.)  A witness for a {\sc Satisfiability} instance is a Boolean assignment to the variables that makes the formula true.  Such a witness can be represented as a vector in $\{0,1\}^n$, where $n$ is the number of variables in $\phi$, as follows.  Let $\{v_1, \ldots , v_n\} \in \phi$ for each $i$ in $\{1, \ldots , n\}$, the $i$th element of $B$ is assignment $B_i$.   A witness candidate for a {\sc Satisfiability} instance may be verified in polynomial time with $\text{\sc CheckSat}(\phi, B)$ (Algorithm 1.1.1 below).
+A witness for a {\sc Satisfiability} instance is a Boolean assignment to the variables that makes the formula true.  Such a witness can be represented as a vector in $\{0,1\}^n$, where $n$ is the number of variables in $\phi$, as follows.  Let $\{v_1, \ldots , v_n\}$ be the variables of $\phi$, for each $i$ in $\{1, \ldots , n\}$, the $i$th element of $B$ is assignment $B_i$.   A witness candidate for a {\sc Satisfiability} instance may be verified in polynomial time with $\text{\sc CheckSat}(\phi, B)$ (Algorithm 1.1.1 below).
 
 \FloatBarrier 
 
