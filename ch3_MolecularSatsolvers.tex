@@ -2,7 +2,7 @@
 
 %<Paragraph> Introduce two molecular algorithms for {\sc Satisfiability}
 
-In this chapter, we introduce two molecular algorithms for {\sc Satisfiability}.  These algorithms construct a set of all witnesses for {\sc Satisfiability} instances.  Lipton's algorithm requires a combinatorial space of all witness candidates to be constructed and then filters invalid ones.  Ogihara and Ray's algorithm constructs a set of witness candidates throughout execution.  Following the description, we explore the physical implementations of---and simulation frameworks for---these algorithms.
+In this chapter, we introduce two molecular algorithms for {\sc Satisfiability}.  These algorithms construct sets of all witnesses for {\sc Satisfiability} instances.  Lipton's algorithm requires a combinatorial space of all witness candidates to be constructed and then filters out invalid ones.  Ogihara and Ray's algorithm constructs a set of witness candidates throughout execution.  Following the description, we explore the physical implementations of---and simulation frameworks for---these algorithms.
 
 \begin{table}[htdp]
 \caption{Components of Boolean literals and equivalent literal representations.}
@@ -29,18 +29,20 @@ In Chapter 1, witness candidates for {\sc Satisfiability} were represented as a 
 	\begin{align*}
 	B &= [0, 1, 0, 1 \rangle \\
 	L &= \{ \neg x_1, x_2, \neg x_3, x_4 \} \\
-	C &= \{ 1_{\texttt{F}}, 2_{\texttt{T}}, 3_{\texttt{F}}, 4_{\texttt{T}} \} \\
+	V &= \{ 1_{\texttt{F}}, 2_{\texttt{T}}, 3_{\texttt{F}}, 4_{\texttt{T}} \} \\
 	D &= \texttt{SFTFT} 
 	\end{align*}
 
-\caption{The bit-vector $B = [0, 1, 0, 1 \rangle$ can be represented as the set of literal assignments $L = \{ \neg x_1, x_2, \neg x_3, x_4 \}$.  Using the condensed representation from Table \ref{equivalentLiteralTable} we can represent the set in condensed form $C = \{ 1_{\texttt{F}}, 2_{\texttt{T}}, 3_{\texttt{F}}, 4_{\texttt{T}} \}$.  A directed polarity string with initial sequence (\texttt{S}), followed by a sequence of literals provides $D = \texttt{SFTFT}$.}
+\caption{The bit-vector $B = [0, 1, 0, 1 \rangle$ can be represented as the set of literal assignments $L = \{ \neg x_1, x_2, \neg x_3, x_4 \}$.  Using the condensed representation from Table \ref{equivalentLiteralTable} we can represent the set in condensed form $V = \{ 1_{\texttt{F}}, 2_{\texttt{T}}, 3_{\texttt{F}}, 4_{\texttt{T}} \}$.  A directed polarity string with initial sequence (\texttt{S}), followed by a sequence of literals provides $D = \texttt{SFTFT}$.}
 \label{equivalentWitnessRepresentations}
 \end{center}
 \end{figure}
 
 \FloatBarrier
 
-We use the directed polarity string (representation $D$ in Figure \ref{equivalentWitnessRepresentations}) as shorthand for a directed oligonucleotide.  This representation indexes a unique literal $v_P$ from the directed string $D$.  We extract literal configurations that map a desired polarity directly to a variable ($v_{\texttt{T}}$ or $v_{\texttt{F}}$).  In Ogihara and Ray's algorithm, we extract configurations that satisfy literals from an ordered clause $C = [a, b, c]$.  We write $v_P$ for extracting the literal to satisfy the variable $v$ with the literal assignment $P$ (either \texttt{T} or \texttt{F}), and $v_N$ to extract any other non-satisfiable literal assignment.
+We use the directed polarity string (representation $D$ in Figure \ref{equivalentWitnessRepresentations}) as shorthand for a directed oligonucleotide.  The directed string representation $D$ can be indexed by the variable $v$.  In Lipton's algorithm, literal configurations for a variable $v$ get extracted directly ($v_{\texttt{T}}$ or $v_{\texttt{F}}$).
+
+In Ogihara and Ray's algorithm, we extract satisfying literal configurations from an ordered clause $[a, b, c]$.  We use the literal configuration $v_P$ to extract the satisfying literal $P$ (either \texttt{T} or \texttt{F}) for the variable $v$.  We use the literal configuration $v_N$ to extract any other non-satisfiable literal assignments to $v$.
 
 \section{Lipton's algorithm for {\sc Satisfiability}}
 
@@ -48,36 +50,41 @@ We use the directed polarity string (representation $D$ in Figure \ref{equivalen
 
 Introduced in 1995 by Richard Lipton \cite{Lipton95usingdna}, this algorithm filters satisfiable witnesses from a combinatorial space of all witness candidates.  Lipton's algorithm is analogous to a conventional brute-force search for all witnesses of a {\sc Satisfiability} instance.
 
-{\sc Lipton's Algorithm} (Algorithm 3.1.2) first constructs a combinatorial space containing oligonucleotide configurations for all potential witness candidates.  Evaluation of a {\sc Satisfiability} instance extracts witnesses for the current clause.  Reading each clause constrains the contents of the tube $T$ to only those configurations that satisfy the current clause.  The algorithm terminates with a set of witnesses for the CNF input $\phi$.  If $\phi$ is unsatisfiable, then $T = \emptyset$.  
+{\sc Lipton's Algorithm} (Algorithm 3.1.1) first constructs a combinatorial space $T$ containing oligonucleotide configurations for all potential witness candidates.  The algorithm iterates over each of the clauses $C$ in $\phi$.  
+
+From each clause $C$, each of the literals contained within each clause $C$ get filtered to satisfiable witnesses.  The contents of $T$ get filtered by incrementally extracting those literals that satisfy the current clause.  The next iteration filters witnesses that satisfy the previous clauses from $T$ and the literal contents from $C$.  The algorithm terminates with a set of witnesses $T$ for the CNF input $\phi$.  If $\phi$ is unsatisfiable, then $T = \emptyset$.  
+
+% We iterate over each of the clauses in $\phi$.  Each clause iteration filters the contents of the tube $T$ to only witnesses that satisfy the current clause.  
+
+	\input{./algorithms/liptonsAlgorithm.tex}
+\FloatBarrier
 
 	\subsection{Description of Lipton's algorithm}
 		
 %		<Paragraph> Describe setup
-The function {\sc Combinatorial Generate} (Algorithm 3.1.1) implements the split-mix synthesis technique \cite{furka1982, furkaBook}.  {\sc Combinatorial Generate} returns a tube $T_{comb}$ consisting of $2^n$ oligonucleotides that represent potential witness candidates.  The tube $T_{comb}$ begins with an initial medium denoted by \texttt{S}.  An iterative loop extends $T_{comb}$ using split-mix synthesis.  Each split corresponds with appending the tubes with a true (\texttt{T}) and false (\texttt{F}) assignment.  The two tubes are mixed and amplified to contain equimolar portions.  
+The function {\sc Combinatorial Generate} (Algorithm 3.1.2) implements the split-mix synthesis technique \cite{furka1982, furkaBook}.  {\sc Combinatorial Generate} returns a tube $T_{comb}$ consisting of oligonucleotides that represent all $2^n$ distinct witness candidates.  The tube $T_{comb}$ begins with an initial medium denoted by \texttt{S}.  An iterative loop extends $T_{comb}$ using split-mix synthesis.  Each split corresponds with appending the tubes with a true (\texttt{T}) and false (\texttt{F}) assignment.  The two tubes are mixed and purified to contain equimolar portions of each witness candidate.  
 
-	\input{./algorithms/combinatorialGenerate.tex}
+\input{./algorithms/combinatorialGenerate.tex}
 \FloatBarrier
 
 Let us consider an example execution of {\sc Combinatorial Generate} with $n = 2$.
 
 \noindent The tube $T_{comb}$ begins as an empty tube.  A start configuration \texttt{S} initiates the tube $T_{comb}$ with a medium for combinatorial synthesis.
 
-\noindent Contents of $T_{comb}$
+\noindent We begin with the initial contents
 \[
 T_{comb} = \{ \texttt{S} \}.
 \]
 
-\noindent Iteration $v = 1$
+\noindent Iteration $v = 1$:
 
-First split the contents of $T_{comb}$.  We have
-
+First, split the contents of $T_{comb}$.  We have
 \begin{align*}
  T_1 &= \{ \texttt{S} \}, \text{ and} \\
  T_2 &= \{ \texttt{S} \}.
 \end{align*}
 
-Next append each of the tubes with a positive (\texttt{T}) and negative (\texttt{F}) assignment for the literal $v_1$.  We have
-
+Next, append each of the tubes with a positive (\texttt{T}) and negative (\texttt{F}) assignment for the literal $v_1$.  We have
 \begin{align*}
  T_1 &= \{ \texttt{ST} \}, \text{ and} \\
  T_2 &= \{ \texttt{SF} \}.
@@ -88,17 +95,15 @@ Mix the contents of $T_1$ and $T_2$ to form $T_{comb}$ for the next iteration.  
 T_{comb} = \{\texttt{ST}, \texttt{SF}\}.
 \]
 
-\noindent Iteration $v = 2$
+\noindent Iteration $v = 2$:
 
 Split the contents of $T_{comb}$.  We have
-
 \begin{align*}
  T_1 &= \{\texttt{ST}, \texttt{SF}\}, \text{ and} \\
  T_2 &= \{\texttt{ST}, \texttt{SF}\}.
 \end{align*}
 
-Next append each of the tubes with a positive (\texttt{T}) and negative (\texttt{F}) assignment for the literal $v_2$.  We have
-
+Next, append each of the tubes with a positive (\texttt{T}) and negative (\texttt{F}) assignment for the literal $v_2$.  We have
 \begin{align*}
  T_1 &= \{\texttt{STT}, \texttt{SFT}\}, \text{ and} \\
  T_2 &= \{\texttt{STF}, \texttt{SFF}\}.
@@ -116,8 +121,6 @@ T_{comb} = \{\texttt{STT}, \texttt{SFT}, \texttt{STF}, \texttt{SFF}\}.
 %		<Paragraph> Describe execution
 %The amplification process gets modeled with a purification step.  This eliminates all redundant strings for the simulated implementation.  After the iteration completes, the complete combinatorial space gets returned. This space consists of $2^n$ vectors of length $n$. 
 
-	\input{./algorithms/liptonsAlgorithm.tex}
-\FloatBarrier
 
 %		<Paragraph> Describe Output
 	\subsection{Detailed trace of Lipton's algorithm}
@@ -131,32 +134,25 @@ Appendix B lists a detailed execution trace for Lipton's algorithm.
 
 %	<Paragraph> Introduce Ogihara and Ray's algorithm
 
-Ogihara and Ray's algorithm (Algorithm 3.2.1) consist of a breadth-first evaluation of clauses from a CNF formula \cite{Ogihara:1996:BFS:898228,Ogihara97dna-basedparallel}.  The algorithm constructs a set of witness candidates based on parsing a 3-CNF formula.  In this section, we describe the preconditions and execution of Ogihara and Ray's algorithm.
+Ogihara and Ray's algorithm (Algorithm 3.2.1) consist of a breadth-first evaluation of clauses from a CNF formula \cite{Ogihara:1996:BFS:898228,Ogihara97dna-basedparallel}.  The algorithm constructs a set of witness candidates based on a parse of a 3-CNF formula.  In this section, we describe the preconditions and execution of Ogihara and Ray's algorithm.
+
+%		<Paragraph> Describe execution
+\input{./algorithms/ogiharaAlgorithm.tex}
+\FloatBarrier
 
 \subsection{Description of Ogihara and Ray's algorithm}
 		
 %		<Paragraph> Describe preconditions
-Ogihara and Ray's algorithm requires two attributes for CNF input:
+Ogihara and Ray's algorithm requires each input to have the two attributes.
 
 \begin{enumerate}
 \item All clauses consist of exactly three literals
 \item All clauses must be sorted by the literal's variable
 \end{enumerate}
 
-Considering only $3$-{\sc Sat} instances fulfills Attribute (1).  If models of $k$-{\sc Sat} with $k > 3$, then a polynomial time reduction to $3$-{\sc Sat} must occur prior to execution.
+Considering only $3$-{\sc Sat} instances fulfills Attribute (1).  If models of $k$-{\sc Sat} with $k > 3$ are desired as input, then a polynomial time reduction to $3$-{\sc Sat} must occur prior to execution.
 
-Sorting the clauses fulfills Attribute (2).  The polarity of each literal may consist of a positive or negative assignment, providing the weak ordering
-
-\[
-v_1 < \cdots < v_n,
-\]
-%		<Paragraph> Describe execution
-
-\input{./algorithms/ogiharaAlgorithm.tex}
-
-\FloatBarrier
-
-Expanding each partial assignment iterates over each clause in the input CNF.  Construction of witness candidates consider the possibilities of the clause ordering
+Sorting the literals from each clause by variable fulfills Attribute (2).  The polarity of each literal may consist of a positive or negative assignment.  Construction of witness candidates consider the possibilities of the clause ordering
 
 \[
 a < b < c.
@@ -169,12 +165,12 @@ a < b < c.
 T = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
 \]
 
-For example, let us evaluate the clause
+\noindent For example, let us evaluate the clause
 \[
 C = x_1 \vee \neg x_2 \vee \neg x_3.
 \]
 
-On the first iteration, we compare the third ordered literal $c$ with $x_3$.  Since $c = \neg x_3$, extract configurations that satisfy $a \vee b$.  
+\noindent On the first iteration, we compare the third ordered literal $c$ with $x_3$.  Since $c = \neg x_3$, extract configurations that satisfy $a \vee b$.  
 
 \begin{align*}
 T_P &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\} \\
@@ -202,14 +198,14 @@ T_{P2} = \{ \texttt{SFF} \}.
 T_P = \{ \texttt{STT}, \texttt{STF}, \texttt{SFF} \}.
 \]
 
-\noindent We have 
+\noindent We have the tubes
 
 \begin{align*}
 T_P &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFF} \}, \\
 T_N &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}.
 \end{align*}
 
-Finally append assignments that satisfy the current literal with $T_P$ and $T_F$.
+\noindent Finally append assignments that satisfy the current literal with $T_P$ and $T_F$.
 
 \begin{align*}
 T_P &= \text{append}(T_P, c_{\texttt{F}}) \\

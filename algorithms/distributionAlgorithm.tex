@@ -4,10 +4,9 @@
 
 	\begin{pseudocode}{Distribution Algorithm}{\phi}
 	
-	m \text{ number of clauses}\\
-	k \text{ number of literals in each clause}\\
+	\text{// Input $\phi$ consists of $m$ clauses.}\\
+	\text{//Initialize $T$ with the literals from the first clause.}\\
 	\\
-	\text{Initialize with the literals from the first clause}\\
 	T \GETS \{ C_1 \} \\
 	
 	\FOR i \GETS 2 \text{ to } m \DO
@@ -18,7 +17,7 @@
 				T_I \GETS \text{\sc Insert Literal}(T, \ell)\\
 				T_C \GETS \text{mix}(T_C, T_I)\\
 			\END\\
-			T \GETS T_C\\
+			T \GETS \text{purify(}T_C\text{)} \\
 		\END
 	\\
 	\RETURN{detect(T)}

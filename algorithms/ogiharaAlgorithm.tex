@@ -4,8 +4,8 @@
 
 	\begin{pseudocode}{Ogihara and Ray's Algorithm}{\phi}
 	
-	n \text{ number of variables in } \phi \\
-	\text{Access each sorted literal $[a,b,c]$ from the clause $C$}\\
+	\text{// Input $\phi$ consists of $n$ variables.}\\
+	\text{// Each clause $C$ contains sorted literals $[a,b,c]$.}\\
 	\\
 	T \GETS \{ \texttt{STT}, \texttt{STF}, \texttt{SFT},  \texttt{SFF}\} \\
 	
@@ -21,19 +21,22 @@
 						T_{P1} \GETS \text{extract}(T_N, a_P)\\
 						T_{N1} \GETS \text{extract}(T_N, a_N)\\				
 						T_{P2} \GETS \text{extract}(T_{N1}, b_P)\\
-						T_{N} \GETS \text{mix}(T_{P1}, T_{P2})
+						T_{N} \GETS \text{mix}(T_{P1}, T_{P2})\\
+						T_{N} \GETS \text{purify(}T_{N}\text{)}					
 					\END \\  
 				\IF v_{\texttt{F}} = c \THEN
 					\BEGIN
 						T_{P1} \GETS \text{extract}(T_P, a_P)\\
 						T_{N1} \GETS \text{extract}(T_P, a_N)\\				
 						T_{P2} \GETS \text{extract}(T_{N1}, b_P)\\
-						T_{P} \GETS \text{mix}(T_{P1}, T_{P2})
+						T_{P} \GETS \text{mix}(T_{P1}, T_{P2})\\
+						T_{P} \GETS \text{purify(}T_{P}\text{)} 						
 					\END\\
 			\END\\
 			T_P \GETS \text{append}(T_P, v_{\texttt{T}})\\
 			T_N \GETS \text{append}(T_N, v_{\texttt{F}})\\
 			T \GETS \text{mix}(T_P, T_N)\\
+			T \GETS \text{purify(}T\text{)} \\									
 		\END\\
 	\RETURN{\text{detect}(T)}
 	\end{pseudocode}

@@ -2,23 +2,21 @@
 \chapter{A new molecular algorithm for {\sc Satisfiability}}
 
 %<Paragraph> Introduce 
-This chapter introduces a new molecular algorithm for {\sc Satisfiability}.  The Distribution algorithm distributes literals from a CNF instance into a set of non-conflicting witnesses.
+This chapter introduces a new molecular algorithm for {\sc Satisfiability}.  The Distribution algorithm distributes literals from a CNF instance into a set of non-conflicting witnesses.  In this chapter, we use the literal notation $L$ from Figure \ref{equivalentWitnessRepresentations} to denote witness candidates.
 
 \section{Distribution algorithm for {\sc Satisfiability}}
 
 %	<Paragraph> Introduce Distribution algorithm	
-The Distribution algorithm initially consists of single literal witnesses from a single clause.  Literals from each clause get distributed into non-conflicting witness candidates.  A witness candidate conflicts when it contains both $x_i$ and $\neg x_i$.  In this case the configuration gets removed from the set of non-conflicting witnesses.  
+The {\sc Distribution Algorithm} (Algorithm 4.1.1) initially consists of single literal witnesses from a single clause.  Literals from each clause get distributed into non-conflicting witness candidates.  A witness candidate conflicts when it contains both $x_i$ and $\neg x_i$.  In this case the configuration gets removed from the set of non-conflicting witnesses.  
+
+\input{./algorithms/distributionAlgorithm.tex}
+\FloatBarrier
 
 	\subsection{Description of the Distribution algorithm}
 		
 %		<Paragraph> Describe preconditions	
 %		<Paragraph> Describe setup
-
-The {\sc Distribution Algorithm} (Algorithm 4.1.1) starts with the literal assignments of a clause.  Evaluation of subsequent clauses extends the solution space using the {\sc Insert Literal} subroutine (Algorithm 4.1.2).  During each insertion, the literal gets inserted into a potential solution vector.  Table \ref{distributionInsertTable} lists the five possibilities for literal assignment.
-
-\input{./algorithms/distributionAlgorithm.tex}
-
-\FloatBarrier
+The {\sc Distribution Algorithm} starts with the literal assignments of a clause.  Evaluation of subsequent clauses extends the solution space using the {\sc Insert Literal} subroutine (Algorithm 4.1.2).  During each insertion, the literal gets inserted into a potential solution vector.  Table \ref{distributionInsertTable} lists the five possibilities for literal assignment.
 	
 \begin{table}[htdp]
 \caption{Configurations for the {\sc Insert Literal} subroutine}
@@ -58,7 +56,6 @@ For example, let us consider the CNF instance
 \]		
 
 The Distribution algorithm begins with the first clause.  We have the set of witnesses
-
 \[
 T = \{ \{x_1\}, \{x_2\} \}.
 \] 
@@ -68,19 +65,19 @@ Next, literals from the second clause get inserted into the set of non-conflicti
 T_C = \emptyset
 \]
 
-\noindent First insert $x_1$ into $T$
+\noindent First, insert $x_1$ into $T$
 \[
 T_I = \{ \{x_1\}, \{x_1, x_2\} \}.
 \] 
 
-\noindent The witness $\{x_1\}$ contains $x_1$, and the idempotent witness $\{x_1\}$ is returned.  The witness $\{x_1, x_2\}$ requires $x_1$ to satisfy the second clause.
+\noindent The witness $\{x_1\}$ contains $x_1$, and the idempotent witness $\{x_1\}$ remains unchanged.  The witness $\{x_1, x_2\}$ requires $x_1$ to satisfy the second clause.
 
 Mix the contents of $T_I$ into the set of clause witnesses $T_C$
 \[
 T_C = \{ \{x_1\}, \{x_1, x_2\} \}.
 \]
 
-\noindent Next insert $\neg x_2$ into $T$
+\noindent Next, insert $\neg x_2$ into $T$
 \[
 T_I = \{ \{x_1, \neg x_2\} \}.
 \] 
@@ -92,8 +89,7 @@ Mix the contents of $T_I$ into the set of clause witnesses $T_C$
 T_C = \{ \{x_1\}, \{x_1, x_2\}, \{x_1, \neg x_2\} \}.
 \]
 
-Finally insert the literal $x_3$ into $T$
-
+Finally, insert the literal $x_3$ into $T$
 \[
 T_I = \{ \{x_1, x_3\}, \{x_2, x_3\} \}.
 \] 
@@ -105,7 +101,7 @@ Mix the contents of $T_I$ into the set of clause witnesses $T_C$
 T_C = \{ \{x_1\}, \{x_1, x_2\}, \{x_1, \neg x_2\}, \{x_1, x_3\}, \{x_2, x_3\} \}.
 \]
 
-The contents of $T_C$ get assigned to $T$.
+The contents of $T_C$ get assigned to $T$
 
 \[
 T = \{ \{x_1\}, \{x_1, x_2\}, \{x_1, \neg x_2\}, \{x_1, x_3\}, \{x_2, x_3\} \}.

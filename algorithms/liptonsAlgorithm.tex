@@ -3,7 +3,6 @@
 
 \begin{figure}[htbp]
 \begin{center}
-
 	\begin{pseudocode}{Lipton's Algorithm}{\phi}
 	T \GETS \text{{\sc Combinatorial Generate}}(n) \\
 	\FOREACH \text{clause } C \text{ in } \phi \DO
@@ -23,14 +22,14 @@
 					\END
 			\END
 		\\
-		T \GETS T_c\\
+		T \GETS \text{purify(}T_c\text{)} \\
 		\END
 	\\
 	\RETURN{\text{detect}(T)}
 	\end{pseudocode}
 
 
-\caption{{\sc Lipton's Algorithm} iterates over each of the $m$ clauses.  The contents of $T_C$ incrementally grows with configurations from $T$ that satisfy the literal $v$.  Once the entire clause $C$ has been evaluated, $T_C$ contains configurations that witness the observed conditions.  The contents of $T_C$ are stored as $T$ for the next clause; $T$ now contains configurations that witness all previous clauses.  Once complete, the tube $T$ contains satisfiable instances for $\phi$.}
+\caption{{\sc Lipton's Algorithm} iterates over each of the $m$ clauses.  The contents of $T_C$ grows incrementally with configurations from $T$ that satisfy the literal $v$.  Once the entire clause $C$ has been evaluated, $T_C$ contains configurations that witness the observed conditions.  The contents of $T_C$ are stored as $T$ for the next clause; $T$ now contains configurations that witness all previous clauses.  Once complete, the tube $T$ contains all witnesses for $\phi$, if any witnesses exist.}
 \label{liptonAlgorithm}
 \end{center}
 \end{figure}

@@ -2,7 +2,7 @@
 
 %	<Paragraph> Describe overview of chapter contents
 
-This chapter introduces Molecular Simulation: A system for molecular computation.  We provide an overview of the software and download location for Molecular Simulation and its documentation. We provide tools for use with Molecular Simulation.  This includes \texttt{Perl} execution scripts and visualization for output data.  We provide examples for Molecular Simulation's input and output.  Invocation of Molecular Simulation from the command line provides user configurable options.  The next chapter describes the usage of Molecular Simulation with automated execution.
+This chapter introduces Molecular Simulation: A system for molecular computation.  We provide an overview of the software and download location for Molecular Simulation and its documentation. We provide tools for use with Molecular Simulation.  This includes \texttt{Perl} execution scripts and visualization for output data.  We provide examples for Molecular Simulation's input and output.  Invocation of Molecular Simulation from the command line provides user configurable options.  Chapter 6 describes the usage of Molecular Simulation with automated execution.
 	
 	\section{Overview}
 	
@@ -16,13 +16,11 @@ This program is a simulated molecular lab for experimenting with DNA operations.
 %		<Paragraph> Reference download and documentation locations
 
 	\section{Download}
-	\noindent Molecular Simulation can be downloaded from:
-	
-	\url{https://github.com/dncarley/MolecularSimulation}. 
+	\noindent Download Molecular Simulation from: \url{https://github.com/dncarley/MolecularSimulation}. 
 	
  	\section{Requirements}
  	
- 	Requirements for Molecular Simulation are specified in this section.  This includes the hardware and software requirements for running Molecular Simulation on your system.
+	This section specifies the requirements for running Molecular Simulation.
 
 	\subsection{Hardware requirements}
 	
@@ -30,15 +28,14 @@ This program is a simulated molecular lab for experimenting with DNA operations.
  	
  	\subsection{Software requirements}
 	
-	\par \noindent \texttt{gcc} (GNU Compiler Collection) must be installed on your system. \\
+	\par \noindent \texttt{gcc} (GNU Compiler Collection) must be installed to build Molecular Simulation. \\
 	
-	\par \noindent \texttt{Perl} must be installed on your system to automate build and execution of Molecular Simulation.
+	\par \noindent \texttt{Perl} must be installed to automate build and execution of Molecular Simulation.
 	
 
 	\section{Documentation}
 
 \noindent The project website contains detailed documentation for Molecular Simulation.  The documentation provides an overview of Molecular Simulation that may be used independently of Chapters 5 and 6 for getting started.  The online documentation provides detailed datatype, function, and class definitions.
-
 
 	\section{Tools}
 	
@@ -77,11 +74,9 @@ The source directory includes several \texttt{Perl} scripts to assist in buildin
 		
 %			<Paragraph> Describe Modified visualization from Ben Fry
 
-A {\sc Sat} datapoint visualization for Molecular Simulation's output can be downloaded from:
+Ben Fry's example in Chapter 4 of \textit{Visualizing Data} \cite{fryVisualizingData} provides a framework for importing output from Molecular Simulation.
 
-\url{https://github.com/dncarley/VisualizeSatDatapoints}
-
-\noindent Ben Fry's example in Chapter 4 of \textit{Visualizing Data} \cite{fryVisualizingData} provides a framework for importing output from Molecular Simulation.  The visualization project directory contains a README for usage.  
+The {\sc Sat} Datapoint Visualization for Molecular Simulation's output can be downloaded from: \url{https://github.com/dncarley/VisualizeSatDatapoints}.
 
 %			<Paragraph> Discuss implementation
 %In the following sections, we provide the output format for Molecular Simulation.  We explore several use cases, including a native desktop and online Javascript applications.
@@ -91,9 +86,9 @@ A {\sc Sat} datapoint visualization for Molecular Simulation's output can be dow
 	
 %		<Paragraph> Describe DIMACS CNF 
 
-Input to Molecular Simulation consists of a DIMACS CNF file. The definition of the \texttt{*.cnf} filetype can be accessed from: \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/doc/}.		
-%		<Verbatim> Show input example
+Input to Molecular Simulation consists of a DIMACS CNF file. The definition of the \texttt{*.cnf} filetype can be accessed from: \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/doc/}.
 
+%		<Verbatim> Show input example
 \begin{verbatim}
 c comments begin with a `c'
 c
@@ -118,7 +113,6 @@ c
 %		<Paragraph> Describe Sat Competition output
 
 Output from Molecular Simulation, by default, conforms to the 2011 {\sc Sat} Competition rules.  The rules can be accessed from: \url{http://www.satcompetition.org/2011/rules.pdf}.
-
 
 %		<Verbatim> Show output example
 \begin{verbatim}
@@ -162,17 +156,14 @@ Table \ref{outputTableDefiniton} describes an extended custom output.  This outp
 \label{outputTableDefiniton}
 \end{table}%
 		
-
 \FloatBarrier
 			
 \section{Execution}
-	
 %		<Paragraph>	Describe invocation of Molecular Simulation
 Invocation of Molecular Simulation can be performed from the command line.
-
-\[
-\texttt{\$ ./execute/simulation i [input] [options]}
-\]
+	\begin{center}
+	\texttt{\$ ./execute/simulation i [input] [options]}
+	\end{center}
 
 The \texttt{[input]} consists of a DIMACS CNF file.  Command line \texttt{[options]} may be a combination of the options in Table \ref{MolecularCommandLineArgs}.
 
@@ -207,7 +198,7 @@ The \texttt{[input]} consists of a DIMACS CNF file.  Command line \texttt{[optio
 
 \subsection{Execution example}
 
-Suppose that we would like to execute Ogihara and Ray's algorithm for a DIMACS CNF file.  We would like to execute the instance \texttt{test1.cnf} located in the directory \texttt{/molecularSimulation/testbench}.  We output the results \texttt{test1-o.out} in the same directory as the input CNF.  We invoke Molecular Simulation with the following command.
+Suppose that we would like to execute Ogihara and Ray's algorithm for a DIMACS CNF file instance \texttt{test1.cnf} located in the directory \texttt{MolecularSimulation/testbench}.  We output the results \texttt{test1-o.out} in the same directory as the input CNF.  To do this, we invoke Molecular Simulation with the following command:
 \[
 \texttt{\$ ./execute/simulation i ../testbench/test1.cnf -a o -w ../testbench/test1-o.out}
 \]

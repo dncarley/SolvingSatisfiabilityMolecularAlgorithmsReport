@@ -16,7 +16,13 @@ Building Molecular Simulation can be performed by invoking the \texttt{Perl} scr
 \texttt{\$ perl build.pl}
 \end{center}
 
-\noindent This script generates an executable \texttt{simulation} in the directory \texttt{molecularSimulation\symbol{92}execute}.  The next sections describe invocation of Molecular Simulation with desired options.  We begin with the creation and importation of DIMACS CNF datasets.
+\noindent This script generates an executable \texttt{simulation} in the directory:
+
+\begin{center}
+\texttt{MolecularSimulation/execute}
+\end{center}
+
+The next sections describe invocation of Molecular Simulation with desired options.  We begin with the creation and importation of DIMACS CNF datasets.
 
 %\par \noindent  Further porting has been made to execute Molecular Simulation on the RIT CS department's Ubuntu machines.		
 		
@@ -25,33 +31,22 @@ Building Molecular Simulation can be performed by invoking the \texttt{Perl} scr
 
 %		<Paragraph> Random $k$-{\sc Sat} instances
 
-	We will create a sweep of random $k$-{\sc Sat} instances to observe {\sc Sat} phase transition.  David Wilson's \texttt{ksat.c} generates random $k$-{\sc Sat} instances in DIMACS CNF format.  The program takes four arguments to create a unique DIMACS CNF instance.  Invocation of the program can be performed using the following command.
+We create a sweep of random $k$-{\sc Sat} instances to observe {\sc Sat} phase transition.  David Wilson's \texttt{ksat.c} generates random $k$-{\sc Sat} instances in DIMACS CNF format \cite{wilsonKsat}.  The program takes four arguments to create a unique DIMACS CNF instance.  Invocation of the program can be performed using the following command.
 
 \begin{center}
-
 \texttt{./execute/ksat} $k$ $n$ $m$ $s$ \texttt{>} \textit{output}\texttt{.cnf}
-
 \end{center}
 
 This generates \textit{output}\texttt{.cnf} in DIMACS CNF format with $k$ variables per clause $n$ variables, $m$ clauses, and random seed $s$.
 
 %		<Paragraph> Random $k$-{\sc Sat} sweep
-
 We use automated \texttt{Perl} scripts to create a sweep of DIMACS CNF instances.  Setup for a sweep configuration includes specifying a set of ratios.  Invocation of the script generates a set of random $k$-{\sc Sat} instances.  The redirected output gets stored in the target directory with the previous file naming convention.  We use the following command to invoke the construction of a sweep of $k$-{\sc Sat} instances.
 
-
 \begin{center}
-
 \texttt{\$ perl buildGenerate.pl}
-
 \end{center}
 
-
-
 %Random $k$-{\sc Sat} instance  
-
-
-
 	\section{Import dataset}
 
 %		<Paragraph> Provide DIMACS {\sc Sat} input  
@@ -62,10 +57,7 @@ Datasets of DIMACS CNF input may be provided for batch processing.  This include
 
 DIMACS CNF benchmarks are available for download from: \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/}.
 
-
 	\section{Configure test}
-
-
 %		<Paragraph> Select algorithm
 %		<Paragraph> Set output options
 %		<Paragraph> Select input CNF file
@@ -78,9 +70,6 @@ The provided \texttt{Perl} script \texttt{executeMolecularSat.pl} allows executi
 \]
 
 The options for \texttt{executeMolecularSat.pl} can be a combination of the options in Table \ref{executeMolecularSatTable}.
-
-
-
 
 \begin{table}[htdp]
 \caption{Command line options for \texttt{executeMolecularSat.pl}}
@@ -114,7 +103,15 @@ The options for \texttt{executeMolecularSat.pl} can be a combination of the opti
 
 %		<Paragraph> Describe understanding data
 
-The output can be analyzed after the automated tests have completed.  The output consists of the standard {\sc Sat} Competition output appended with custom runtime metric logging.  We discuss viewing output directly during execution and reading saved output files.  Collections of output files may be read by the data visualization program and exported into a condensed table. 
+The following command provides a simplified build and execution for the default simulation for Molecular Simulation.
+
+\begin{center}
+\texttt{\$ perl runSimulation.pl [options]}
+\end{center}
+
+This command first builds Molecular Simulation with \texttt{build.pl}, and invokes Molecular Simulation with \texttt{executeMolecularSat.pl}.  The \texttt{[options]} are passed directly to \texttt{executeMolecularSat.pl}.
+
+Output consists of the standard {\sc Sat} Competition output appended with custom runtime metric logging.  Collections of output files may be read by the data visualization program and exported into a condensed table. 
 
 		\subsection{Execution output}
 

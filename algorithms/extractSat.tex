@@ -4,10 +4,9 @@
 
 	\begin{pseudocode}{ExtractSat}{\phi}
 	
-	n \text{ number of variables in } \phi \\
+	\text{// Input $\phi$ consists of $n$ variables.}\\
 	\\
-		T \GETS \text{\sc CombinatorialGenerate}(n)\\
-	
+		T \GETS \text{\sc CombinatorialGenerate}(n)\\	
 		\FOREACH \text{clause } C \text{ in } \phi \DO
 			\BEGIN
 				T_C \GETS \emptyset \\
