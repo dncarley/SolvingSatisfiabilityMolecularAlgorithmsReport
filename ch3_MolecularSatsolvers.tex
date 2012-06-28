@@ -2,7 +2,7 @@
 
 %<Paragraph> Introduce two molecular algorithms for {\sc Satisfiability}
 
-In this chapter, we introduce two molecular algorithms for {\sc Satisfiability}.  These algorithms construct sets of all witnesses for {\sc Satisfiability} instances.  Lipton's algorithm requires a combinatorial space of all witness candidates to be constructed and then filters out invalid ones.  Ogihara and Ray's algorithm constructs a set of witness candidates throughout execution.  Following the description, we explore the physical implementations of---and simulation frameworks for---these algorithms.
+In this chapter, we discuss two molecular algorithms for {\sc Satisfiability}.  These algorithms construct sets of all witnesses for {\sc Satisfiability} instances.  Lipton's algorithm requires a combinatorial space of all witness candidates to be constructed and then filters out invalid ones.  Ogihara and Ray's algorithm constructs a set of witness candidates throughout execution.  Following the description, we explore the physical implementations of---and simulation frameworks for---these algorithms.
 
 \begin{table}[htdp]
 \caption{Components of Boolean literals and equivalent literal representations.}
@@ -42,7 +42,7 @@ In Chapter 1, witness candidates for {\sc Satisfiability} were represented as a 
 
 We use the directed polarity string (representation $D$ in Figure \ref{equivalentWitnessRepresentations}) as shorthand for a directed oligonucleotide.  The directed string representation $D$ can be indexed by the variable $v$.  In Lipton's algorithm, literal configurations for a variable $v$ get extracted directly ($v_{\texttt{T}}$ or $v_{\texttt{F}}$).
 
-In Ogihara and Ray's algorithm, we extract satisfying literal configurations from an ordered clause $[a, b, c]$.  We use the literal configuration $v_P$ to extract the satisfying literal $P$ (either \texttt{T} or \texttt{F}) for the variable $v$.  We use the literal configuration $v_N$ to extract any other non-satisfiable literal assignments to $v$.
+In Ogihara and Ray's algorithm, we extract satisfying literal configurations from an ordered clause $(a, b, c)$.  We use the literal configuration $v_P$ to extract the satisfying literal $P$ (either \texttt{T} or \texttt{F}) for the variable $v$.  We use the literal configuration $v_N$ to extract any other non-satisfiable literal assignments to $v$.
 
 \section{Lipton's algorithm for {\sc Satisfiability}}
 
@@ -118,13 +118,7 @@ T_{comb} = \{\texttt{STT}, \texttt{SFT}, \texttt{STF}, \texttt{SFF}\}.
 
 {\sc Combinatorial Generate} generates all witness candidates for a {\sc Satisfiability} instance.  {\sc Lipton's Algorithm} filters, from a combinatorial space $T$, configurations that represent witnesses for the input $\phi$.
 
-%		<Paragraph> Describe execution
-%The amplification process gets modeled with a purification step.  This eliminates all redundant strings for the simulated implementation.  After the iteration completes, the complete combinatorial space gets returned. This space consists of $2^n$ vectors of length $n$. 
-
-
-%		<Paragraph> Describe Output
-	\subsection{Detailed trace of Lipton's algorithm}
-	
+	\subsection{Detailed trace of Lipton's algorithm}	
 %	<Paragraph> Introduce pseudocode
 Appendix B lists a detailed execution trace for Lipton's algorithm.
 
@@ -143,23 +137,28 @@ Ogihara and Ray's algorithm (Algorithm 3.2.1) consist of a breadth-first evaluat
 \subsection{Description of Ogihara and Ray's algorithm}
 		
 %		<Paragraph> Describe preconditions
-Ogihara and Ray's algorithm requires each input to have the two attributes.
+Ogihara and Ray's algorithm requires each input to have two attributes:
 
 \begin{enumerate}
-\item All clauses consist of exactly three literals
-\item All clauses must be sorted by the literal's variable
+\item All clauses consist of exactly three literals.
+\item All clauses must be ordered by the literal's variable.
 \end{enumerate}
 
 Considering only $3$-{\sc Sat} instances fulfills Attribute (1).  If models of $k$-{\sc Sat} with $k > 3$ are desired as input, then a polynomial time reduction to $3$-{\sc Sat} must occur prior to execution.
 
-Sorting the literals from each clause by variable fulfills Attribute (2).  The polarity of each literal may consist of a positive or negative assignment.  Construction of witness candidates consider the possibilities of the clause ordering
-
+Ordering the literals from each clause by variable fulfills Attribute (2).  We impose an increasing ordering over the variable indices in each clause $C = (x_i \vee x_j \vee x_k)$.  We have
 \[
-a < b < c.
+1 \leq i < j < k \leq n.
 \]
 
-%		<Paragraph> Describe setup
+\noindent We use the notation $(a, b, c)$ to denote the ordered clause, where
+\begin{align*}
+a &= x_i, \\
+b &= x_j, \\
+c &= x_k.
+\end{align*}
 
+%		<Paragraph> Describe setup
 {\sc Ogihara and Ray's Algorithm} begins with four initial witness candidates. 
 \[
 T = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
@@ -228,7 +227,7 @@ Appendix B lists a detailed execution trace for Ogihara and Ray's algorithm.
 
 \section{Implementations of molecular {\sc Satisfiability} solvers}
 
-We introduce existing implementations of molecular {\sc Satisfiability} solvers.  Physical implementations apply molecular biology techniques using real molecules.  Simulation frameworks use standard computation to simulate molecular biology techniques.
+We discuss existing implementations of molecular {\sc Satisfiability} solvers.  Physical implementations apply molecular biology techniques and actual molecules.  Simulation frameworks use standard computation to simulate molecular biology techniques.
 
 	\subsection{Physical implementations}
 	
@@ -243,4 +242,4 @@ Braich et al. implemented a molecular computer to filter solutions for a 3-{\sc 
 %		<Paragraph> Describe computer simulation 
 Martín-Mateos et al. introduced a simulation for Lipton's algorithm \cite{MartinMateos02molecularcomputation}.   Molecular operations get implemented in \texttt{ACL2}, a Common Lisp variant.  The framework for this system implemented test cases for Lipton's algorithm.
 
-Ogihara provides test results for implementation of his original molecular algorithm \cite{Ogihara:1996:BFS:898228}.  This simulation provides a comparison to Lipton's algorithm for practical length restrictions.
+Ogihara provides test results for an implementation of his original molecular algorithm \cite{Ogihara:1996:BFS:898228}.  This simulation provides a comparison to Lipton's algorithm for practical length restrictions.

@@ -5,7 +5,7 @@
 	\begin{pseudocode}{Ogihara and Ray's Algorithm}{\phi}
 	
 	\text{// Input $\phi$ consists of $n$ variables.}\\
-	\text{// Each clause $C$ contains sorted literals $[a,b,c]$.}\\
+	\text{// Each clause $C$ contains ordered literals $(a,b,c)$.}\\
 	\\
 	T \GETS \{ \texttt{STT}, \texttt{STF}, \texttt{SFT},  \texttt{SFF}\} \\
 	
@@ -15,7 +15,7 @@
 	
 		\FOREACH \text{clause } C \text{ in } \phi \DO
 			\BEGIN
-				[a, b, c] \GETS C\\
+				(a, b, c) \GETS C\\
 				\IF v_{\texttt{T}} = c  \THEN
 					\BEGIN
 						T_{P1} \GETS \text{extract}(T_N, a_P)\\
@@ -45,4 +45,3 @@
 \label{ogiharaRayAlgorithm}
 \end{center}
 \end{figure}
-

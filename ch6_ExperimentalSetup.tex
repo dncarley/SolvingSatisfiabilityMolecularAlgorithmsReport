@@ -2,7 +2,7 @@
 
 %	<Paragraph> Overview of experimental setup
 
-This chapter describes the use of Molecular Simulation for evaluation of a set of DIMACS CNF {\sc Satisfiability} instances.  We discuss configuration for generation of random $k$-{\sc Sat} instances.  Further, any existing DIMACS CNF benchmark may be imported for test.  We provide example configuration options for automating the execution of Molecular Simulation.  The example continues with an analysis of runtime metrics for each test instance.  The next chapter provides the results from the $k$-{\sc Sat} sweep experiment.
+This chapter describes the use of Molecular Simulation for evaluation of a set of DIMACS CNF {\sc Satisfiability} instances.  We discuss configuration for generation of random $k$-{\sc Sat} instances.  Further, any existing DIMACS CNF benchmark may be imported for test.  Example configuration options automate the execution of Molecular Simulation.  The example continues with an analysis of runtime metrics for each test instance.  The next chapter describes the results from the $k$-{\sc Sat} sweep experiment.
 
 	\section{Setup}
 
@@ -34,7 +34,7 @@ The next sections describe invocation of Molecular Simulation with desired optio
 We create a sweep of random $k$-{\sc Sat} instances to observe {\sc Sat} phase transition.  David Wilson's \texttt{ksat.c} generates random $k$-{\sc Sat} instances in DIMACS CNF format \cite{wilsonKsat}.  The program takes four arguments to create a unique DIMACS CNF instance.  Invocation of the program can be performed using the following command.
 
 \begin{center}
-\texttt{./execute/ksat} $k$ $n$ $m$ $s$ \texttt{>} \textit{output}\texttt{.cnf}
+\texttt{\$ ./execute/ksat} $k$ $n$ $m$ $s$ \texttt{>} \textit{output}\texttt{.cnf}
 \end{center}
 
 This generates \textit{output}\texttt{.cnf} in DIMACS CNF format with $k$ variables per clause $n$ variables, $m$ clauses, and random seed $s$.
@@ -49,8 +49,6 @@ We use automated \texttt{Perl} scripts to create a sweep of DIMACS CNF instances
 %Random $k$-{\sc Sat} instance  
 	\section{Import dataset}
 
-%		<Paragraph> Provide DIMACS {\sc Sat} input  
-
 Datasets of DIMACS CNF input may be provided for batch processing.  This includes random $k$-{\sc Sat} instances generated from the previous section, or importing existing DIMACS CNF instances.   
 
 %		<Paragraph> DIMACS Sat benchmarks
@@ -61,9 +59,9 @@ DIMACS CNF benchmarks are available for download from: \url{ftp://dimacs.rutgers
 %		<Paragraph> Select algorithm
 %		<Paragraph> Set output options
 %		<Paragraph> Select input CNF file
-The previous chapter described a single execution of Molecular Simulation.  Now we provide the automated invocation for processing datasets with each of the algorithms.
+The previous chapter described a single execution of Molecular Simulation.  We use automated scripts for processing datasets with each of the algorithms.
 
-The provided \texttt{Perl} script \texttt{executeMolecularSat.pl} allows execution for a directory of DIMACS CNF input.  Executing the script from the command line without arguments processes the experimental setup and saves output to the same directory.
+The \texttt{Perl} script \texttt{executeMolecularSat.pl} allows execution for a directory of DIMACS CNF input.  Executing the script from the command line without arguments processes the experimental setup and saves output to the same directory.
 
 \[
 \texttt{ \$ perl executeMolecularSat.pl [options]}
@@ -78,15 +76,18 @@ The options for \texttt{executeMolecularSat.pl} can be a combination of the opti
 \hline
 \textbf{Argument} & \textbf{Parameters} & \textbf{Description} \\ \hline
 %\texttt{i}		& \texttt{[input]} & Required DIMACS CNF input \\
-% 				&				   &		 \\
+ 				&				   &		 \\
  \texttt{-d}	& 				   & Distribution algorithm		 \\
  \texttt{-l}	& 				   & Lipton's algorithm		 \\
  \texttt{-o}	& 				   & Ogihara and Ray's algorithm		 \\
+ 				&				   &		 \\  				
+ 				&				   & \textbf{Default:} Execute all three algorithms.		 \\  				
  				&				   &		 \\ \hline 				
 \texttt{-debug}		&				   & Debug		 \\ 				
  				&				   &		 \\ \hline
 \texttt{-p}		&				   & Specify CNF file path. 	 \\
- 				& \texttt{[CNF file path]}  &		Default path: \texttt{data/testCNF}	 \\ 			
+ 				&				   &		 \\  				
+ 				& \texttt{[CNF file path]}  & \textbf{Default path:} \texttt{data/testCNF}	 \\ 			
  				&				   &		\\ \hline 	
 \texttt{-f}		&				   & Write output to file		 \\
  				&				   &		\\ \hline 				
@@ -103,13 +104,13 @@ The options for \texttt{executeMolecularSat.pl} can be a combination of the opti
 
 %		<Paragraph> Describe understanding data
 
-The following command provides a simplified build and execution for the default simulation for Molecular Simulation.
+The following command builds and executes Molecular Simulation.
 
 \begin{center}
 \texttt{\$ perl runSimulation.pl [options]}
 \end{center}
 
-This command first builds Molecular Simulation with \texttt{build.pl}, and invokes Molecular Simulation with \texttt{executeMolecularSat.pl}.  The \texttt{[options]} are passed directly to \texttt{executeMolecularSat.pl}.
+This command first builds Molecular Simulation with \texttt{build.pl}, and invokes Molecular Simulation with \texttt{executeMolecularSat.pl}.  The \texttt{[options]} are passed directly to \texttt{executeMolecularSat.pl}.  Molecular Simulation executes the default experimental setup with no \texttt{[options]} specified.
 
 Output consists of the standard {\sc Sat} Competition output appended with custom runtime metric logging.  Collections of output files may be read by the data visualization program and exported into a condensed table. 
 
@@ -121,7 +122,7 @@ Output consists of the standard {\sc Sat} Competition output appended with custo
 
 %			<Paragraph> View output on terminal
 %			<Paragraph> Verbose output
-	Output directed to standard output conforms to the {\sc Sat} Competition rules.  This output may be used during testing, or redirected to an external stream.  The debug option \texttt{-debug} provides detailed information about the execution.  The debug option writes verbose content based on the program execution.  
+	Output directed to standard output conforms to the {\sc Sat} Competition rules.  This output may be used during testing, or redirected to an external stream.  The debug option \texttt{-debug} displays detailed information about the execution.  The debug option writes verbose content based on the program execution.  
 
 %		<Paragraph> Output metrics
-	Reading output metrics from the saved output, as defined in Table \ref{outputTableDefiniton}, allows for analysis of collected data.  The data visualization reads a directory of output and condenses it as a \texttt{*.tsv} file.  Subsequent datapoint browsing and the online view use the \texttt{*.tsv} file for condensed reading and transmission.  In the next chapter, we provide the results of the experimental setup.
+	Reading output metrics from the saved output, as defined in Table \ref{outputTableDefiniton}, allows for analysis of collected data.  The data visualization reads a directory of output and condenses it as a Tab Separated Values (\texttt{*.tsv}) file.  Subsequent datapoint browsing and the online view use the \texttt{*.tsv} file for condensed reading and transmission.  In the next chapter, we describe the results of the experimental setup.

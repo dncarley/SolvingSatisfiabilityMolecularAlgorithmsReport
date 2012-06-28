@@ -1,27 +1,36 @@
 
-
 \begin{figure}[htbp]
 \begin{center}
 
 	\begin{pseudocode}{Insert Literal}{T, \ell}
 		T_R \GETS \emptyset \\
-		\FOREACH \text{ string } s \text{ in } T \DO
+		
+		\IF T = \emptyset \THEN
 			\BEGIN
-				\CASE(1): \ell < s \THEN
-					s' \GETS \text{append}(\ell, s)\\
-				\CASE(2): \ell > s \THEN
-					s' \GETS \text{append}(s, \ell)\\
-				\CASE(3): s_1 < \ell < s_2 \THEN
+				\text{// Assign the single literal witness for \textbf{case }(0).}\\
+				 T_R \GETS \{ (\ell) \}\\
+			\\
+			\END
+		\ELSE
+			\BEGIN	
+				\FOREACH \text{ Witness candidate } w \text{ in } T \DO
 					\BEGIN
-					[s_1, s_2] \GETS \text{splice}(s, \ell)\\
-					s_1 \GETS \text{append}(s_1, \ell)\\
-					s' \GETS \text{append}(s_1, s_2)\\
+						\CASE(1): \ell < w \THEN
+							w' \GETS \text{append}(\ell, w)\\
+						\CASE(2): \ell > s \THEN
+							w' \GETS \text{append}(w, \ell)\\
+						\CASE(3): w_1 < \ell < w_2 \THEN
+							\BEGIN
+							[w_1, w_2] \GETS \text{splice}(w, \ell)\\
+							w_1 \GETS \text{append}(w_1, \ell)\\
+							w' \GETS \text{append}(w_1, w_2)\\
+							\END \\
+						\CASE(4): \neg \ell \in w \THEN
+							w' \GETS \emptyset \\
+						\CASE(5): \ell \in s \THEN
+							w' \GETS w\\
+						T_R \GETS \text{mix}(T_R, w') \\
 					\END \\
-				\CASE(4): \neg \ell \in s \THEN
-					s' \GETS \emptyset \\
-				\CASE(5): \ell \in s \THEN
-					s' \GETS s\\
-				T_R \GETS \text{mix}(T_R, s') \\
 			\END \\
 		\RETURN{T_R}
 	\end{pseudocode}

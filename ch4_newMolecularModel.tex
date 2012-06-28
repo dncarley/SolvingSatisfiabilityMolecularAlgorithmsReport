@@ -2,37 +2,110 @@
 \chapter{A new molecular algorithm for {\sc Satisfiability}}
 
 %<Paragraph> Introduce 
-This chapter introduces a new molecular algorithm for {\sc Satisfiability}.  The Distribution algorithm distributes literals from a CNF instance into a set of non-conflicting witnesses.  In this chapter, we use the literal notation $L$ from Figure \ref{equivalentWitnessRepresentations} to denote witness candidates.
+This chapter introduces a new molecular algorithm for {\sc Satisfiability}: the Distribution algorithm distributes literals from a CNF instance into a set of non-conflicting witnesses. 
 
 \section{Distribution algorithm for {\sc Satisfiability}}
 
 %	<Paragraph> Introduce Distribution algorithm	
-The {\sc Distribution Algorithm} (Algorithm 4.1.1) initially consists of single literal witnesses from a single clause.  Literals from each clause get distributed into non-conflicting witness candidates.  A witness candidate conflicts when it contains both $x_i$ and $\neg x_i$.  In this case the configuration gets removed from the set of non-conflicting witnesses.  
+The {\sc Distribution Algorithm} (Algorithm 4.1.1) starts with single literal witnesses from the first clause.  The Distribution algorithm maintains a set of witnesses for each processed clause.  Literal assignments that may be inserted into the witness candidates from the processed clauses we call \emph{non-conflicting witnesses}.  A witness candidate \emph{conflicts} when it contains both $x_i$ and $\neg x_i$ literal assignments.  In this case, the algorithm removes the \emph{conflicting witness} from the set of non-conflicting witnesses.  
 
 \input{./algorithms/distributionAlgorithm.tex}
+\FloatBarrier
+
+During execution, the Distribution algorithm maintains an ordering for literal assignments in a set of non-conflicting witness.  The {\sc Insert Literal} subroutine (Algorithm 4.1.2) maintains an ordering to the literals in each ordered witness candidate.
+
+Case 0 initiates an empty tube $T$ with literal assignments from the first clause.  We have the tube
+
+\begin{align*}
+T_0 &= \text{{\sc Insert Literal}}(T, x_1)\\
+    &= \{ (x_1) \}. \\
+\end{align*}	
+
+Let us consider an example to demonstrate the cases for {\sc Insert Literal}.  Let $w = (x_2, \neg x_4, x_5)$ be a partial ordered witness contained in a tube
+\[
+T = \{ (x_2, \neg x_4, x_5) \}
+\]
+
+Case 1:
+\begin{align*}
+T_1 &= \text{{\sc Insert Literal}}(T, x_1)\\
+    &= \{ (x_1) \cdot (x_2, \neg x_4, x_5) \} \\
+    &= \{ (x_1, x_2, \neg x_4, x_5) \} 
+\end{align*}	
+
+Case 2:
+\begin{align*}
+T_2 &= \text{{\sc Insert Literal}}(T, x_6)\\
+    &= \{ (x_2, \neg x_4, x_5) \cdot (x_6) \} \\
+    &= \{ (x_2, \neg x_4, x_5, x_6) \}
+\end{align*}	
+
+Case 3:
+\begin{align*}
+T_3 &= \text{{\sc Insert Literal}}(T, x_3)\\
+    &= \{ (x_2) \cdot (x_3) \cdot(\neg x_4, x_5) \} \\
+	&= \{ (x_2, x_3, \neg x_4, x_5) \}
+\end{align*}	
+
+Case 4:
+\begin{align*}
+T_4 &= \text{{\sc Insert Literal}}(T, \neg x_2)\\
+    &= \{ (x_2, \neg x_4, x_5) \} \\
+	&= \{  \}
+\end{align*}
+
+Case 5:
+\begin{align*}
+T_5 &= \text{{\sc Insert Literal}}(T, x_2)\\
+    &= \{ (x_2, \neg x_4, x_5) \} \\
+\end{align*}
+
+In Case 1, the literal $x_1$ variable precedes the first literal in the ordered witness candidate $w$.  In Case 2 the literal $x_6$ variable succeeds the last literal of the ordered witness candidate $w$.
+
+Case 3 inserts a literal $x_3$ into $w$.  Because the literal $x_3$ variable occurs between the first and last ordered literals, the ordered witness candidate $w$ must be split to incorporate $(x_3)$.  We split $w$ into two components
+\begin{align*}
+w_1 &= (x_2) \\
+w_2 &= (\neg x_4, x_5),
+\end{align*}
+
+\noindent and form the completed witness candiate by appending the literal $x_3$ to $w_1$
+\[
+w_1 = (x_2, x_3).
+\]
+\noindent Finally form the ordered non-conflicting witness $w$ by appending $w_2$ to $w_1$
+\[
+w = (x_2, x_3, \neg x_4, x_5).
+\]
+
+Case 4 eliminates the conflicting witness; both positive ($x_2$) and negative ($\neg x_2$) literals appear for the same variable in the witness candidate $w$.
+
+In Case 5, the witness $w$ remains unchanged since the literal $x_2$ exists in the witness candidate $w$.
+
+\input{./algorithms/insertVariable.tex}
 \FloatBarrier
 
 	\subsection{Description of the Distribution algorithm}
 		
 %		<Paragraph> Describe preconditions	
 %		<Paragraph> Describe setup
-The {\sc Distribution Algorithm} starts with the literal assignments of a clause.  Evaluation of subsequent clauses extends the solution space using the {\sc Insert Literal} subroutine (Algorithm 4.1.2).  During each insertion, the literal gets inserted into a potential solution vector.  Table \ref{distributionInsertTable} lists the five possibilities for literal assignment.
+The {\sc Distribution Algorithm} starts with the literal assignments of a clause.  Evaluation of subsequent clauses extends the witness candidates using the {\sc Insert Literal} subroutine.  Each insertion maintains the set of witness candidates to only those that satisfy the current clause.  Table \ref{distributionInsertTable} lists the six possibilities for literal assignment.
 	
 \begin{table}[htdp]
 \caption{Configurations for the {\sc Insert Literal} subroutine}
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Case} & \textbf{Return configuration} & \textbf{State} \\ \hline 
-1	& $\ell \cdot s$ & if $\ell$ is less than all elements in $s$ \\ 
+\textbf{Case} & \textbf{Ordered witness} & \textbf{State} \\ \hline 
+0	& $(\ell)$ & if $T=\emptyset$ \\ \hline
+1	& $(\ell) \cdot (w)$ & if $v \in \ell$ is less than all literal indicies in $w$ \\ 
 & &  \\ \hline
-2	& $s \cdot \ell$ & if $\ell$ is greater than all elements in $s$ \\ 
+2	& $(w) \cdot (\ell)$ & if $v \in \ell$ is greater than all literal indicies in $w$ \\ 
 & &  \\ \hline
-3	& $s_1 \cdot \ell \cdot s_2$ & if $\ell$ is between two elements in $s$ \\ 
+3	& $(w_1) \cdot (\ell) \cdot (w_2)$ & if $v \in \ell$ is between two literal indicies in $w$ \\ 
 & &  \\ \hline
-4	& $\emptyset$ & if $\ell$ conflicts with $\neg \ell$ in $s$\\
+4	& $\emptyset$ & if $\ell$ conflicts with $\neg \ell$ in $w$\\
 & &  \\ \hline
-5	& $s$ & if $\ell$ exists in $s$\\ \hline
+5	& $(w)$ & if $\ell$ exists in $w$\\ \hline
 \end{tabular}
 \end{center}
 \label{distributionInsertTable}
@@ -42,13 +115,9 @@ The {\sc Distribution Algorithm} starts with the literal assignments of a clause
 
 %		<Paragraph> Describe execution
 		
-During this phase, each literal from a disjunctive clause gets considered, incrementally constructing a partial solution space.  Cases (1), (2), and (3) place a literal $\ell$ into an existing sequence $s$.  Each of these cases represents when the literal $\ell$ get inserted in a non-decreasing sequence.
+During this phase, each literal from a disjunctive clause incrementally constructs partial non-conflicting witnesses for the input $\phi$.  Case 0 inserts a literal $\ell$ to an unassigned initial tube.  Cases 1, 2, and 3 place a literal $\ell$ into an expanding witness candidate $w$.  Each of these cases maintain an ordering to the expanding set of non-conflicting witness candidates.
 
-\input{./algorithms/insertVariable.tex}
-
-A literal conflict occurs when both positive and negative assignments of a literal occur in a sequence $s$.  In this case (4), the sequence $s$ gets removed from the set potential solutions.  If the sequence $s$ contains the literal $\ell$, case (5), then the existing sequence $s$ gets returned unmodified.
-
-%Redundant vectors get removed after insertion of the next disjunctive clause.  Any remaining witnesses in the solution space contain non-conflicting literal assignments.  This does not immediately require that each witness to be a complete satisfiable assignment. Satisfiable witnesses remain in a non-empty satisfying solution space.
+A literal conflict occurs when both positive and negative assignments of a literal occur in a witness candidate $w$.  Case 4 removes the conflicting witness candidate $w$ from the set potential solutions.  In Case 5, the witness $w$ remains unmodified; this case occurs when the witness $w$ contains the literal $\ell$.
 
 For example, let us consider the CNF instance
 \[
@@ -57,54 +126,54 @@ For example, let us consider the CNF instance
 
 The Distribution algorithm begins with the first clause.  We have the set of witnesses
 \[
-T = \{ \{x_1\}, \{x_2\} \}.
+T = \{ (x_1), (x_2) \}.
 \] 
 
-Next, literals from the second clause get inserted into the set of non-conflicting witnesses in $T$.
+Next, insert the literals from the second clause into the set of non-conflicting witnesses in $T$.
 \[
 T_C = \emptyset
 \]
 
 \noindent First, insert $x_1$ into $T$
 \[
-T_I = \{ \{x_1\}, \{x_1, x_2\} \}.
+T_I = \{ (x_1), (x_1, x_2) \}.
 \] 
 
-\noindent The witness $\{x_1\}$ contains $x_1$, and the idempotent witness $\{x_1\}$ remains unchanged.  The witness $\{x_1, x_2\}$ requires $x_1$ to satisfy the second clause.
+\noindent The witness $(x_1)$ contains $x_1$, and the idempotent witness $(x_1)$ remains unchanged.  The witness $(x_1, x_2)$ requires $x_1$ to satisfy the second clause.
 
 Mix the contents of $T_I$ into the set of clause witnesses $T_C$
 \[
-T_C = \{ \{x_1\}, \{x_1, x_2\} \}.
+T_C = \{ (x_1), (x_1, x_2) \}.
 \]
 
 \noindent Next, insert $\neg x_2$ into $T$
 \[
-T_I = \{ \{x_1, \neg x_2\} \}.
+T_I = \{ (x_1, \neg x_2) \}.
 \] 
 
-\noindent The witness $\{x_1, \neg x_2\}$ requires $\neg x_2$ to satisfy the second clause.  The witness candidate $\{x_2, \neg x_2\}$ contains a conflict and gets removed from the set of potential witnesses.
+\noindent The witness $(x_1, \neg x_2)$ requires $\neg x_2$ to satisfy the second clause.  The witness candidate $(x_2, \neg x_2)$ contains a conflict and gets removed from the set of potential witnesses.
 
 Mix the contents of $T_I$ into the set of clause witnesses $T_C$
 \[
-T_C = \{ \{x_1\}, \{x_1, x_2\}, \{x_1, \neg x_2\} \}.
+T_C = \{ (x_1), (x_1, x_2), (x_1, \neg x_2) \}.
 \]
 
 Finally, insert the literal $x_3$ into $T$
 \[
-T_I = \{ \{x_1, x_3\}, \{x_2, x_3\} \}.
+T_I = \{ (x_1, x_3), (x_2, x_3) \}.
 \] 
 
 \noindent In this case, the literal $x_3$ is required to satisfy the second clause.  The literal gets inserted into the configurations without redundant or conflicting assignment.
 
 Mix the contents of $T_I$ into the set of clause witnesses $T_C$
 \[
-T_C = \{ \{x_1\}, \{x_1, x_2\}, \{x_1, \neg x_2\}, \{x_1, x_3\}, \{x_2, x_3\} \}.
+T_C = \{ (x_1), (x_1, x_2), (x_1, \neg x_2), (x_1, x_3), (x_2, x_3) \}.
 \]
 
-The contents of $T_C$ get assigned to $T$
+Assign the contents of $T_C$ to $T$
 
 \[
-T = \{ \{x_1\}, \{x_1, x_2\}, \{x_1, \neg x_2\}, \{x_1, x_3\}, \{x_2, x_3\} \}.
+T = \{ (x_1), (x_1, x_2), (x_1, \neg x_2), (x_1, x_3), (x_2, x_3) \}.
 \]
 
 The set $T$ contains non-conflicting witnesses for the observed clauses.  Once the algorithm terminates, $T$ contains non-conflicting witnesses for the CNF instance $\phi$. 

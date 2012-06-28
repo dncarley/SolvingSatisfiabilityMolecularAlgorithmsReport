@@ -135,7 +135,7 @@ C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
 
 Initialize the tube $T$ with initial vector assignments for variables $x_1$ and $x_2$
 \[
-	T = \{\texttt{TT}, \texttt{TF}, \texttt{FT}, \texttt{FF}\}
+	T = \{\texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
 \]
 
 \noindent Iterate variable $x_3$:
@@ -146,10 +146,10 @@ C_1 = (x_1 \vee x_2 \vee \neg x_3)
 \noindent $\neg x_3$ matches $v_3$
 
 \begin{align*}
-T_{P1} &= \{\texttt{TT}, \texttt{TF}\}\\
-T_{N1} &= \{\texttt{FT}, \texttt{FF}\}\\
-T_{P2} &= \{\texttt{FT}\}\\
-T_P &= \{\texttt{TT}, \texttt{TF}, \texttt{FT}\}
+T_{P1} &= \{\texttt{STT}, \texttt{STF}\}\\
+T_{N1} &= \{\texttt{SFT}, \texttt{SFF}\}\\
+T_{P2} &= \{\texttt{SFT}\}\\
+T_P &= \{\texttt{STT}, \texttt{STF}, \texttt{SFT}\}
 \end{align*}
 
 \[
@@ -165,14 +165,14 @@ C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
 \noindent Append
 
 \begin{align*}
-T_P &= \{\texttt{TTT}, \texttt{TFT}, \texttt{FTT}\}\\
-T_N &= \{\texttt{TTF}, \texttt{TFF}, \texttt{FTF}, \texttt{FFF}\}
+T_P &= \{\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}\}\\
+T_N &= \{\texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
 \end{align*}
 
 \noindent Mix
 
 \[
-T = \{\texttt{TTT}, \texttt{TFT}, \texttt{FTT}, \texttt{TTF}, \texttt{TFF}, \texttt{FTF}, \texttt{FFF}\}
+T = \{\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
 \]
 
 
@@ -189,10 +189,10 @@ C_2 = (x_2 \vee x_3 \vee \neg x_4)
 \noindent $\neg x_4$ matchs $v_3$
 
 \begin{align*}
-T_{P1} &= \{\texttt{TTT}, \texttt{FTT}, \texttt{TTF}, \texttt{FTF}\}\\
-T_{N1} &= \{\texttt{TFT}, \texttt{TFF}, \texttt{FFF}\}\\
-T_{P2} &= \{\texttt{TFT}\}\\
-T_P &= \{\texttt{TTT}, \texttt{FTT}, \texttt{TTF}, \texttt{FTF}, \texttt{TFT}\}
+T_{P1} &= \{\texttt{STTT}, \texttt{SFTT}, \texttt{STTF}, \texttt{SFTF}\}\\
+T_{N1} &= \{\texttt{STFT}, \texttt{STFF}, \texttt{SFFF}\}\\
+T_{P2} &= \{\texttt{STFT}\}\\
+T_P &= \{\texttt{STTT}, \texttt{SFTT}, \texttt{STTF}, \texttt{SFTF}, \texttt{STFT}\}
 \end{align*}
 
 \[
@@ -201,23 +201,23 @@ C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
 \noindent $x_4$ matches $v_3$
 
 \begin{align*}
-T_{P1} &= \{\texttt{FTT}, \texttt{FTF}, \texttt{FFF}\}\\
-T_{N1} &= \{\texttt{TTT}, \texttt{TFT}, \texttt{TTF}, \texttt{TFF}\}\\
-T_{P2} &= \{\texttt{TTF}, \texttt{TFF}\}\\
-T_N &= \{\texttt{FTT}, \texttt{FTF}, \texttt{FFF}, \texttt{TTF}, \texttt{TFF}\}
+T_{P1} &= \{\texttt{SFTT}, \texttt{SFTF}, \texttt{SFFF}\}\\
+T_{N1} &= \{\texttt{STTT}, \texttt{STFT}, \texttt{STTF}, \texttt{STFF}\}\\
+T_{P2} &= \{\texttt{STTF}, \texttt{STFF}\}\\
+T_N &= \{\texttt{SFTT}, \texttt{SFTF}, \texttt{SFFF}, \texttt{STTF}, \texttt{STFF}\}
 \end{align*}
 
 \noindent Append
 
 \begin{align*}
-T_P &= \{\texttt{TTT}, \texttt{TFT}, \texttt{FTT}\}\\
-T_N &= \{\texttt{TTF}, \texttt{TFF}, \texttt{FTF}, \texttt{FFF}\}
+T_P &= \{\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}\}\\
+T_N &= \{\texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
 \end{align*}
 
 \noindent Mix
 
 \[
-T = \{\texttt{TTT}, \texttt{TFT}, \texttt{FTT}, \texttt{TTF}, \texttt{TFF}, \texttt{FTF}, \texttt{FFF}\}
+T = \{\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
 \]
 
 
@@ -225,45 +225,45 @@ T = \{\texttt{TTT}, \texttt{TFT}, \texttt{FTT}, \texttt{TTF}, \texttt{TFF}, \tex
 
 Initialize the tube $T$ with the variables from the first clause
 \[
-	T = \{\{x_1\}, \{x_2\}, \{\neg x_3\}\}
+	T = \{(x_1), (x_2), (\neg x_3)\}
 \]	
 
 \noindent Select Clause 2:
 
 \par $T_1 =	\text{{\sc Insert Literal}}(T, x_2)$
 \[
-		T_1 =  \{\{x_1,x_2\}, \{x_2\}, \{x_2,\neg x_3\}\}
+		T_1 =  \{(x_1,x_2), (x_2), (x_2,\neg x_3)\}
 \]
 \par $T_2 =	\text{{\sc Insert Literal}}(T, x_3)$
 \[	
-		T_2 =  \{\{x_1,x_3\}, \{x_2,x_3\}\}	
+		T_2 =  \{(x_1,x_3), (x_2,x_3)\}	
 \]
 \par $T_3 =	\text{{\sc Insert Literal}}(T, \neg x_4)$
 \[	
-		T_3 =  \{\{x_1,\neg x_4\}, \{x_2,\neg x_4\}, \{\neg x_3,\neg x_4\}\}			
+		T_3 =  \{(x_1,\neg x_4), (x_2,\neg x_4), (\neg x_3,\neg x_4)\}			
 \]		
 \par $T = \text{mix}(T_1, T_2, T_3)$
 \[	
-		T = \{\{x_1,x_2\}, \{x_2\}, \{x_2,\neg x_3\}, \{x_1, x_3\}, \{x_2,x_3\}, \{x_1,\neg x_4\}, \{x_2,\neg x_4\}, \{\neg x_3,\neg x_4\}\}
+		T = \{(x_1,x_2), (x_2), (x_2,\neg x_3), (x_1, x_3), (x_2,x_3), (x_1,\neg x_4), (x_2,\neg x_4), (\neg x_3,\neg x_4)\}
 \]		
 
 \noindent Select Clause 3:
 	
 \par $T_1 = 	\text{{\sc Insert Literal}}(T, \neg x_1)$
 \[
-		T_1 = \{\{\neg x_1, x_2\}, \{\neg x_1, x_2,\neg x_3\}, \{\neg x_1, x_2, x_3\}, \{\neg x_1, x_2,\neg x_4\}, \{\neg x_1,\neg x_3,\neg x_4\}\}
+		T_1 = \{(\neg x_1, x_2), (\neg x_1, x_2,\neg x_3), (\neg x_1, x_2, x_3), (\neg x_1, x_2,\neg x_4), (\neg x_1,\neg x_3,\neg x_4)\}
 \]	
 \par $T_2 =	\text{{\sc Insert Literal}}(T, \neg x_3)$
 \[
-		T_2 = \{\{x_1,x_2,\neg x_3\}, \{x_2,\neg x_3\}, \{x_2,\neg x_3\}, \{x_1,\neg x_3,\neg x_4\}, \{x_2,\neg x_3,\neg x_4\}, \{\neg x_3,\neg x_4\}\}
+		T_2 = \{(x_1,x_2,\neg x_3), (x_2,\neg x_3), (x_2,\neg x_3), (x_1,\neg x_3,\neg x_4), (x_2,\neg x_3,\neg x_4), (\neg x_3,\neg x_4)\}
 \]
 \par $T_2 =	\text{{\sc Insert Literal}}(T, x_4)$
 \[
-		T_3 = \{\{x_1,x_2,x_4\}, \{x_2,x_4\}, \{x_2,\neg x_3,x_4\}, \{x_1,x_3,x_4\}, \{x_2,x_3,x_4\}\}
+		T_3 = \{(x_1,x_2,x_4), (x_2,x_4), (x_2,\neg x_3,x_4), (x_1,x_3,x_4), (x_2,x_3,x_4)\}
 \]
 \par $T = \text{mix}(T_1, T_2, T_3)$
 \begin{align*}
-		T = \{&\{\neg x_1,x_2\}, \{\neg x_1,x_2,\neg x_3\}, \{\neg x_1,x_2,x_3\}, \{\neg x_1,x_2,\neg x_4\}, \{\neg x_1,\neg x_3,\neg x_4\},\\
-			  &\{x_1,x_2,\neg x_3\}, \{x_2,\neg x_3\}, \{x_1,\neg x_3,\neg x_4\}, \{x_2,\neg x_3,\neg x_4\}, \{\neg x_3,\neg x_4\},\\
-			  &\{x_1,x_2,x_4\}, \{x_2,x_4\}, \{x_2,\neg x_3,x_4\}, \{x_1,x_3,x_4\}, \{x_2,x_3,x_4\}\}
+		T = \{&(\neg x_1,x_2), (\neg x_1,x_2,\neg x_3), (\neg x_1,x_2,x_3), (\neg x_1,x_2,\neg x_4), (\neg x_1,\neg x_3,\neg x_4),\\
+			  &(x_1,x_2,\neg x_3), (x_2,\neg x_3), (x_1,\neg x_3,\neg x_4), (x_2,\neg x_3,\neg x_4), (\neg x_3,\neg x_4),\\
+			  &(x_1,x_2,x_4), (x_2,x_4), (x_2,\neg x_3,x_4), (x_1,x_3,x_4), (x_2,x_3,x_4)\}
 \end{align*}

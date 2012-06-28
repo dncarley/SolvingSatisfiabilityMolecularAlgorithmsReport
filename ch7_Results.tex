@@ -1,13 +1,12 @@
 \chapter{Results}
 
 %	<Paragraph> Overview of results
-This chapter provides results of the $k$-{\sc Sat} execution test from the previous chapter.  We consider the results of the test and provide analysis of the algorithm metrics.  
+This chapter presents results of the $k$-{\sc Sat} execution test from the previous chapter.  We consider the results of the test and analyze the algorithm metrics.  
 
 	\section{Algorithm metric comparison}
 	
 %		<Paragraph> Summary of measured metrics
-This section provides results from the simulation.  We provide the analysis for the molecular operations.  These include counts of append, extract, mix, purify, splice, and split.  Presentation of actual computation time and required memory for the solution representation allow for comparison of algorithms.
-
+This section describes the results from the simulation.  We analyze the molecular operations count for append, extract, mix, purify, splice, and split.  Presentation of actual computation time and required memory for the solution representation allow for comparison of algorithms.
 
 %\subsection{Split}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -29,11 +28,11 @@ This section provides results from the simulation.  We provide the analysis for 
 \begin{figure}[htdp]
 
 \reversemarginpar{
-\textbf{Append} is an operation that concatenates molecules. \\
+\textbf{Append} concatenates two oligonucleotides. \\
 
 The Distribution algorithm is exponential in the number of appends.  The operation count for append depends on the parsing order of the CNF instance.\\
 
-Lipton's and Ogihara-Ray's algorithms use a fixed amount of appends.  This depends on the number of variables and clauses present in the CNF instance.
+Lipton's and Ogihara-Ray's algorithms use a fixed number of appends.  This depends on the number of variables and clauses present in the CNF instance.
 }
 
 \begin{center}
@@ -54,9 +53,9 @@ Lipton's and Ogihara-Ray's algorithms use a fixed amount of appends.  This depen
 
 \reversemarginpar{
 
-\textbf{Extract} is an operation that filters strings.\\
+\textbf{Extract} filters oligonucleotides from a tube.\\
 
-Ogihara-Ray's algorithm requires the greatest amount of extracts.  Lipton's algorithm is linear on $\alpha$ and varies a constant amount from Ogihara-Ray's algorithm.\\
+Ogihara-Ray's algorithm requires the greatest number of extracts.  Lipton's algorithm is linear on $\alpha$ and varies a constant from Ogihara-Ray's algorithm.\\
 
 The Distribution algorithm does not require extract.
 
@@ -78,11 +77,11 @@ The Distribution algorithm does not require extract.
 \begin{figure}[htdp]
 
 \reversemarginpar{
-\textbf{Mix} is an operation that combines two tubes.\\
+\textbf{Mix} combines the contents of two tubes.\\
 
-Lipton's algorithm requires a linear amount of mixes on $\alpha$.  The Distribution algorithm also requires a linear number of mixes, varying by a constant factor from Lipton's algorithm.\\
+Lipton's algorithm requires a linear number of mixes on $\alpha$.  The Distribution algorithm also requires a linear number of mixes, varying by a constant factor from Lipton's algorithm.\\
 
-Ogihara-Ray's algorithm requires a constant amount of mixes on $\alpha$.
+Ogihara-Ray's algorithm requires a constant number of mixes on $\alpha$.
 }
 
 \begin{center}
@@ -101,9 +100,9 @@ Ogihara-Ray's algorithm requires a constant amount of mixes on $\alpha$.
 \begin{figure}[htdp]
 
 \reversemarginpar{
-\textbf{Purify} is an operation that ensures equal portions of each independent string.\\
+\textbf{Purify} ensures a uniform distribution of each independent oligonucleotide in a tube.\\
 
-All three algorithms operate using a linear number of purifications on $\alpha$.  Ogihara-Ray's algorithm requires the greatest amount of purifications.  The purifications vary by a constant amount when compared to Lipton's and the Distribution algorithms.
+All three algorithms operate using a linear number of purifications on $\alpha$.  Ogihara-Ray's algorithm requires the greatest number of purifications.  The purifications vary by a constant when compared to Lipton's and the Distribution algorithms.
 
  }
 
@@ -123,11 +122,11 @@ All three algorithms operate using a linear number of purifications on $\alpha$.
 \begin{figure}[htdp]
 
 \reversemarginpar{
-\textbf{Splice} is an operation that inserts a string at a targeted location.\\
+\textbf{Splice} cuts an oligonucleotide at a targeted location.\\
 
 The Distribution algorithm is exponential in the number of splices.  The number of splices depends on the parsing order of the CNF instance.  Each split requires reassembly, accomplished using two appends.  Figure \ref{appendFig} shows the number of appends.\\
 
-Lipton's and Ogihara-Ray's algorithms do not require splice the splice operator.
+Lipton's and Ogihara-Ray's algorithms do not require the splice operator.
 }
 
 \begin{center}
@@ -147,9 +146,9 @@ Lipton's and Ogihara-Ray's algorithms do not require splice the splice operator.
 
 \reversemarginpar{
 
-\textbf{Split} is an operation that portions a tube into two exact copes.\\
+\textbf{Split} portions a tube into two exact tubes.\\
 
-Distribution requires a linear number of splits.\\
+The Distribution algorithm requires a linear number of splits.\\
 
 Lipton's and Ogihara-Ray's algorithms are constant in splits based the number of variables.
  }
@@ -171,9 +170,9 @@ Lipton's and Ogihara-Ray's algorithms are constant in splits based the number of
 \begin{figure}[htdp]
 
 \reversemarginpar{
-\textbf{Time} is a measurement of algorithm execution in seconds.\\
+\textbf{Time} measures algorithm execution time in seconds.\\
 
-Ogihara-Ray's algorithm requires the least amount of time.  In cases where the {\sc Satisfiability} instance is under-constrained, where more possible solutions occur, the algorithm takes the greatest amount of time.  Less pruning occurs in over-constrained instances, reducing the execution time of test instances.\\
+Ogihara-Ray's algorithm requires the least time.  In cases where the {\sc Satisfiability} instance is under-constrained, where more possible solutions occur, the algorithm takes the greatest time.  Less pruning occurs in over-constrained instances, reducing the execution time of test instances.\\
 
 Lipton's algorithm executes in exponential time $\alpha \approx [4.2, 8.2]$ (the phase transition region for 3-{\sc Sat}) taking the longest.\\
 
@@ -197,15 +196,14 @@ The Distribution algorithm executes in exponential time, and performs better tha
 \begin{figure}[htdp]
 
 \reversemarginpar{
-\textbf{Memory} is a measurement of the satisfiable instance footprint returned by each algorithm measured in Bytes.\\
+\textbf{Memory} measures witness footprint in Bytes.\\
 
 Lipton's and Ogihara-Ray's algorithms share the same solution footprint.\\
 
-The Distribution algorithm contains a larger solution footprint after the trivially satisfiable instances with $\alpha \approx [0.2, 0.8]$.  The space provides a set of non-conflicting assignments from $\alpha \approx [0.8, 2.9]$.  Non-conflicting assignments consist of witnesses for only necessary literals. \\
+The Distribution algorithm contains a larger solution footprint after the trivially satisfiable instances with $\alpha \approx [0.2, 0.8]$.  The space contains a set of non-conflicting assignments from $\alpha \approx [0.8, 2.9]$.  Non-conflicting assignments consist of witnesses for only necessary literals. \\
 
 Each {\sc Satisfiability} instance has a constrained solution space during the phase-transition region.  All three algorithms share the same footprint.  There are no satisfiable instances in this test with $\alpha > 7.2$. The axis in Figure \ref{memoryFig} scales accordingly.
 }
-
 
 \begin{center}
 
@@ -218,4 +216,3 @@ Each {\sc Satisfiability} instance has a constrained solution space during the p
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \FloatBarrier
-

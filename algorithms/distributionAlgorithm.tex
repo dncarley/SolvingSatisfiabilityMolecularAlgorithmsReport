@@ -4,20 +4,15 @@
 
 	\begin{pseudocode}{Distribution Algorithm}{\phi}
 	
-	\text{// Input $\phi$ consists of $m$ clauses.}\\
-	\text{//Initialize $T$ with the literals from the first clause.}\\
-	\\
-	T \GETS \{ C_1 \} \\
-	
-	\FOR i \GETS 2 \text{ to } m \DO
+	\FOREACH \text{clause } C \text{ in } \phi \DO
 		\BEGIN 
-			T_C \GETS \emptyset \\
-		\FOREACH \text{literal } \ell \text{ in } C_i \DO
-			\BEGIN
-				T_I \GETS \text{\sc Insert Literal}(T, \ell)\\
-				T_C \GETS \text{mix}(T_C, T_I)\\
-			\END\\
-			T \GETS \text{purify(}T_C\text{)} \\
+				T_C \GETS \emptyset \\
+			\FOREACH \text{literal } \ell \text{ in } C \DO
+				\BEGIN
+					T_I \GETS \text{\sc Insert Literal}(T, \ell)\\
+					T_C \GETS \text{mix}(T_C, T_I)\\
+				\END\\
+				T \GETS \text{purify(}T_C\text{)} \\
 		\END
 	\\
 	\RETURN{detect(T)}

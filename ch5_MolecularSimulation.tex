@@ -2,17 +2,17 @@
 
 %	<Paragraph> Describe overview of chapter contents
 
-This chapter introduces Molecular Simulation: A system for molecular computation.  We provide an overview of the software and download location for Molecular Simulation and its documentation. We provide tools for use with Molecular Simulation.  This includes \texttt{Perl} execution scripts and visualization for output data.  We provide examples for Molecular Simulation's input and output.  Invocation of Molecular Simulation from the command line provides user configurable options.  Chapter 6 describes the usage of Molecular Simulation with automated execution.
+This chapter introduces Molecular Simulation: A system for molecular computation.  We describe an overview of Molecular Simulation and its documentation, along with tools for automated execution for Molecular Simulation.  This includes \texttt{Perl} execution scripts and visualization for output data.  We describe example input and output for Molecular Simulation.  Command line argument provides user configurable options for Molecular Simulation.  Chapter 6 describes the usage of Molecular Simulation with automated execution.
 	
 	\section{Overview}
 	
 %		<Paragraph> Define scope of simulation system
 
-Molecular Simulation provides a molecular lab for operating on DNA.  The present simulation implements three molecular algorithms for {\sc Satisfiability}.  The included \texttt{Perl} scripts process DIMACS CNF input directories with invocations to Molecular Simulation.
+Molecular Simulation implements a simulated molecular lab for operating on DNA.  The present simulation implements three molecular algorithms for {\sc Satisfiability}.  The included \texttt{Perl} scripts process DIMACS CNF input directories with invocations to Molecular Simulation.
 
 Molecular Simulation may be executed directly or invoked with the assistance of an execution script.  The system requirements to execute or design a molecular experiment are listed in this section.  
 		
-This program is a simulated molecular lab for experimenting with DNA operations. Implementation of three molecular algorithms for solving {\sc Satisfiability} include Lipton's algorithm, Ogihara and Ray's algorithm, and the Distribution algorithm.  Chapters 3 and 4 provide a background and pseudocode for these algorithms.		
+This program is a simulated molecular lab for experimenting with DNA operations. Implementation of three molecular algorithms for solving {\sc Satisfiability} include Lipton's algorithm, Ogihara and Ray's algorithm, and the Distribution algorithm.  Chapters 3 and 4 describe the background and provide pseudocode for these algorithms.		
 %		<Paragraph> Reference download and documentation locations
 
 	\section{Download}
@@ -35,12 +35,12 @@ This program is a simulated molecular lab for experimenting with DNA operations.
 
 	\section{Documentation}
 
-\noindent The project website contains detailed documentation for Molecular Simulation.  The documentation provides an overview of Molecular Simulation that may be used independently of Chapters 5 and 6 for getting started.  The online documentation provides detailed datatype, function, and class definitions.
+\noindent The project website contains detailed documentation for Molecular Simulation.  The documentation provides an overview of Molecular Simulation that may be used independently of Chapters 5 and 6 for getting started.  The online documentation describes detailed datatype, function, and class definitions.
 
 	\section{Tools}
 	
 %		<Paragraph> Describe external tools
-This project uses several tools for automating tasks and execution.  In this section, we introduce tools to automate execution and visualize output from Molecular Simulation.
+This project uses several tools for automating tasks and execution.  In this section, we discuss tools to automate execution and visualize output from Molecular Simulation.
 		
 		\subsection{\texttt{Perl} utilities}
 		
@@ -77,9 +77,6 @@ The source directory includes several \texttt{Perl} scripts to assist in buildin
 Ben Fry's example in Chapter 4 of \textit{Visualizing Data} \cite{fryVisualizingData} provides a framework for importing output from Molecular Simulation.
 
 The {\sc Sat} Datapoint Visualization for Molecular Simulation's output can be downloaded from: \url{https://github.com/dncarley/VisualizeSatDatapoints}.
-
-%			<Paragraph> Discuss implementation
-%In the following sections, we provide the output format for Molecular Simulation.  We explore several use cases, including a native desktop and online Javascript applications.
 			
 	\section{Input}
 	\label{inputSection}
@@ -198,7 +195,9 @@ The \texttt{[input]} consists of a DIMACS CNF file.  Command line \texttt{[optio
 
 \subsection{Execution example}
 
-Suppose that we would like to execute Ogihara and Ray's algorithm for a DIMACS CNF file instance \texttt{test1.cnf} located in the directory \texttt{MolecularSimulation/testbench}.  We output the results \texttt{test1-o.out} in the same directory as the input CNF.  To do this, we invoke Molecular Simulation with the following command:
+Suppose that we would like to execute Ogihara and Ray's algorithm for a DIMACS CNF file instance \texttt{test1.cnf} located in the directory \texttt{MolecularSimulation/testbench}.  We output the results \texttt{test1-o.out} in the same directory as the input CNF.
+
+We invoke Molecular Simulation with the following command:
 \[
 \texttt{\$ ./execute/simulation i ../testbench/test1.cnf -a o -w ../testbench/test1-o.out}
 \]
