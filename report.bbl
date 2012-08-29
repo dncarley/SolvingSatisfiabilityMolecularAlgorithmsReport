@@ -13,7 +13,7 @@
 \bibitem{Braich02solutionof}
 {\sc Braich, R.~S., Chelyapov, N., Johnson, C., Rothemund, P. W.~K., and
   Adleman, L.}
-\newblock Solution of a 20-variable 3-{\sc sat} problem on a {DNA} computer.
+\newblock Solution of a 20-variable 3-{S}{\sc at} problem on a {DNA} computer.
 \newblock {\em Science 296\/} (2002), 499--502.
 
 \bibitem{Cook:1971:CTP:800157.805047}
@@ -24,7 +24,7 @@
 
 \bibitem{dimacsFormat}
 {\sc {DIMACS}}.
-\newblock {\sc {S}atisfiability} suggested format. {A}ccessed from
+\newblock {S}{\sc atisfiability} suggested format. {A}ccessed from
   \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/}. {DIMACS} 1993.
 \newblock {A}ccessed from
   \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/}. {DIMACS} 1993.,
@@ -67,7 +67,7 @@
 
 \bibitem{Gent94thesat}
 {\sc Gent, I.~P., and Walsh, T.}
-\newblock The {\sc sat} phase transition.
+\newblock The {S}{\sc at} phase transition.
 \newblock In {\em ECAI\/} (1994), John Wiley {\&} Sons, pp.~105--109.
 
 \bibitem{dnaComputingModels2008}
@@ -98,20 +98,21 @@
   \url{http://www-03.ibm.com/press/us/en/pressrelease/28558.wss}, October 2009.
 
 \bibitem{MartinMateos02molecularcomputation}
-{\sc Mart{\'\i}n-Mateos, F., Alonso, J.~A., Perez-Jimenez, M., and
+{\sc Mart\'{i}n-Mateos, F., Alonso, J.~A., Perez-Jimenez, M., and
   Sancho-Caparrini, F.}
 \newblock Molecular computation models in \text{ACL2}: a simulation of
-  \text{Lipton's} experiment solving {\sc sat}, 2002.
+  \text{Lipton's} experiment solving {S}{\sc at}, 2002.
 
 \bibitem{Ogihara:1996:BFS:898228}
 {\sc Ogihara, M.}
-\newblock Breadth first search 3-{\sc sat} algorithms for {DNA} computers.
+\newblock Breadth first search 3-{S}{\sc at} algorithms for {DNA} computers.
 \newblock Tech. rep., University of Rochester, Rochester, NY, USA, 1996.
 
 \bibitem{Ogihara97dna-basedparallel}
 {\sc Ogihara, M., and Ray, A.}
-\newblock {DNA}-based parallel computation by "counting".
-\newblock Tech. rep., University of Rochester, 1997.
+\newblock {DNA}-{B}ased {P}arallel {C}omputation by ``{C}ounting''.
+\newblock In {\em {DIMACS} {T}hird {I}nternational {W}orkshop {DNA} {B}ased
+  {C}omputation\/} (1997).
 
 \bibitem{oxfordNanopore}
 {\sc {O}xford~{N}anopore {T}echnologies}.
@@ -120,7 +121,7 @@
 
 \bibitem{satcompetition}
 {\sc {SATC}omp~{O}rganizing committee}.
-\newblock {T}he international {\sc sat} {C}ompetitions web page.
+\newblock {T}he {I}nternational {S}{\sc at} {C}ompetitions web page.
 \newblock {A}ccessed from \url{http://satcompetition.org/}.
 
 \bibitem{sipser06}
@@ -137,21 +138,21 @@
 
 \bibitem{wilsonKsat}
 {\sc Wilson, D.}
-\newblock Random $k$-{\sc {s}at} generator.
+\newblock Random $k$-{S}{\sc at} generator.
 \newblock {\em Accessed from:
   \url{http://research.microsoft.com/en-us/um/people/dbwilson/ksat/default.htm%
 }\/} (2011).
 
 \bibitem{dnaBasedImplemetation_Yoshida2000}
 {\sc Yoshida, H., and Suyama, A.}
-\newblock Solution to 3-\sc{Sat} by breadth first search.
+\newblock Solution to 3-{S}{\sc at} by breadth first search.
 \newblock In {\em {DNA} Based Computers V\/} (2000), E.~Winfree and D.~Gifford,
   Eds., vol.~54 of {\em DIMACS: Series in Discrete Mathematics and Theoretical
   Computer Science}, pp.~9--22.
 
 \bibitem{Zhang2001}
 {\sc Zhang, W.}
-\newblock Phase transitions and backbones of 3-{\sc sat} and maximum 3-{\sc
+\newblock Phase transitions and backbones of 3-{S}{\sc at} and maximum 3-{\sc
   sat}.
 \newblock In {\em Principles and Practice of Constraint Programming --- CP
   2001}, T.~Walsh, Ed., vol.~2239 of {\em Lecture Notes in Computer Science}.

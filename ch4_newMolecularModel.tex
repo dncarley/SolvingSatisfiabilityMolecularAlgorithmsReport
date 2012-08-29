@@ -7,178 +7,735 @@ This chapter introduces a new molecular algorithm for {\sc Satisfiability}: the 
 \section{Distribution algorithm for {\sc Satisfiability}}
 
 %	<Paragraph> Introduce Distribution algorithm	
-The {\sc Distribution Algorithm} (Algorithm 4.1.1) starts with single literal witnesses from the first clause.  The Distribution algorithm maintains a set of witnesses for each processed clause.  Literal assignments that may be inserted into the witness candidates from the processed clauses we call \emph{non-conflicting witnesses}.  A witness candidate \emph{conflicts} when it contains both $x_i$ and $\neg x_i$ literal assignments.  In this case, the algorithm removes the \emph{conflicting witness} from the set of non-conflicting witnesses.  
+
+The Distribution algorithm (Algorithm \ref{distributionAlgorithm}) begins with a CNF instance $\phi$.  The algorithm constructs sets of witnesses stored in $T_C$ that satisfy the current clause $C$ along with all previously evaluated witnesses in the tube $T_S$.  Once the Distribution completes the tube $T_S$ contain witnesses for $\phi$; when $\phi$ is unsatisfiable the tube $T_S = \emptyset$. \\
+
+The algorithm begins by initiating a solution tube $T_S$ with a start sequence \texttt{S}.  During the evaluation of $m$ clauses\footnote{We consider only the parse ordering of the clauses from the CNF instance $\phi$.  The Distribution algorithm will resolve conflict uniquely depending on the permutations of the clauses in $\phi$.}, the tube stores witnesses for the CNF instance
+
+\[
+\bigwedge_{1\leq i \leq m} C_i.
+\]
+
+The tube $T_C$ stores witnesses for each clause.  The tube $T_C$ begins as the empty set on reading each clause $C$, and grows with the satisfying literal assignments.  
+
+During the evaluation of each literal, we split the contents of $T_S$ into the tubes $T_V$ and a copy of $T_S$.  We use the tube $T_V$ to filter positive and negative literal assignments into the tubes $T_P$ and $T_F$, respectively.  The copy of the tube $T_S$ retains the witness candidates for each of the literals in $C$.
+
+We extract from $T_V$ witnesses candidates that conflict with the current literal in the tube $T_F$, and those with idempotent assignments in the tube $T_P$.  The remaining contents of the tube $T_V$, if any, contain witness candidates that can witness the current clause with the assignment of the current literal $v$.  
+
+The Distribution algorithm extends $T_V$ by appending the contents with the assignment $v_p$ in the same polarity of the current literal $v$.  We mix the clause witnesses ($T_C$) with the contents of the idempotent witnesses ($T_P$), extended witnesses ($T_V$), along with existing clause witnesses in $T_C$.
+
+On each iteration of clauses, the Distribution algorithm clears the contents of the tube $T_S$ and passes the clause witnesses ($T_C$) to the remaining clauses.  We purify the contents of $T_S$ to create a uniform distribution of the witness candidates.  Once the Distribution algorithm completes the tube $T_S$ contains witnesses for $\phi$; if $T_S = \emptyset$ then $\phi$ is unsatisfiable.
+
 
 \input{./algorithms/distributionAlgorithm.tex}
 \FloatBarrier
 
-During execution, the Distribution algorithm maintains an ordering for literal assignments in a set of non-conflicting witness.  The {\sc Insert Literal} subroutine (Algorithm 4.1.2) maintains an ordering to the literals in each ordered witness candidate.
-
-Case 0 initiates an empty tube $T$ with literal assignments from the first clause.  We have the tube
-
-\begin{align*}
-T_0 &= \text{{\sc Insert Literal}}(T, x_1)\\
-    &= \{ (x_1) \}. \\
-\end{align*}	
-
-Let us consider an example to demonstrate the cases for {\sc Insert Literal}.  Let $w = (x_2, \neg x_4, x_5)$ be a partial ordered witness contained in a tube
-\[
-T = \{ (x_2, \neg x_4, x_5) \}
-\]
-
-Case 1:
-\begin{align*}
-T_1 &= \text{{\sc Insert Literal}}(T, x_1)\\
-    &= \{ (x_1) \cdot (x_2, \neg x_4, x_5) \} \\
-    &= \{ (x_1, x_2, \neg x_4, x_5) \} 
-\end{align*}	
-
-Case 2:
-\begin{align*}
-T_2 &= \text{{\sc Insert Literal}}(T, x_6)\\
-    &= \{ (x_2, \neg x_4, x_5) \cdot (x_6) \} \\
-    &= \{ (x_2, \neg x_4, x_5, x_6) \}
-\end{align*}	
-
-Case 3:
-\begin{align*}
-T_3 &= \text{{\sc Insert Literal}}(T, x_3)\\
-    &= \{ (x_2) \cdot (x_3) \cdot(\neg x_4, x_5) \} \\
-	&= \{ (x_2, x_3, \neg x_4, x_5) \}
-\end{align*}	
-
-Case 4:
-\begin{align*}
-T_4 &= \text{{\sc Insert Literal}}(T, \neg x_2)\\
-    &= \{ (x_2, \neg x_4, x_5) \} \\
-	&= \{  \}
-\end{align*}
-
-Case 5:
-\begin{align*}
-T_5 &= \text{{\sc Insert Literal}}(T, x_2)\\
-    &= \{ (x_2, \neg x_4, x_5) \} \\
-\end{align*}
-
-In Case 1, the literal $x_1$ variable precedes the first literal in the ordered witness candidate $w$.  In Case 2 the literal $x_6$ variable succeeds the last literal of the ordered witness candidate $w$.
-
-Case 3 inserts a literal $x_3$ into $w$.  Because the literal $x_3$ variable occurs between the first and last ordered literals, the ordered witness candidate $w$ must be split to incorporate $(x_3)$.  We split $w$ into two components
-\begin{align*}
-w_1 &= (x_2) \\
-w_2 &= (\neg x_4, x_5),
-\end{align*}
-
-\noindent and form the completed witness candiate by appending the literal $x_3$ to $w_1$
-\[
-w_1 = (x_2, x_3).
-\]
-\noindent Finally form the ordered non-conflicting witness $w$ by appending $w_2$ to $w_1$
-\[
-w = (x_2, x_3, \neg x_4, x_5).
-\]
-
-Case 4 eliminates the conflicting witness; both positive ($x_2$) and negative ($\neg x_2$) literals appear for the same variable in the witness candidate $w$.
-
-In Case 5, the witness $w$ remains unchanged since the literal $x_2$ exists in the witness candidate $w$.
-
-\input{./algorithms/insertVariable.tex}
-\FloatBarrier
 
 	\subsection{Description of the Distribution algorithm}
-		
-%		<Paragraph> Describe preconditions	
-%		<Paragraph> Describe setup
-The {\sc Distribution Algorithm} starts with the literal assignments of a clause.  Evaluation of subsequent clauses extends the witness candidates using the {\sc Insert Literal} subroutine.  Each insertion maintains the set of witness candidates to only those that satisfy the current clause.  Table \ref{distributionInsertTable} lists the six possibilities for literal assignment.
-	
-\begin{table}[htdp]
-\caption{Configurations for the {\sc Insert Literal} subroutine}
+
+Let us consider an example CNF instance designed to show several aspects of the Distribution algorithm.
+
+
+\[
+	\phi = (x_1 \vee x_2) \wedge (x_1 \vee \neg x_2 \vee x_3)
+\]
+
+
+This example demonstrates several key aspects of the algorithm.  We observe how the algorithm initiates the tube $T_S$  with literals from the first clause.  The second clause contains a literal of the same ($x_1$) and opposite polarity ($\neg x_2$) of the literals in the first clause.  The literal ($x_3$) demonstrates when the algorithm does match any existing literal assignments in $T_S$; causing the assignment of $(x_3)$ to be appended to all witness candidates in $T_V$.
+
+With this example, we demonstrate filtering witness candidates in $T_V$ into the tubes $T_P$ and $T_N$.  The tube $T_N$ contains witness candidates that conflict with the current literal, and the tube $T_P$ contains witnesses for the current literal.  The remaining contents of $T_V$ contain witness candidates that do not contain the current literal.  We append the contents of $T_V$ with the current literal, and store the contents of $T_V \cup T_P$ as witnesses for the current clause in the tube $T_C$.
+
+After each literal from a clause has been distributed, the contents of $T_C$ contain witnesses for both the current clause and all previously distributed clauses.  The contents of $T_C$ get stored as the tube $T_S$.  The tube $T_S$ stores the witness candidates for the next clause.  Once each clause has been distributed, the tube $T_S$ contains witnesses for the $k$-CNF instance $\phi$; if $T_S = \emptyset$, then $\phi$ is unsatisfiable.\\
+
+
+Initiate the tube $T_S$ with a start medium \texttt{S}.
+% 
+%\begin{center}
+%\begin{tikzpicture}
+%\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+%	\[
+%		T_S = \{\texttt{S}\}
+%	\]
+%};
+%\end{tikzpicture}
+%\end{center}
+
+
 \begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Case} & \textbf{Ordered witness} & \textbf{State} \\ \hline 
-0	& $(\ell)$ & if $T=\emptyset$ \\ \hline
-1	& $(\ell) \cdot (w)$ & if $v \in \ell$ is less than all literal indicies in $w$ \\ 
-& &  \\ \hline
-2	& $(w) \cdot (\ell)$ & if $v \in \ell$ is greater than all literal indicies in $w$ \\ 
-& &  \\ \hline
-3	& $(w_1) \cdot (\ell) \cdot (w_2)$ & if $v \in \ell$ is between two literal indicies in $w$ \\ 
-& &  \\ \hline
-4	& $\emptyset$ & if $\ell$ conflicts with $\neg \ell$ in $w$\\
-& &  \\ \hline
-5	& $(w)$ & if $\ell$ exists in $w$\\ \hline
-\end{tabular}
-\end{center}
-\label{distributionInsertTable}
-\end{table}%
-
-\FloatBarrier
-
-%		<Paragraph> Describe execution
-		
-During this phase, each literal from a disjunctive clause incrementally constructs partial non-conflicting witnesses for the input $\phi$.  Case 0 inserts a literal $\ell$ to an unassigned initial tube.  Cases 1, 2, and 3 place a literal $\ell$ into an expanding witness candidate $w$.  Each of these cases maintain an ordering to the expanding set of non-conflicting witness candidates.
-
-A literal conflict occurs when both positive and negative assignments of a literal occur in a witness candidate $w$.  Case 4 removes the conflicting witness candidate $w$ from the set potential solutions.  In Case 5, the witness $w$ remains unmodified; this case occurs when the witness $w$ contains the literal $\ell$.
-
-For example, let us consider the CNF instance
-\[
-\phi = (x_1 \vee x_2) \wedge (x_1 \vee \neg x_2 \vee x_3).
-\]		
-
-The Distribution algorithm begins with the first clause.  We have the set of witnesses
-\[
-T = \{ (x_1), (x_2) \}.
-\] 
-
-Next, insert the literals from the second clause into the set of non-conflicting witnesses in $T$.
-\[
-T_C = \emptyset
-\]
-
-\noindent First, insert $x_1$ into $T$
-\[
-T_I = \{ (x_1), (x_1, x_2) \}.
-\] 
-
-\noindent The witness $(x_1)$ contains $x_1$, and the idempotent witness $(x_1)$ remains unchanged.  The witness $(x_1, x_2)$ requires $x_1$ to satisfy the second clause.
-
-Mix the contents of $T_I$ into the set of clause witnesses $T_C$
-\[
-T_C = \{ (x_1), (x_1, x_2) \}.
-\]
-
-\noindent Next, insert $\neg x_2$ into $T$
-\[
-T_I = \{ (x_1, \neg x_2) \}.
-\] 
-
-\noindent The witness $(x_1, \neg x_2)$ requires $\neg x_2$ to satisfy the second clause.  The witness candidate $(x_2, \neg x_2)$ contains a conflict and gets removed from the set of potential witnesses.
-
-Mix the contents of $T_I$ into the set of clause witnesses $T_C$
-\[
-T_C = \{ (x_1), (x_1, x_2), (x_1, \neg x_2) \}.
-\]
-
-Finally, insert the literal $x_3$ into $T$
-\[
-T_I = \{ (x_1, x_3), (x_2, x_3) \}.
-\] 
-
-\noindent In this case, the literal $x_3$ is required to satisfy the second clause.  The literal gets inserted into the configurations without redundant or conflicting assignment.
-
-Mix the contents of $T_I$ into the set of clause witnesses $T_C$
-\[
-T_C = \{ (x_1), (x_1, x_2), (x_1, \neg x_2), (x_1, x_3), (x_2, x_3) \}.
-\]
-
-Assign the contents of $T_C$ to $T$
-
-\[
-T = \{ (x_1), (x_1, x_2), (x_1, \neg x_2), (x_1, x_3), (x_2, x_3) \}.
-\]
-
-The set $T$ contains non-conflicting witnesses for the observed clauses.  Once the algorithm terminates, $T$ contains non-conflicting witnesses for the CNF instance $\phi$. 
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
 	
-	\subsection{Detailed trace of the Distribution algorithm}
+	\[
+	T_S = \{
+\texttt{S}
+	\}
+	\]
+	\begin{align*}
+	T_S = \{ 
+&5'-\underbrace{\texttt{TTG}}_{\text{Start}}-3' \}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+
+
+
+Evaluate clause $C_1 = (x_1 \vee x_2)$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{ }\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+
+Select the literal $x_1$ from $C_1$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				
+				\[
+				T_V = \{
+			\texttt{S}
+				\}
+				\]
+				\begin{align*}
+				T_V = \{ 
+			&5'-\underbrace{\texttt{TTG}}_{\text{Start}}-3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}			
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				
+				\[
+				T_S = \{
+			\texttt{S}
+				\}
+				\]
+				\begin{align*}
+				T_S = \{ 
+			&5'-\underbrace{\texttt{TTG}}_{\text{Start}} -3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}			
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
+
+Extract literals from $T_V$ that contain negative and positive assignments for $x_1$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{ }\} \\
+		T_P &= \{\texttt{ }\} \\
+		T_V &= \{\texttt{S}\} 
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $x_1$ to the required variable tube $T_V$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+1}\}
+	\]
+	\begin{align*}
+		T_V = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} -3' \}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{S+1}\}
+	\]
+	\begin{align*}
+	T_C = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} -3' \}
+	\end{align*}	
+};
+\end{tikzpicture}
+\end{center}
+
+
+%%%%%%%%%%%%
+
+%%%%%%%%%%%%
+Select the literal $x_2$ from $C_1$.  Split the contents of $T_S$:
+
+%\begin{center}
+%\begin{tikzpicture}
+%\node[fill=gray, rounded corners=5pt, text width=6in]{
+%	\makebox[\textwidth][r]{
+%		\begin{minipage}[t]{0.5\textwidth}
+%			\begin{center}
+%			\begin{tikzpicture}
+%			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+%				\[
+%					T_V = \{\texttt{S}\}
+%				\]
+%			};
+%			\end{tikzpicture}
+%			\end{center}				
+%		\end{minipage}				
+%		\begin{minipage}[t]{0.5\textwidth}
+%			\begin{center}
+%			\begin{tikzpicture}
+%			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+%				\[
+%					T_S = \{\texttt{S}\}
+%				\]
+%			};
+%			\end{tikzpicture}
+%			\end{center}				
+%		\end{minipage}		
+%	}
+%};
+%\end{tikzpicture}
+%\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				
+				\[
+				T_V = \{
+			\texttt{S}
+				\}
+				\]
+				\begin{align*}
+				T_V = \{ 
+			&5'-\underbrace{\texttt{TTG}}_{\text{Start}} -3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}			
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				
+				\[
+				T_S = \{
+			\texttt{S}
+				\}
+				\]
+				\begin{align*}
+				T_S = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}} -3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}			
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+\hspace{1em}
+
+
+Extract literals from $T_V$ that contain negative and positive assignments for $x_2$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{ }\} \\
+		T_P &= \{\texttt{ }\} \\
+		T_V &= \{\texttt{S}\} 
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $x_2$ to the required variable tube $T_V$.
+
+%\begin{center}
+%\begin{tikzpicture}
+%\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+%	\[
+%		T_V = \{\texttt{S+2}\}
+%	\]
+%};
+%\end{tikzpicture}
+%\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+2}\}
+	\]
+	\begin{align*}
+		T_V = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}} -3' \}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+%\begin{center}
+%\begin{tikzpicture}
+%\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+%	\[
+%		T_C = \{\texttt{S+1, S+2}\}
+%	\]
+%};
+%\end{tikzpicture}
+%\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{S+1, S+2}\}
+	\]
+	\begin{align*}
+		T_C = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}} - 3' \}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Complete the iteration of the first clause by storing the witnesses in $T_C$ as witnesses to $T_S$ for the evaluated instance $\phi$.
+
+%\begin{center}
+%\begin{tikzpicture}
+%\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+%	\[
+%		T_S = \{\texttt{S+1, S+2}\}
+%	\]
+%};
+%\end{tikzpicture}
+%\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_S = \{\texttt{S+1, S+2}\}
+	\]
+	\begin{align*}
+		T_S = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}} - 3' \}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%
+
+
+Evaluate clause $C_2 = (x_1 \vee \neg x_2 \vee x_3)$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{ }\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%
+Select the literal $x_1$ from $C_2$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_V = \{\texttt{S+1, S+2}\}
+				\]
+				\begin{align*}
+					T_V = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+							 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}} - 3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_S = \{\texttt{S+1, S+2}\}
+				\]
+				\begin{align*}
+					T_S = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+							 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}} - 3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
+
+Extract literals from $T_V$ that contain negative and positive assignments for $x_1$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{ \}\\
+		T_P &= \{\texttt{S+1}\}\\
+		T_V &= \{\texttt{S+2}\}\\
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $x_1$ to the required variable tube $T_V$.
+
+%\begin{center}
+%\begin{tikzpicture}
+%\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+%	\[
+%		T_V = \{\texttt{S+2+1}\} 
+%	\]
+%};
+%\end{tikzpicture}
+%\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+2+1}\}
+	\]
+	\begin{align*}
+		T_V = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3' \}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+%\begin{center}
+%\begin{tikzpicture}
+%\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+%	\[
+%		T_C = \{\texttt{S+1, S+2+1}\}
+%	\]
+%};
+%\end{tikzpicture}
+%\end{center}
+
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{S+1, S+2+1}\}
+	\]
+	\begin{align*}
+		T_C = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3' \}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%
+Select the literal $\neg x_2$ from $C_2$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_V = \{\texttt{S+1, S+2}\}
+				\]
+				\begin{align*}
+					T_V = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+							 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}} - 3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_S = \{\texttt{S+1, S+2}\}
+				\]
+				\begin{align*}
+					T_S = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+							 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}} - 3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
+
+Extract literals from $T_V$ that contain negative and positive assignments for $\neg x_2$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{S+2}\}\\
+		T_P &= \{\texttt{}\}\\
+		T_V &= \{\texttt{S+1}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $\neg x_2$ to the required variable tube $T_V$.
+
+%\begin{center}
+%\begin{tikzpicture}
+%\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+%	\[
+%		T_V = \{\texttt{S+1-2}\}
+%	\]
+%};
+%\end{tikzpicture}
+%\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+1-2}\}
+	\]
+	\begin{align*}
+		T_V = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}} - 3' \}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_C = \{&\texttt{S+1, S+2+1}, \\
+				&\texttt{S+1-2}\}
+	\end{align*}
+	\begin{align*}
+		T_C = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}} - 3' \}
+	\end{align*}	
+};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%
+Select the literal $x_3$ from $C_2$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_V = \{\texttt{S+1, S+2}\}
+				\]
+				\begin{align*}
+					T_V = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+							 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}} - 3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_S = \{\texttt{S+1, S+2}\}
+				\]
+				\begin{align*}
+					T_S = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+							 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}} - 3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+		
+\hspace{1em}
+
+
+Extract literals from $T_V$ that contain negative and positive assignments for $x_3$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{}\}\\
+		T_P &= \{\texttt{}\} \\
+		T_V &= \{\texttt{S+1, S+2}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $x_3$ to the required variable tube $T_V$.
+
+%\begin{center}
+%\begin{tikzpicture}
+%\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+%	\[
+%		T_V = \{\texttt{S+1+3, S+2+3}\}
+%	\]
+%};
+%\end{tikzpicture}
+%\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+1+3, S+2+3}\}
+	\]
+	\begin{align*}
+		T_V = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}} - 3' \}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+%\begin{center}
+%\begin{tikzpicture}
+%\node[fill=lightgray, rounded corners=5pt, text width=3.5in]{
+%	\begin{align*}
+%		T_C = \{&\texttt{S+1, S+2+1}, \\
+%				&\texttt{S+1-2}, \\
+%				&\texttt{S+1+3, S+2+3}\}
+%	\end{align*}
+%};
+%\end{tikzpicture}
+%\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_C = \{&\texttt{S+1, S+2+1}, \\
+				&\texttt{S+1-2},\\
+				&\texttt{S+1+3, S+2+3}\}
+	\end{align*}
+	\begin{align*}
+		T_C = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}} - 3',\\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}} - 3' \}
+	\end{align*}	
+};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%
+
+Complete the iteration of the last clause by storing the witnesses in $T_C$ as witnesses to $T_S$.  The tube $T_S$ contains witnesses for $\phi$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_S = \{&\texttt{S+1, S+2+1}, \\
+				&\texttt{S+1-2},\\
+				&\texttt{S+1+3, S+2+3}\}
+	\end{align*}
+	\begin{align*}
+		T_S = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}} - 3',\\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}} - 3', \\
+				 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}} - 3' \}
+	\end{align*}	
+};
+\end{tikzpicture}
+\end{center}
+
+
+
+
+	
+	
+\subsection{Detailed trace of the Distribution algorithm}
 
 Appendix B lists a detailed execution trace for the Distribution algorithm.
 

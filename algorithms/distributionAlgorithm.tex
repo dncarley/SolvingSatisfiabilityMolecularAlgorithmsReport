@@ -1,24 +1,34 @@
 
 \begin{figure}[htbp]
-\begin{center}
+	\renewcommand{\figurename}{Algorithm}
+	\renewcommand{\thepseudocode}{\ref{distributionAlgorithm}}
+	
+	\begin{center}
 
-	\begin{pseudocode}{Distribution Algorithm}{\phi}
+	\begin{pseudocode}[shadowbox]{Distribution Algorithm}{\phi}
+	
+	T_S \GETS \{ \texttt{S} \} \\
 	
 	\FOREACH \text{clause } C \text{ in } \phi \DO
 		\BEGIN 
-				T_C \GETS \emptyset \\
-			\FOREACH \text{literal } \ell \text{ in } C \DO
+		
+			T_C \GETS \emptyset \\
+			\FOREACH \text{literal } v \text{ in } C \DO
 				\BEGIN
-					T_I \GETS \text{\sc Insert Literal}(T, \ell)\\
-					T_C \GETS \text{mix}(T_C, T_I)\\
+					[T_V, T_S] \GETS \text{split}(T_S) \\
+					T_N \GETS \text{extract}(T_V, v_{\texttt{N}})\\
+					T_P \GETS \text{extract}(T_V, v_{\texttt{P}})\\
+					T_V \GETS \text{append}(T_V, v_{\texttt{P}})\\
+					T_C \GETS \text{mix}(T_C, T_P, T_V)\\
 				\END\\
-				T \GETS \text{purify(}T_C\text{)} \\
-		\END
-	\\
-	\RETURN{detect(T)}
+				T_S \GETS \emptyset\\
+				T_S \GETS \text{mix}(T_S, T_C)\\
+				T_S \GETS \text{purify}(T_S)\\
+		\END\\
+	\RETURN{ \text{detect}(T_S)}
 	\end{pseudocode}
 
-\caption{{\sc Distribution Algorithm} constructs a set of non-conflicting assignments for a CNF instance.  This algorithm inserts contents of each clause $C_i$ into $T$ with the {\sc Insert Literal} subroutine.}
+\caption{The {\sc Distribution Algorithm} constructs a set of witnesses for a CNF instance $\phi$ by clause evaluation.  The literals of each clause $C$ get distributed into the clause witness tube $T_C$.  These witnesses contained in $T_C$ continue to witness the evaluated portion of $\phi$ in the solution witness tube $T_S$.  }
 \label{distributionAlgorithm}
 \end{center}
 \end{figure}

@@ -1,8 +1,11 @@
 
 \begin{figure}[htbp]
-\begin{center}
+	\renewcommand{\figurename}{Algorithm}
+	\renewcommand{\thepseudocode}{\ref{insertVariableAlgorithm}}
+	
+	\begin{center}
 
-	\begin{pseudocode}{Insert Literal}{T, \ell}
+	\begin{pseudocode}[shadowbox]{Insert Literal}{T, \ell}
 		T_R \GETS \emptyset \\
 		
 		\IF T = \emptyset \THEN

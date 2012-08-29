@@ -1,8 +1,11 @@
 
 \begin{figure}[htbp]
-\begin{center}
+	\renewcommand{\figurename}{Algorithm}
+	\renewcommand{\thepseudocode}{\ref{checkSat}}
+	
+	\begin{center}
 
-	\begin{pseudocode}{CheckSat}{\phi, B}
+	\begin{pseudocode}[shadowbox]{CheckSat}{\phi, B}
 	
 		\FOREACH \text{clause } C \text{ in } \phi \DO
 			\BEGIN
@@ -20,7 +23,7 @@
 	\end{pseudocode}
 
 \caption{$\text{\sc CheckSat}(\phi, B)$ iterates over each of the clauses $C$ in the CNF instance $\phi$.  The bit-vector $B$ encodes a witness candidate for the CNF instance $\phi$.  The $test\_clause$ variable gets set to $False$, assuming that the clause cannot be satisfied.  If the clause can be satisfied with the input configuration $B$, then the algorithm continues.  If each of the $m$ clauses can be satisfied, then $\text{\sc CheckSat}(\phi, B)$ returns $True$; otherwise the algorithm returns $False$.}
-\label{default}
+\label{checkSat}
 \end{center}
 \end{figure}
 

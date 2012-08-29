@@ -17,7 +17,7 @@ In the second half of this chapter, we provide an introduction to {\sc Satisfiab
 		
 Smaller and cost-effective DNA sequencers provide the ability to read the contents of a gene.  Benchtop sequencers \cite{ionTorrent, oxfordNanopore} allow doctors to treat patients at the genome level from their office.  Life Technologies and Oxford Nanopore offer gene sequencers based on solid-state semiconductor technology \cite{ionTorrent, oxfordNanopore}.	
 
-\section{Genetic encoding schemes}
+\subsection{Genetic encoding schemes}
 
 %	<Paragraph> Microbiology [studies] molecular life
 	Microbiology studies the interactions among organic molecules.  In this project, we explore the use of applied genetics as a means for generalized computation.  Molecular computation encodes data as sequences of DNA or RNA.  
@@ -40,11 +40,11 @@ Smaller and cost-effective DNA sequencers provide the ability to read the conten
 \begin{tabular}{|c|c|c|}
 \hline
  \textbf{Integer} & \textbf{Oligonucleotide} & \textbf{Reverse-complement}\\ \hline
-0 & $5'$\texttt{TCTCCC}$3'$ & $3'$\texttt{AGAGGG}$5'$ \\
-1 & $5'$\texttt{AAACCC}$3'$ & $3'$\texttt{TTTGGG}$5'$ \\
-2 & $5'$\texttt{GGTAAA}$3'$ & $3'$\texttt{CCATTT}$5'$ \\
-3 & $5'$\texttt{CCCTCC}$3'$ & $3'$\texttt{GGGAGG}$5'$ \\
-4 & $5'$\texttt{CTTTTC}$3'$ & $3'$\texttt{GAAAAG}$5'$ \\ \hline
+0 & $5'-$\texttt{TCTCCC}$-3'$ & $3'-$\texttt{AGAGGG}$-5'$ \\
+1 & $5'-$\texttt{AAACCC}$-3'$ & $3'-$\texttt{TTTGGG}$-5'$ \\
+2 & $5'-$\texttt{GGTAAA}$-3'$ & $3'-$\texttt{CCATTT}$-5'$ \\
+3 & $5'-$\texttt{CCCTCC}$-3'$ & $3'-$\texttt{GGGAGG}$-5'$ \\
+4 & $5'-$\texttt{CTTTTC}$-3'$ & $3'-$\texttt{GAAAAG}$-5'$ \\ \hline
 \end{tabular}
 \end{center}
 \label{integer2OligoTable}
@@ -53,7 +53,7 @@ Smaller and cost-effective DNA sequencers provide the ability to read the conten
 Suppose for example that we would like to encode the sequence of integers $S = [1, 3, 4, 3, 2, 0]$ as an equivalent oligonucleotide representation with the definitions in Table \ref{integer2OligoTable}.  Gene sequencing tools permit one to read and decode data according to Table \ref{integer2OligoTable}.  The resulting oligonucleotide $O$ is defined as
 
 \[
-O = 5'\texttt{AAACCC}\mid \texttt{CCCTCC}\mid \texttt{CTTTTC}\mid \texttt{CCCTCC}\mid \texttt{GGTAAA}\mid \texttt{TCTCCC}3'.
+O = 5'-\texttt{AAACCC}\cdot \texttt{CCCTCC}\cdot \texttt{CTTTTC}\cdot \texttt{CCCTCC}\cdot \texttt{GGTAAA}\cdot \texttt{TCTCCC}-3'.
 \]
 
 %	<Paragraph> Interactions of molecules [performs] computation
@@ -75,30 +75,30 @@ Given an undirected graph $G$, does there exist a path that visits every vertex 
 
 Adleman uses oligonucleotides for defining each vertex for encoding a graph.  His scheme for encoding a graph's vertices shares a similar definition from our example of encoding a sequence of integers, given in Table \ref{integer2OligoTable}.  Representing edges requires a reverse-complement oligonucleotide, which connects the suffix of the vertex $v_i$ with the prefix of $v_j$.  Let us consider an example.  Let
 \begin{align*}
- v_1 &= 5'\texttt{ATCTTT}3' \\
- v_2 &= 5'\texttt{CCTATA}3'.
+ v_1 &= 5'-\texttt{ATCTTT}-3' \\
+ v_2 &= 5'-\texttt{CCTATA}-3'.
 \end{align*}
 
 \noindent From the definition of $v_1$ and $v_2$, we can construct an edge $e_{1,2}$ as
 \[
-e_{1,2} = 3'\texttt{AAAGGA}5'.
+e_{1,2} = 3'-\texttt{AAAGGA}-5'.
 \]
 
 \noindent Appending $v_2$ to $v_1$ is accomplished by first attaching the edge $e_{1,2}$ to the vertex $v_1$
 \begin{align*}
- 5'\texttt{ATC}&\texttt{TTT}3' \\
-  3'&\texttt{AAAGGA}5'.
+ 5'-\texttt{ATC}\cdot & \texttt{TTT}-3' \\
+  3'-&\texttt{AAAGGA}-5'.
 \end{align*}
 
 \noindent Next we attach $v_2$ to the resulting complex, yielding
 \begin{align*}
- 5'\texttt{ATCTTT}|&\texttt{CCTATA}3'\\
-  3'\texttt{AAA}&\texttt{GGA}5'.
+ 5'-\texttt{ATCTTT} \cdot &\texttt{CCTATA}-3'\\
+  3'-\texttt{AAA}&\texttt{GGA}-5'.
 \end{align*}
 
 \noindent Finally the edge may be removed and we have the sequence
 \[
-v_1 \cdot v_2 = 5'\texttt{ATCTTT}|\texttt{CCTATA}3'.
+v_1 \cdot v_2 = 5'-\texttt{ATCTTT}\cdot \texttt{CCTATA}-3'.
 \]
 
 The sequence $v_1 \cdot v_2$ represents the path $v_1$ to $v_2$, and can be obtained with the \textit{append} operation.  A test tube $T$ stores witness candidates.  The tube $T$ starts as an empty tube.  To solve {\sc Hamitonian Path}, we introduce equimolar portions of each oligonucleotide vertex for a starting configuration, using the \textit{mix} operation.
@@ -155,18 +155,8 @@ Once all of the vertices have been filtered, we check $T$ using \textit{detect} 
 The output consists of `$true$' or `$false$' for $T \neq \emptyset$ or $T = \emptyset$, respectively.
 \end{definition}
 
-\subsection{Additional molecular operators}
-
-In the following chapters, we will use the molecular operators for constructing molecular {\sc Satisfiability} solvers.  The Distribution algorithm, introduced in Chapter 4, requires the \textit{splice} operation.
-\begin{definition}
-\emph{Splice} cuts an oligonucleotide $a = a_1 \cdot b \cdot a_2$ with a subsequence $b$ into two pieces by a restriction enzyme.
-\[
-[a_1, a_2] \leftarrow \mathrm{splice}(a, b)
-\]
-These two pieces are $a_1$ and $a_2$.
-\end{definition}
-
 In the implementation of a simulation system, we avoid redundant string representations with the \textit{purify} operation.  This is a synthetic version of PCR.  Purify balances the space representation of molecules with a uniform distribution.
+
 \begin{definition}
 \emph{Purify} provides a uniform distribution from the contents of $T$ as $T'$.
 \[

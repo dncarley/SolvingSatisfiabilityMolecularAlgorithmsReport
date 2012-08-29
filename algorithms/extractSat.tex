@@ -1,8 +1,11 @@
 
 \begin{figure}[htbp]
-\begin{center}
+	\renewcommand{\figurename}{Algorithm}
+	\renewcommand{\thepseudocode}{\ref{extractSatAlgorithm}}
+	
+	\begin{center}
 
-	\begin{pseudocode}{ExtractSat}{\phi}
+	\begin{pseudocode}[shadowbox]{ExtractSat}{\phi}
 	
 	\text{// Input $\phi$ consists of $n$ variables.}\\
 	\\
@@ -12,7 +15,8 @@
 				T_C \GETS \emptyset \\
 			
 				\FOREACH \text{literal } \ell \text{ in } C \DO
-					\BEGIN 
+					\BEGIN
+						T   \GETS \text{purify}(T)\\ 
 						T_T \GETS \text{extract}(T, \ell) \\
 						T_C \GETS \text{mix}(T_C, T_T)
 					\END \\
@@ -23,8 +27,7 @@
 			\THEN \RETURN{\texttt{UNSATISFIABLE}}\\
 		\RETURN{\texttt{SATISFIABLE}}
 	\end{pseudocode}
-
-
+	
 \caption{$\text{\sc ExtractSat}(\phi)$ collects satisfying Boolean literals from each clause in $\phi$.  Initially, $\text{\sc ExtractSat}(\phi)$ constructs a combinatorial space $T$ using the subroutine $\text{\sc CombinatorialGenerate}(n)$ which we introduce in Chapter 3.  The initial space $T$ contains string configurations representing all potential witness candidates for $\phi$.  The space $T$ gets filtered down to witness all clauses.  These potential solutions are incrementally mixed into the tube $T_C$ for each clause.  }
 \label{extractSatAlgorithm}
 \end{center}

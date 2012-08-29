@@ -1,7 +1,11 @@
 
 \begin{figure}[htbp]
-\begin{center}
-	\begin{pseudocode}{Lipton's Algorithm}{\phi}
+	\renewcommand{\figurename}{Algorithm}
+	\renewcommand{\thepseudocode}{\ref{liptonAlgorithm}}
+	
+	\begin{center}
+
+	\begin{pseudocode}[shadowbox]{Lipton's Algorithm}{\phi}
 	T \GETS \text{{\sc Combinatorial Generate}}(n) \\
 	\FOREACH \text{clause } C \text{ in } \phi \DO
 		\BEGIN
@@ -20,6 +24,8 @@
 					\END
 			\END
 		\\
+		T \GETS \emptyset \\
+		T \GETS \text{mix(}T, T_C\text{)} \\
 		T \GETS \text{purify(}T_c\text{)} \\
 		\END
 	\\

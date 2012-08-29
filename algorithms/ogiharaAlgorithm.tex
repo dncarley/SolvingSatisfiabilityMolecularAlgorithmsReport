@@ -1,11 +1,16 @@
 
 \begin{figure}[htbp]
-\begin{center}
+	\renewcommand{\figurename}{Algorithm}
+	\renewcommand{\thepseudocode}{\ref{ogiharaRayAlgorithm}}
+	
+	\begin{center}
 
-	\begin{pseudocode}{Ogihara and Ray's Algorithm}{\phi}
+	\begin{pseudocode}[shadowbox]{Ogihara and Ray's Algorithm}{\phi}
 	
 	\text{// Input $\phi$ consists of $n$ variables.}\\
 	\text{// Each clause $C$ contains ordered literals $(a,b,c)$.}\\
+	\text{// Extract literals using the condensed notation $v_P$, where: }\\
+	\text{// \hspace{1em} $v_P$ matches the literal, and $v_N$ matches the negated literal.}\\
 	\\
 	T \GETS \{ \texttt{STT}, \texttt{STF}, \texttt{SFT},  \texttt{SFF}\} \\
 	

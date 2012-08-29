@@ -31,7 +31,9 @@ The next sections describe invocation of Molecular Simulation with desired optio
 
 %		<Paragraph> Random $k$-{\sc Sat} instances
 
-We create a sweep of random $k$-{\sc Sat} instances to observe {\sc Sat} phase transition.  David Wilson's \texttt{ksat.c} generates random $k$-{\sc Sat} instances in DIMACS CNF format \cite{wilsonKsat}.  The program takes four arguments to create a unique DIMACS CNF instance.  Invocation of the program can be performed using the following command.
+We create a sweep of random $k$-{\sc Sat} instances to observe {\sc Sat} phase transition.  This set consists of random $3$-CNF instances at fixed $n=20$ spanning clause-variable ratios $\alpha = m/n = [0.2, 14.0]$ in increments of $0.2$.  Each $\alpha$ ratio consists of 30 3-CNF instances.
+
+David Wilson's \texttt{ksat.c} generates random $k$-{\sc Sat} instances in DIMACS CNF format \cite{wilsonKsat}.  The program takes four arguments to create a unique DIMACS CNF instance.  Invocation of the program can be performed using the following command:
 
 \begin{center}
 \texttt{\$ ./execute/ksat} $k$ $n$ $m$ $s$ \texttt{>} \textit{output}\texttt{.cnf}
@@ -125,4 +127,4 @@ Output consists of the standard {\sc Sat} Competition output appended with custo
 	Output directed to standard output conforms to the {\sc Sat} Competition rules.  This output may be used during testing, or redirected to an external stream.  The debug option \texttt{-debug} displays detailed information about the execution.  The debug option writes verbose content based on the program execution.  
 
 %		<Paragraph> Output metrics
-	Reading output metrics from the saved output, as defined in Table \ref{outputTableDefiniton}, allows for analysis of collected data.  The data visualization reads a directory of output and condenses it as a Tab Separated Values (\texttt{*.tsv}) file.  Subsequent datapoint browsing and the online view use the \texttt{*.tsv} file for condensed reading and transmission.  In the next chapter, we describe the results of the experimental setup.
+	Reading output metrics from the saved output, as defined in Table \ref{outputTableDefiniton}, allows for analysis of collected data.  Output files from Molecular Simulation get condensed into a Tab Separated Values (\texttt{*.tsv}) file.  Subsequent datapoint browsing and the online view use the \texttt{*.tsv} file for condensed reading and transmission of data points.  In the next chapter, we describe the results of the experimental setup.

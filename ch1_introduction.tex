@@ -24,7 +24,7 @@ where each clause $C_i$ contains $k$ disjunctive Boolean literals
 C_i = (v_1 \vee v_2 \vee \cdots \vee v_k).
 \]
 
-A witness for a {\sc Satisfiability} instance is a Boolean assignment to the variables that makes the formula true.  Such a witness can be represented as a vector $B$ in $\{0,1\}^n$, where $n$ is the number of variables in $\phi$, as follows.  Let $\{v_1, \ldots , v_n\}$ be the variables of $\phi$, for each $i$ in $\{1, \ldots , n\}$, the $i$th element of $B$ is denoted $B_i$ and represents an assignment of true or false to $v_i$.   A witness candidate for a {\sc Satisfiability} instance may be verified in polynomial time with $\text{\sc CheckSat}(\phi, B)$ (Algorithm 1.1.1 below).
+A witness for a {\sc Satisfiability} instance is a Boolean assignment to the variables that makes the formula true.  Such a witness can be represented as a vector $B$ in $\{0,1\}^n$, where $n$ is the number of variables in $\phi$, as follows.  Let $\{v_1, \ldots , v_n\}$ be the variables of $\phi$, for each $i$ in $\{1, \ldots , n\}$, the $i$th element of $B$ is denoted $B_i$ and represents an assignment of true or false to $v_i$.   A witness candidate for a {\sc Satisfiability} instance may be verified in polynomial time with $\text{\sc CheckSat}(\phi, B)$ (Algorithm \ref{checkSat} below).
 
 \FloatBarrier 
 
@@ -32,7 +32,7 @@ A witness for a {\sc Satisfiability} instance is a Boolean assignment to the var
 
 \FloatBarrier 
 
-$\text{\sc CheckSat}(\phi, B)$ may be used as a subroutine in a brute force {\sc Satisfiability} solver.  Algorithm 1.1.2 provides pseudocode for a brute force {\sc Satisfiability} solver $\text{\sc BruteSat}(\phi)$.  
+$\text{\sc CheckSat}(\phi, B)$ may be used as a subroutine in a brute force {\sc Satisfiability} solver.  Algorithm \ref{bruteSat} provides pseudocode for a brute force {\sc Satisfiability} solver $\text{\sc BruteSat}(\phi)$.  
 
 \FloatBarrier 
 
@@ -43,7 +43,7 @@ In this project, we consider molecular algorithms to solve {\sc Satisfiability}.
 \input{./algorithms/extractSat.tex}
 \FloatBarrier 
 
-Let us consider Algorithm 1.1.3 as a simplified version of Lipton's algorithm \cite{Lipton95usingdna, dnaComputingModels2008}.  The $\text{\sc ExtractSat}(\phi)$ function provides an introductory view of a molecular algorithm.  $\text{\sc ExtractSat}$ differs in how the algorithm validates each candidate.  The brute force algorithm, $\text{\sc BruteSat}$, generates sequentially an exponential number of witness candidates.  On the other hand, exponential witness canidates with $\text{\sc ExtractSat}$ get filtered in parallel.  
+Let us consider Algorithm \ref{extractSatAlgorithm} as a simplified version of Lipton's algorithm \cite{Lipton95usingdna, dnaComputingModels2008}.  The $\text{\sc ExtractSat}(\phi)$ function provides an introductory view of a molecular algorithm.  $\text{\sc ExtractSat}$ differs in how the algorithm validates each candidate.  The brute force algorithm, $\text{\sc BruteSat}$, generates sequentially an exponential number of witness candidates.  On the other hand, exponential witness canidates with $\text{\sc ExtractSat}$ get filtered in parallel.  
 				
 \section{Simulation of molecular {\sc Satisfiability} solvers}
 	

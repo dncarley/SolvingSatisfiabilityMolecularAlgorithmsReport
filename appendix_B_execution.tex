@@ -1,13 +1,17 @@
 
 \chapter{Molecular algorithm trace}
 
+
 \section{Example {\sc Satisfiability} instance}
 
-
 \[
- \phi = (x_1 \vee x_2 \vee \neg x_3) \wedge  (x_2 \vee x_3 \vee \neg x_4) \wedge (\neg x_1 \vee \neg x_3 \vee \neg x_4)
+ \phi = (x_1 \vee x_2 \vee \neg x_3) \wedge  (x_2 \vee x_3 \vee \neg x_4) \wedge (\neg x_1 \vee \neg x_3 \vee x_4)
 \]
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Lipton's Algorithm}
 
@@ -15,135 +19,427 @@
 T  = \text{{\sc Combinatorial Generate}}(4)
 \]
 
-\[
-T = 
-\]
-\begin{verbatim}
-	STTTT SFTTT STFTT SFFTT STTFT SFTFT STFFT SFFFT
-	STTTF SFTTF STFTF SFFTF STTFF SFTFF STFFF SFFFF
-\end{verbatim}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+T = \{
+&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STFTT}, \texttt{SFFTT}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{STFFT}, \texttt{SFFFT}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{STFTF}, \texttt{SFFTF}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
 	
-Next select Clause 1:
+From the tube $T$, select witnesses for Clause 1:
 
 \[
 C_1 = (x_1 \vee x_2 \vee \neg x_3)
 \]
 
-\begin{verbatim}
-	STTTT SFTTT STFTT SFFTT STTFT SFTFT STFFT SFFFT
-	STTTF SFTTF STFTF SFFTF STTFF SFTFF STFFF SFFFF
-\end{verbatim}
-	
 	Extract $x_1$:
 
-\begin{verbatim}
-		STTTT      STFTT      STTFT      STFFT     
-		STTTF      STFTF      STTFF      STFFF     
-\end{verbatim}
 
-	Extract $x_2$:
-\begin{verbatim}
-		STTTT SFTTT           STTFT SFTFT          
-		STTTF SFTTF           STTFF SFTFF          
-\end{verbatim}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_P = \{&\texttt{STTTT}, \texttt{\hspace{2.5 em}}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{\hspace{2.5 em}}, \texttt{STFFT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{\hspace{2.5 em}}, \texttt{STFTF}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{\hspace{2.5 em}}, \texttt{STFFF}, \texttt{\hspace{2.5 em}}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
-	Extract $\neg x_3$:
-\begin{verbatim}	
-		                    STTFT SFTFT STFFT SFFFT
-		                    STTFF SFTFF STFFF SFFFF
-\end{verbatim}		                    
+ Mix $T_P$ into $T_C$
 
-	Mix contents:
 
-\begin{verbatim}	
-		STTTT SFTTT STFTT      STTFT SFTFT STFFT SFFFT
-		STTTF SFTTF STFTF      STTFF SFTFF STFFF SFFFF
-\end{verbatim}		
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_C = \{&\texttt{STTTT}, \texttt{\hspace{2.5 em}}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{\hspace{2.5 em}}, \texttt{STFFT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{\hspace{2.5 em}}, \texttt{STFTF}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{\hspace{2.5 em}}, \texttt{STFFF}, \texttt{\hspace{2.5 em}}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
-Next select Clause 2:
+ Extract $x_2$:
+
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_P = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix $T_P$ into $T_C$
+
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_C = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{STFFT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{STFTF}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{\hspace{2.5 em}}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Extract $\neg x_3$:
+
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_N = \{&\texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{STFFT}, \texttt{SFFFT}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix contents:
+
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_C = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{STFFT}, \texttt{SFFFT}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{STFTF}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ 
+ Next select Clause 2:
 
 \[
-C_2 = (x_2 \vee x_3 \vee \neg x_4)
+ C_2 = (x_2 \vee x_3 \vee \neg x_4)
 \]
 
-\begin{verbatim}
-	STTTT SFTTT STFTT      STTFT SFTFT STFFT SFFFT
-	STTTF SFTTF STFTF      STTFF SFTFF STFFF SFFFF
-\end{verbatim}		
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{STFFT}, \texttt{SFFFT}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{STFTF}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
 	Extract $x_2$:
-\begin{verbatim}
-		STTTT SFTTT           STTFT SFTFT          
-		STTTF SFTTF           STTFF SFTFF          
-\end{verbatim}	
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_P = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_P$ into $T_C$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_C = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
 	Extract $x_3$:
-\begin{verbatim}	
-		STTTT SFTTT STFTT                         
-		STTTF SFTTF STFTF                         
-\end{verbatim}	
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_P = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{STFTF}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix $T_P$ into $T_C$
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_C = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{STFTF}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
 	Extract $\neg x_4$:
-\begin{verbatim}
-		                                       
-		STTTF SFTTF STFTF      STTFF SFTFF STFFF SFFFF	
-\end{verbatim}
 
-	Mix contents:
-\begin{verbatim}
-		STTTT SFTTT STFTT      STTFT SFTFT          
-		STTTF SFTTF STFTF      STTFF SFTFF STFFF SFFFF
-\end{verbatim}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_N = \{&\texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{STFTF}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
-Finally, select Clause 3:	
+ Mix $T_N$ into $T_C$
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_C = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{STFTF}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Finally, select Clause 3:	
 \[
-C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
+ C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
 \]
-\begin{verbatim}
-	STTTT SFTTT STFTT      STTFT SFTFT          
-	STTTF SFTTF STFTF      STTFF SFTFF STFFF SFFFF
-\end{verbatim}	
-	Extract $\neg x_1$:
-\begin{verbatim}
-		     SFTTT                SFTFT          
-		     SFTTF                SFTFF      SFFFF
-\end{verbatim}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTTF}, \texttt{SFTTF}, \texttt{STFTF}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ From the tube $T$, extract $\neg x_1$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_N = \{&\texttt{\hspace{2.5 em}}, \texttt{SFTTT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{SFTTF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{SFTFF}, \texttt{\hspace{2.5 em}}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_N$ into $T_C$
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_C = \{&\texttt{\hspace{2.5 em}}, \texttt{SFTTT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{SFTTF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{SFTFF}, \texttt{\hspace{2.5 em}}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
 	Extract $\neg x_3$:
-\begin{verbatim}
-		                    STTFT SFTFT          
-		                    STTFF SFTFF STFFF SFFFF
-\end{verbatim}	
 
-	Extract $x_4$:
-\begin{verbatim}
-		STTTT SFTTT STFTT      STTFT SFTFT          
-		                                       
-\end{verbatim}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_N = \{&\texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
-	Mix contents:
-\begin{verbatim}
-		STTTT SFTTT STFTT      STTFT SFTFT          
-		      SFTTF            STTFF SFTFF STFFF SFFFF
-\end{verbatim}
+ Mix the contents of $T_N$ into $T_C$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_C = \{&\texttt{\hspace{2.5 em}}, \texttt{SFTTT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{SFTTF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
 
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_P = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
+	Mix the contents of $T_P$ into $T_C$:
 
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+ T_C = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STFTT}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFT}, \texttt{SFTFT}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{\hspace{2.5 em}}, \texttt{SFTTF}, \texttt{\hspace{2.5 em}}, \texttt{\hspace{2.5 em}}, \\
+&\texttt{STTFF}, \texttt{SFTFF}, \texttt{STFFF}, \texttt{SFFFF}
+\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Ogihara and Ray's Algorithm}
 
-Initialize the tube $T$ with initial vector assignments for variables $x_1$ and $x_2$
-\[
-	T = \{\texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
-\]
+Initialize the tube $T$ with initial vector assignments for literals $x_1$ and $x_2$
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+	T = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
 
 \noindent Iterate variable $x_3$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+				T_P = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+				T_N = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}		
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
+
+Evaluate clause $C_1$:
 \[
 C_1 = (x_1 \vee x_2 \vee \neg x_3)
 \]
 
-\noindent $\neg x_3$ matches $v_3$
+\noindent The literal $\neg x_3$ matches $v_3$ from $C_1$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
 
 \begin{align*}
 T_{P1} &= \{\texttt{STT}, \texttt{STF}\}\\
@@ -151,119 +447,957 @@ T_{N1} &= \{\texttt{SFT}, \texttt{SFF}\}\\
 T_{P2} &= \{\texttt{SFT}\}\\
 T_P &= \{\texttt{STT}, \texttt{STF}, \texttt{SFT}\}
 \end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
+Evaluate clause $C_2$:
 \[
 C_2 = (x_2 \vee x_3 \vee \neg x_4)
 \]
-\noindent $x_3$ or $\neg x_3$ does not match $v_3$
+\noindent The literals $x_3$ or $\neg x_3$ does not match $v_3$ from $C_2$.
 
+Evaluate clause $C_3$:
 \[
 C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
 \]
-\noindent $x_3$ or $\neg x_3$ does not match $v_3$
+\noindent The literals $x_3$ or $\neg x_3$ does not match $v_3$ from $C_2$.
 
-\noindent Append
+\noindent Append assignments for $x_3$ and $\neg x_3$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
 
 \begin{align*}
 T_P &= \{\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}\}\\
 T_N &= \{\texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
 \end{align*}
 
-\noindent Mix
+};
+\end{tikzpicture}
+\end{center}
 
-\[
-T = \{\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
-\]
+\noindent Mix $T_P$ and $T_N$ into the tube $T$.
 
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+
+\begin{align*}
+T = \{&\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \\
+	  &\texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
 \noindent Iterate variable $x_4$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\begin{align*}
+				T_P = \{&\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \\
+					    &\texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\begin{align*}
+				T_N = \{&\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \\
+					    &\texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
+
+Evaluate clause $C_1$:
 \[
 C_1 = (x_1 \vee x_2 \vee \neg x_3)
 \]
+\noindent The literals $x_4$ or $\neg x_4$ does not match $v_3$ in $C_1$.
 
-\noindent $x_4$ or $\neg x_4$ does not match $v_3$
-
+Evaluate clause $C_2$:
 \[
 C_2 = (x_2 \vee x_3 \vee \neg x_4)
 \]
-\noindent $\neg x_4$ matchs $v_3$
+\noindent The literal $\neg x_4$ matchs $v_3$ in $C_2$.
 
-\begin{align*}
-T_{P1} &= \{\texttt{STTT}, \texttt{SFTT}, \texttt{STTF}, \texttt{SFTF}\}\\
-T_{N1} &= \{\texttt{STFT}, \texttt{STFF}, \texttt{SFFF}\}\\
-T_{P2} &= \{\texttt{STFT}\}\\
-T_P &= \{\texttt{STTT}, \texttt{SFTT}, \texttt{STTF}, \texttt{SFTF}, \texttt{STFT}\}
-\end{align*}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+	T_{P1} &= \{\texttt{STTT}, \texttt{SFTT}, \texttt{STTF}, \texttt{SFTF}\}\\
+	T_{N1} &= \{\texttt{STFT}, \texttt{STFF}, \texttt{SFFF}\}\\
+	T_{P2} &= \{\texttt{STFT}\}\\
+	T_P &= \{\texttt{STTT}, \texttt{SFTT}, \texttt{STTF}, \texttt{SFTF}, \texttt{STFT}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
+Evaluate clause $C_3$:
 \[
 C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)
 \]
-\noindent $x_4$ matches $v_3$
+\noindent The literal $x_4$ matches $v_3$ in $C_3$.
 
-\begin{align*}
-T_{P1} &= \{\texttt{SFTT}, \texttt{SFTF}, \texttt{SFFF}\}\\
-T_{N1} &= \{\texttt{STTT}, \texttt{STFT}, \texttt{STTF}, \texttt{STFF}\}\\
-T_{P2} &= \{\texttt{STTF}, \texttt{STFF}\}\\
-T_N &= \{\texttt{SFTT}, \texttt{SFTF}, \texttt{SFFF}, \texttt{STTF}, \texttt{STFF}\}
-\end{align*}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+	T_{P1} &= \{\texttt{SFTT}, \texttt{SFTF}, \texttt{SFFF}\}\\
+	T_{N1} &= \{\texttt{STTT}, \texttt{STFT}, \texttt{STTF}, \texttt{STFF}\}\\
+	T_{P2} &= \{\texttt{STTF}, \texttt{STFF}\}\\
+	T_N &= \{\texttt{SFTT}, \texttt{SFTF}, \texttt{SFFF}, \texttt{STTF}, \texttt{STFF}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
-\noindent Append
+\noindent Append assignments for $x_4$ and $\neg x_4$.
 
-\begin{align*}
-T_P &= \{\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}\}\\
-T_N &= \{\texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
-\end{align*}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3.5in]{
+	\begin{align*}
+	T_P &= \{\texttt{STTTT}, \texttt{SFTTT}, \texttt{STTFT}, \texttt{SFTFT}, \texttt{STFTT}\}\\
+	T_N &= \{\texttt{SFTTF}, \texttt{SFTFF}, \texttt{SFFFF}, \texttt{STTFF}, \texttt{STFFF}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
-\noindent Mix
+\noindent Mix $T_P$ and $T_N$ into the tube $T$, providing the witnesses for $\phi$
 
-\[
-T = \{\texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{STTF}, \texttt{STFF}, \texttt{SFTF}, \texttt{SFFF}\}
-\]
 
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3.5in]{
+	\begin{align*}
+	T = \{&\texttt{STTTT}, \texttt{SFTTT}, \texttt{STTFT}, \texttt{SFTFT}, \texttt{STFTT}\}\\
+	  	  &\texttt{SFTTF}, \texttt{SFTFF}, \texttt{SFFFF}, \texttt{STTFF}, \texttt{STFFF}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Distribution Algorithm}
+ 
+Initiate the tube $T_S$ with a start medium \texttt{S}.
+ 
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_S = \{\texttt{S}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
 
-Initialize the tube $T$ with the variables from the first clause
-\[
-	T = \{(x_1), (x_2), (\neg x_3)\}
-\]	
 
-\noindent Select Clause 2:
+Evaluate clause $C_1 = (x_1 \vee x_2 \vee \neg x_3)$:
 
-\par $T_1 =	\text{{\sc Insert Literal}}(T, x_2)$
-\[
-		T_1 =  \{(x_1,x_2), (x_2), (x_2,\neg x_3)\}
-\]
-\par $T_2 =	\text{{\sc Insert Literal}}(T, x_3)$
-\[	
-		T_2 =  \{(x_1,x_3), (x_2,x_3)\}	
-\]
-\par $T_3 =	\text{{\sc Insert Literal}}(T, \neg x_4)$
-\[	
-		T_3 =  \{(x_1,\neg x_4), (x_2,\neg x_4), (\neg x_3,\neg x_4)\}			
-\]		
-\par $T = \text{mix}(T_1, T_2, T_3)$
-\[	
-		T = \{(x_1,x_2), (x_2), (x_2,\neg x_3), (x_1, x_3), (x_2,x_3), (x_1,\neg x_4), (x_2,\neg x_4), (\neg x_3,\neg x_4)\}
-\]		
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{ }\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
 
-\noindent Select Clause 3:
+
+Select the literal $x_1$ from $C_1$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+					T_V = \{\texttt{S}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_S = \{\texttt{S}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
 	
-\par $T_1 = 	\text{{\sc Insert Literal}}(T, \neg x_1)$
-\[
-		T_1 = \{(\neg x_1, x_2), (\neg x_1, x_2,\neg x_3), (\neg x_1, x_2, x_3), (\neg x_1, x_2,\neg x_4), (\neg x_1,\neg x_3,\neg x_4)\}
-\]	
-\par $T_2 =	\text{{\sc Insert Literal}}(T, \neg x_3)$
-\[
-		T_2 = \{(x_1,x_2,\neg x_3), (x_2,\neg x_3), (x_2,\neg x_3), (x_1,\neg x_3,\neg x_4), (x_2,\neg x_3,\neg x_4), (\neg x_3,\neg x_4)\}
-\]
-\par $T_2 =	\text{{\sc Insert Literal}}(T, x_4)$
-\[
-		T_3 = \{(x_1,x_2,x_4), (x_2,x_4), (x_2,\neg x_3,x_4), (x_1,x_3,x_4), (x_2,x_3,x_4)\}
-\]
-\par $T = \text{mix}(T_1, T_2, T_3)$
-\begin{align*}
-		T = \{&(\neg x_1,x_2), (\neg x_1,x_2,\neg x_3), (\neg x_1,x_2,x_3), (\neg x_1,x_2,\neg x_4), (\neg x_1,\neg x_3,\neg x_4),\\
-			  &(x_1,x_2,\neg x_3), (x_2,\neg x_3), (x_1,\neg x_3,\neg x_4), (x_2,\neg x_3,\neg x_4), (\neg x_3,\neg x_4),\\
-			  &(x_1,x_2,x_4), (x_2,x_4), (x_2,\neg x_3,x_4), (x_1,x_3,x_4), (x_2,x_3,x_4)\}
-\end{align*}
+\hspace{1em}
+
+Extract literals from $T_V$ that contain negative and positive assignments for $x_1$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{ }\} \\
+		T_P &= \{\texttt{ }\} \\
+		T_V &= \{\texttt{S}\} 
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $x_1$ to the required variable tube $T_V$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+1}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{S+1}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+
+%%%%%%%%%%%%
+Select the literal $x_2$ from $C_1$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+					T_V = \{\texttt{S}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_S = \{\texttt{S}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+\hspace{1em}
+
+
+Extract literals from $T_V$ that contain negative and positive assignments for $x_2$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{ }\} \\
+		T_P &= \{\texttt{ }\} \\
+		T_V &= \{\texttt{S}\} 
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $x_2$ to the required variable tube $T_V$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+2}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{S+1, S+2}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+
+Select the literal $\neg x_3$ from $C_1$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+					T_V = \{\texttt{S}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_S = \{\texttt{S}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
+
+
+Extract literals from $T_V$ that contain negative and positive assignments for $\neg x_3$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{ }\} \\
+		T_P &= \{\texttt{ }\} \\
+		T_V &= \{\texttt{S}\} 
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $\neg x_3$ to the required variable tube $T_V$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S-3}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{S+1, S+2, S-3}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+Complete the iteration of the first clause by storing the witnesses in $T_C$ as witnesses to $T_S$ for the evaluated instance $\phi$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_S = \{\texttt{S+1, S+2, S-3}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+Evaluate clause $C_2 = (x_2 \vee x_3 \vee \neg x_4)$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{ }\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+
+Select the literal $x_2$ from $C_2$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+					T_V = \{\texttt{S+1, S+2, S-3}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_S = \{\texttt{S+1, S+2, S-3}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
+
+Extract literals from $T_V$ that contain negative and positive assignments for $x_2$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{ }\} \\
+		T_P &= \{\texttt{S+2}\} \\
+		T_V &= \{\texttt{S+1, S-3}\} 
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $x_2$ to the required variable tube $T_V$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+1+2, S-3+2}\} 
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{S+2, S+1+2, S-3+2}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+
+%%%%%%%%%%%%
+Select the literal $x_3$ from $C_2$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+					T_V = \{\texttt{S+1, S+2, S-3}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_S = \{\texttt{S+1, S+2, S-3}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
+
+Extract literals from $T_V$ that contain negative and positive assignments for $x_3$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{S-3}\}\\
+		T_P &= \{\texttt{}\} \\
+		T_V &= \{\texttt{S+1, S+2}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $x_3$ to the required variable tube $T_V$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+1+3, S+2+3}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_C = \{&\texttt{S+2, S+1+2, S-3+2},\\
+				&\texttt{S+1+3, S+2+3}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+
+%%%%%%%%%%%%
+
+%%%%%%%%%%%%
+Select the literal $\neg x_4$ from $C_2$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+					T_V = \{\texttt{S+1, S+2, S-3}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_S = \{\texttt{S+1, S+2, S-3}\}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
+
+Extract literals from $T_V$ that contain negative and positive assignments for $\neg x_4$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{}\}\\
+		T_P &= \{\texttt{}\} \\
+		T_V &= \{\texttt{S+1, S+2, S-3}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $\neg x_4$ to the required variable tube $T_V$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+1-4, S+2-4, S-3-4}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_C = \{& \texttt{S+2, S+1+2, S-3+2},\\
+				& \texttt{S+1+3, S+2+3},\\
+				& \texttt{S+1-4, S+2-4, S-3-4}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%
+
+
+Complete the iteration of the second clause by storing the witnesses in $T_C$ as witnesses to $T_S$ for the evaluated instance $\phi$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_S = \{& \texttt{S+2, S+1+2, S-3+2},\\
+				& \texttt{S+1+3, S+2+3},\\
+				& \texttt{S+1-4, S+2-4, S-3-4}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+
+Evaluate clause $C_3 = (\neg x_1 \vee \neg x_3 \vee x_4)$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_C = \{\texttt{ }\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+
+Select the literal $\neg x_1$ from $C_3$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\begin{align*}
+					T_V = \{& \texttt{S+2, S+1+2, S-3+2},\\
+							& \texttt{S+1+3, S+2+3},\\
+							& \texttt{S+1-4, S+2-4, S-3-4}\}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\begin{align*}
+					T_S = \{& \texttt{S+2, S+1+2, S-3+2},\\
+							& \texttt{S+1+3, S+2+3},\\
+							& \texttt{S+1-4, S+2-4, S-3-4}\}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
+
+%%%%  S+2, S+1+2, S-3+2, S+1+3, S+2+3, S+1-4, S+2-4, S-3-4
+Extract literals from $T_V$ that contain negative and positive assignments for $\neg x_1$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{S+1+2, S+1+3, S+1-4 }\} \\
+		T_P &= \{\texttt{ }\} \\
+		T_V &= \{\texttt{S+2, S-3+2, S+2+3, S+2-4, S-3-4}\} 
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $\neg x_1$ to the required variable tube $T_V$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_V = \{&\texttt{S+2-1, S-3+2-1, S+2+3-1, S+2-4-1, S-3-4-1}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=4.5in]{
+	\[
+		T_C = \{\texttt{S+2-1, S-3+2-1, S+2+3-1, S+2-4-1, S-3-4-1}\} 
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%
+Select the literal $\neg x_3$ from $C_3$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\begin{align*}
+					T_V = \{& \texttt{S+2, S+1+2, S-3+2},\\
+							& \texttt{S+1+3, S+2+3},\\
+							& \texttt{S+1-4, S+2-4, S-3-4}\}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\begin{align*}
+					T_S = \{& \texttt{S+2, S+1+2, S-3+2},\\
+							& \texttt{S+1+3, S+2+3},\\
+							& \texttt{S+1-4, S+2-4, S-3-4}\}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+		
+\hspace{1em}
+
+Extract literals from $T_V$ that contain negative and positive assignments for $\neg x_3$.
+
+%%S+2, S+1+2, S-3+2, S+1+3, S+2+3, S+1-4, S+2-4, S-3-4
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{S+1+3, S+2+3}\}\\
+		T_P &= \{\texttt{S-3+2, S-3-4}\} \\
+		T_V &= \{\texttt{S+2, S+1+2, S+1-4, S+2-4}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $\neg x_3$ to the required variable tube $T_V$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+		T_V = \{\texttt{S+2-3, S+1+2-3, S+1-4-3, S+2-4-3}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=4.5in]{
+	\begin{align*}
+		T_C = \{&\texttt{S+2-1, S-3+2-1, S+2+3-1, S+2-4-1, S-3-4-1}, \\
+				&\texttt{S-3+2, S-3-4, S+2-3, S+1+2-3, S+1-4-3, S+2-4-3}\} 
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+
+%%%%%%%%%%%%
+Select the literal $x_4$ from $C_3$.  Split the contents of $T_S$:
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\begin{align*}
+					T_V = \{& \texttt{S+2, S+1+2, S-3+2},\\
+							& \texttt{S+1+3, S+2+3},\\
+							& \texttt{S+1-4, S+2-4, S-3-4}\}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\begin{align*}
+					T_S = \{& \texttt{S+2, S+1+2, S-3+2},\\
+							& \texttt{S+1+3, S+2+3},\\
+							& \texttt{S+1-4, S+2-4, S-3-4}\}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+		
+\hspace{1em}
+
+
+Extract literals from $T_V$ that contain negative and positive assignments for $x_4$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\begin{align*}
+		T_N &= \{\texttt{S+1-4, S+2-4, S-3-4}\}\\
+		T_P &= \{\texttt{}\} \\
+		T_V &= \{\texttt{S+2, S+1+2, S-3+2, S+1+3, S+2+3}\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Append the satisfying literal $x_4$ to the required variable tube $T_V$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=4.5in]{
+	\[
+		T_V = \{\texttt{S+2+4, S+1+2+4, S-3+2+4, S+1+3+4, S+2+3+4}\}
+	\]
+};
+\end{tikzpicture}
+\end{center}
+
+ Mix the contents of $T_C$, $T_P$, and $T_V$ into the clause witness tube $T_C$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=5.5in]{
+	\begin{align*}
+		T_C = \{&\texttt{S+2-1, S-3+2-1, S+2+3-1, S+2-4-1, S-3-4-1}, \\
+				&\texttt{S-3+2, S-3-4, S+2-3, S+1+2-3, S+1-4-3, S+2-4-3}, \\
+				&\texttt{S+2+4, S+1+2+4, S-3+2+4, S+1+3+4, S+2+3+4}\} 
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%
+
+Complete the iteration of the last clause by storing the witnesses in $T_C$ as witnesses to $T_S$.  The tube $T_S$ contains witnesses for $\phi$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=5.5in]{
+	\begin{align*}
+		T_S = \{&\texttt{S+2-1, S-3+2-1, S+2+3-1, S+2-4-1, S-3-4-1}, \\
+				&\texttt{S-3+2, S-3-4, S+2-3, S+1+2-3, S+1-4-3, S+2-4-3}, \\
+				&\texttt{S+2+4, S+1+2+4, S-3+2+4, S+1+3+4, S+2+3+4}\} 
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+
+

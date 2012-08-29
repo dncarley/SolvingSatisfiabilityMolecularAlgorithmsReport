@@ -1,22 +1,23 @@
 
 \begin{figure}[htbp]
-\begin{center}
-
-\begin{pseudocode}{BruteSat}{\phi}
-
-	\text{// Input $\phi$ consists of $n$ variables.}\\
-	\text{// Bit-vector $B$ represents a witness candidate.}  \\
-\\
-	\FOREACH B \in \{0, 1\}^n \DO
-		\BEGIN
-			\IF \text{\sc CheckSat}(\phi, B) 
-				\THEN	\RETURN{\texttt{SATISFIABLE}} \\
-
-		\END \\
-	\RETURN{\texttt{UNSATISFIABLE}}
-\end{pseudocode}
-
-\caption{$\text{\sc BruteSat}(\phi)$ tests a maximum of $2^n$ Boolean witness candiates, using the $\text{\sc CheckSat}(\phi, B)$ algorithm.  If the witness candidate $B$ satisfies the input instance $\phi$, then the algorithm returns \texttt{SATISFIABLE}; otherwise the algorithm returns \texttt{UNSATISFIABLE}.}
-\label{bruteSat}
-\end{center}
+	\renewcommand{\figurename}{Algorithm}
+	\renewcommand{\thepseudocode}{\ref{bruteSat}}
+	
+	\begin{center}	
+	\begin{pseudocode}[shadowbox]{BruteSat}{\phi}
+	
+		\text{// Input $\phi$ consists of $n$ variables.}\\
+		\text{// Bit-vector $B$ represents a witness candidate.}  \\
+		\\
+		\FOREACH B \in \{0, 1\}^n \DO
+			\BEGIN
+				\IF \text{\sc CheckSat}(\phi, B) 
+					\THEN	\RETURN{\texttt{SATISFIABLE}} \\
+			\END \\
+		\RETURN{\texttt{UNSATISFIABLE}}
+	\end{pseudocode}
+	
+	\caption{$\text{\sc BruteSat}(\phi)$ tests a maximum of $2^n$ Boolean witness candiates, using the $\text{\sc CheckSat}(\phi, B)$ algorithm.  If the witness candidate $B$ satisfies the input instance $\phi$, then the algorithm returns \texttt{SATISFIABLE}; otherwise the algorithm returns \texttt{UNSATISFIABLE}.}
+	\label{bruteSat}
+	\end{center}
 \end{figure}

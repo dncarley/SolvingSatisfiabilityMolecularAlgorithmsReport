@@ -1,10 +1,12 @@
 
 \begin{figure}[htbp]
-\begin{center}
+	\renewcommand{\figurename}{Algorithm}
+	\renewcommand{\thepseudocode}{\ref{combinatorialGenerate}}
+	
+	\begin{center}
 
-	\begin{pseudocode}{Combinatorial Generate}{n}
-		T_{comb} \GETS \emptyset \\
-		T_{comb} \GETS \text{mix(}T_{comb}, \texttt{S} \text{)} \\ 
+	\begin{pseudocode}[shadowbox]{Combinatorial Generate}{n}
+		T_{comb} \GETS \{\texttt{S}\} \\
 	
 		\FOR v \GETS 1 \text{ to } n \DO
 			\BEGIN

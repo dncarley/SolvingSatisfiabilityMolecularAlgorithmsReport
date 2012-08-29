@@ -1,19 +1,25 @@
-\chapter{Conclusions}
+\chapter{Conclusion}
 
 %	<Paragraph> Summary of project
-This project considered {\sc Satisfiability} as a problem for general computation.  We considered three molecular algorithms for {\sc Satisfiability} and simulated their execution with a computation framework.  In this chapter, we state the contributions of this project and directions molecular computation will take.
+
+We considered three molecular algorithms for {\sc Satisfiability} and simulated their execution with a computation framework.  Chapter 2 discussed techniques for molecular computation and defined a molecular instruction set (Adleman's molecular toolbox).
+
+In Chapter 2, we defined {\sc Satisfiability} along with the standard forms: CNF, $k$-CNF, and $k$-{\sc Sat}.  We use random $3$-CNF instances for execution of simulated molecular algorithms.  
 	
-	\section{Contributions}
+	\section{Contribution}
 
-%		<Paragraph> Molecular algorithm for {\sc Sat}
-%		<Paragraph> Simulation of molecular {\sc Sat} algorithms
-We developed several contributions for molecular computation during this project.  This includes introducing the Distribution algorithm for {\sc Satisfiability} in Chapter 4.  We introduced Molecular Simulation in Chapter 5 and collected data from simulations of three molecular {\sc Satisfiability} algorithms described in Chapter 6.  This comparison shows advantages and disadvantages of each of the molecular algorithms for {\sc Satisfiability}.
+This project introduces the Distribution algorithm for {\sc Satisfiability}.  This algorithm distributes the literals into a growing set of witnesses during the evaluation of a $k$-CNF instance.
 
-%		<Paragraph> Generalized computing architecture 		
+We provide comparisons of molecular operators for each of the molecular algorithms under test.  The software framework for this project (Molecular Simulation) was used for simulating and collecting metrics on random $3$-CNF instances at fixed $n=20$ spanning clause-variable ratios $\alpha = m/n = [0.2, 14.0]$ in increments of $0.2$.
 
 	\section{Future work}
 	
 %		<Paragraph> Implementation of molecular computers
-Gene sequencers have been designed for reading molecules and diagnosing patients in a medical setting.  These gene sequencers currently have the ability to sequence any type of gene.  Observing real interactions between sequences in a controlled environment permit molecular computation for targeted gene disease diagnosis.
 
-{\sc Satisfiability} defines a canonical input format for combinatorial problems.  Applications of molecular {\sc Satisfiability} algorithms may extend to witness natural gene expressions.  Gene sequencers designed for molecular computation permit observation of molecular interactions on both synthetic and natural gene expressions. 
+Variations on the Distribution algorithm can decrease the length and quantity of witness candidates.  In particular, the Distribution algorithm may select clauses with the maximum number of idempotent literal assignments while regarding all other literals as unassigned.  From the remaining clauses, assignments can be made using the standard Distribution algorithm (Chapter 4) or employ a clause selection strategy.\\
+
+In this project we considered the use of a genetic substrate to store and match witness candidates for {\sc Satisfiability}.  Existing implementation of molecular computers use laboratory procedures operated by a human or human-like automation.  Gene sequencers currently provide an integrated means for reading natural gene expressions.  
+
+Practical molecular computation must be integrated into a molecular computing architecture.  This architecture must facilite the storage and transfer of isolated tubes with read/write/extract capabilities.  This type of machine provides an environment for observing natural interactions of genes (along with sequencing), and an architecture for molecular computation. 
+
+

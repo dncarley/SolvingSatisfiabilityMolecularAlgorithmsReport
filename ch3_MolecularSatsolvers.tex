@@ -29,20 +29,52 @@ In Chapter 1, witness candidates for {\sc Satisfiability} were represented as a 
 	\begin{align*}
 	B &= [0, 1, 0, 1 \rangle \\
 	L &= \{ \neg x_1, x_2, \neg x_3, x_4 \} \\
-	V &= \{ 1_{\texttt{F}}, 2_{\texttt{T}}, 3_{\texttt{F}}, 4_{\texttt{T}} \} \\
-	D &= \texttt{SFTFT} 
+	D &= \texttt{SFTFT}\\ 
+	Z &= \texttt{S-1+2-3+4}\\ 
 	\end{align*}
 
-\caption{The bit-vector $B = [0, 1, 0, 1 \rangle$ can be represented as the set of literal assignments $L = \{ \neg x_1, x_2, \neg x_3, x_4 \}$.  Using the condensed representation from Table \ref{equivalentLiteralTable} we can represent the set in condensed form $V = \{ 1_{\texttt{F}}, 2_{\texttt{T}}, 3_{\texttt{F}}, 4_{\texttt{T}} \}$.  A directed polarity string with initial sequence (\texttt{S}), followed by a sequence of literals provides $D = \texttt{SFTFT}$.}
+\caption{The bit-vector $B = [0, 1, 0, 1 \rangle$ can be represented as the set of literal assignments $L = \{ \neg x_1, x_2, \neg x_3, x_4 \}$.  A directed polarity string (D) with initial sequence (\texttt{S}), followed by a sequence of literals provides $D = \texttt{SFTFT}$.  A directed integer string (Z) consists of an initial sequence (\texttt{S}) followed by DIMACS literal assignments $Z =\texttt{S-1+2-3+4}$. }
 \label{equivalentWitnessRepresentations}
 \end{center}
 \end{figure}
 
 \FloatBarrier
 
-We use the directed polarity string (representation $D$ in Figure \ref{equivalentWitnessRepresentations}) as shorthand for a directed oligonucleotide.  The directed string representation $D$ can be indexed by the variable $v$.  In Lipton's algorithm, literal configurations for a variable $v$ get extracted directly ($v_{\texttt{T}}$ or $v_{\texttt{F}}$).
+We use the directed string notation (representation $D$ in Figure \ref{equivalentWitnessRepresentations}) as shorthand for a directed oligonucleotide.  The directed string representation $D$ can be indexed by the variable $v$ using the condensed literal from Table \ref{equivalentLiteralTable}.  In Lipton's algorithm, literal configurations for a variable $v$ get extracted directly ($v_{\texttt{T}}$ or $v_{\texttt{F}}$).
 
-In Ogihara and Ray's algorithm, we extract satisfying literal configurations from an ordered clause $(a, b, c)$.  We use the literal configuration $v_P$ to extract the satisfying literal $P$ (either \texttt{T} or \texttt{F}) for the variable $v$.  We use the literal configuration $v_N$ to extract any other non-satisfiable literal assignments to $v$.
+Ogihara and Ray's algorithm extracts satisfying literal configurations from an ordered clause $(a, b, c)$.  We use the condensed literal notation $v_P$ to indicate the assignment (either \texttt{T} or \texttt{F}) for the literal $v$.  We use the literal configuration $v_N$ to indicate any other non-satisfiable literal assignment to $v$.
+
+In the discussion of the Distribution algorithm in Chapter 4, we use the directed integer notation (representation $Z$ in Figure \ref{equivalentWitnessRepresentations}) as shorthand for a directed sequence of integers.
+
+Along with our shorthand representations ($D$ and $Z$) from Figure \ref{equivalentWitnessRepresentations}, we include a small combinatorial library corresponding to positive and negative literals.  Table \ref{smallCombinatorialLibrary} lists a mapping of literals to oligonucleotides used for literal matching and assignment.  
+
+
+\begin{table}[htdp]
+\caption{Positive and negative literal assignment and matching oligonucleotides.  }
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Literal} & \textbf{Assignment} & \textbf{Matching} \\ \hline
+$x_1$ & $5'-$\texttt{TTT}$-3'$ & $3'-$\texttt{AAA}$-5'$ \\ 
+$\neg x_1$ & $5'-$\texttt{TTA}$-3'$ & $3'-$\texttt{AAT}$-5'$ \\ \hline
+$x_2$ & $5'-$\texttt{CTT}$-3'$ & $3'-$\texttt{GAA}$-5'$ \\ 
+$\neg x_2$ & $5'-$\texttt{ATT}$-3'$ & $3'-$\texttt{TAA}$-5'$ \\ \hline
+$x_3$ & $5'-$\texttt{ATG}$-3'$ & $3'-$\texttt{TAC}$-5'$ \\ 
+$\neg x_3$ & $5'-$\texttt{GTT}$-3'$ & $3'-$\texttt{CAA}$-5'$ \\ \hline
+$x_4$ & $5'-$\texttt{TCT}$-3'$ & $3'-$\texttt{AGA}$-5'$ \\ 
+$\neg x_4$ & $5'-$\texttt{CCT}$-3'$ & $3'-$\texttt{GGA}$-5'$ \\ \hline
+$x_5$ & $5'-$\texttt{ACT}$-3'$ & $3'-$\texttt{TGA}$-5'$ \\ 
+$\neg x_5$ & $5'-$\texttt{GCT}$-3'$ & $3'-$\texttt{CGA}$-5'$ \\ \hline
+Start & $5'-$\texttt{TTG}$-3'$ & $3'-$\texttt{AAC}$-5'$ \\ \hline
+\end{tabular}
+\end{center}
+\label{smallCombinatorialLibrary}
+\end{table}%
+
+\FloatBarrier
+
+The examples throughout this report use this combinatorial library designed with codons.  Larger combinatorial libraries \cite{dnaComputingModels2008} take multiple considerations for the genetic encoding, including uniform melting temperature and non-self complementary sequences.  Codons provide redundant encodings that we exploit for a small library.   
+
 
 \section{Lipton's algorithm for {\sc Satisfiability}}
 
@@ -50,7 +82,7 @@ In Ogihara and Ray's algorithm, we extract satisfying literal configurations fro
 
 Introduced in 1995 by Richard Lipton \cite{Lipton95usingdna}, this algorithm filters satisfiable witnesses from a combinatorial space of all witness candidates.  Lipton's algorithm is analogous to a conventional brute-force search for all witnesses of a {\sc Satisfiability} instance.
 
-{\sc Lipton's Algorithm} (Algorithm 3.1.1) first constructs a combinatorial space $T$ containing oligonucleotide configurations for all potential witness candidates.  The algorithm iterates over each of the clauses $C$ in $\phi$.  
+Lipton's algorithm (Algorithm \ref{liptonAlgorithm}) first constructs a combinatorial space $T$ containing oligonucleotide configurations for all potential witness candidates.  The algorithm iterates over each of the clauses $C$ in $\phi$.  
 
 From each clause $C$, each of the literals contained within each clause $C$ get filtered to satisfiable witnesses.  The contents of $T$ get filtered by incrementally extracting those literals that satisfy the current clause.  The next iteration filters witnesses that satisfy the previous clauses from $T$ and the literal contents from $C$.  The algorithm terminates with a set of witnesses $T$ for the CNF input $\phi$.  If $\phi$ is unsatisfiable, then $T = \emptyset$.  
 
@@ -62,7 +94,7 @@ From each clause $C$, each of the literals contained within each clause $C$ get 
 	\subsection{Description of Lipton's algorithm}
 		
 %		<Paragraph> Describe setup
-The function {\sc Combinatorial Generate} (Algorithm 3.1.2) implements the split-mix synthesis technique \cite{furka1982, furkaBook}.  {\sc Combinatorial Generate} returns a tube $T_{comb}$ consisting of oligonucleotides that represent all $2^n$ distinct witness candidates.  The tube $T_{comb}$ begins with an initial medium denoted by \texttt{S}.  An iterative loop extends $T_{comb}$ using split-mix synthesis.  Each split corresponds with appending the tubes with a true (\texttt{T}) and false (\texttt{F}) assignment.  The two tubes are mixed and purified to contain equimolar portions of each witness candidate.  
+The function {\sc Combinatorial Generate} (Algorithm \ref{combinatorialGenerate}) implements the split-mix synthesis technique \cite{furka1982, furkaBook}.  {\sc Combinatorial Generate} returns a tube $T_{comb}$ consisting of oligonucleotides that represent all $2^n$ distinct witness candidates.  The tube $T_{comb}$ begins with an initial medium denoted by \texttt{S}.  An iterative loop extends $T_{comb}$ using split-mix synthesis.  Each split corresponds with appending the tubes with a true (\texttt{T}) and false (\texttt{F}) assignment.  The two tubes are mixed and purified to contain equimolar portions of each witness candidate.  
 
 \input{./algorithms/combinatorialGenerate.tex}
 \FloatBarrier
@@ -72,51 +104,228 @@ Let us consider an example execution of {\sc Combinatorial Generate} with $n = 2
 \noindent The tube $T_{comb}$ begins as an empty tube.  A start configuration \texttt{S} initiates the tube $T_{comb}$ with a medium for combinatorial synthesis.
 
 \noindent We begin with the initial contents
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
 \[
-T_{comb} = \{ \texttt{S} \}.
+T_{comb} = \{ \texttt{S} \},
 \]
+
+\[
+T_{comb} = \{ 5'-\underbrace{\texttt{TTG}}_{\text{Start}}-3' \}.
+\]
+};
+\end{tikzpicture}
+\end{center}
 
 \noindent Iteration $v = 1$:
 
 First, split the contents of $T_{comb}$.  We have
-\begin{align*}
- T_1 &= \{ \texttt{S} \}, \text{ and} \\
- T_2 &= \{ \texttt{S} \}.
-\end{align*}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_1 = \{ \texttt{S} \}
+				\]
+				\[
+					T_1 = \{ 5'-\underbrace{\texttt{TTG}}_{\text{Start}}-3' \}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_2 = \{ \texttt{S} \}
+				\]
+				\[
+					T_2 = \{ 5'-\underbrace{\texttt{TTG}}_{\text{Start}}-3' \}.
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+\hspace{1em}
 
 Next, append each of the tubes with a positive (\texttt{T}) and negative (\texttt{F}) assignment for the literal $v_1$.  We have
-\begin{align*}
- T_1 &= \{ \texttt{ST} \}, \text{ and} \\
- T_2 &= \{ \texttt{SF} \}.
-\end{align*}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+					T_1 = \{ \texttt{ST} \}
+				\]
+				\[
+					T_1 = \{ 5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}-3' \}
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}			
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{			
+				\[
+					T_2 = \{\texttt{ST}, \texttt{SF}\}
+				\]
+				\[
+					T_2 = \{ 5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}-3' \}.		
+				\]
+			};
+			\end{tikzpicture}
+			\end{center}		
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+\hspace{1em}
 
 Mix the contents of $T_1$ and $T_2$ to form $T_{comb}$ for the next iteration.  We have
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
 \[
 T_{comb} = \{\texttt{ST}, \texttt{SF}\}.
 \]
+\begin{align*}
+T_{comb} = \{&5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}-3',\\
+&5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}-3' \}.
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
 \noindent Iteration $v = 2$:
 
 Split the contents of $T_{comb}$.  We have
-\begin{align*}
- T_1 &= \{\texttt{ST}, \texttt{SF}\}, \text{ and} \\
- T_2 &= \{\texttt{ST}, \texttt{SF}\}.
-\end{align*}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][l]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+				T_1 = \{\texttt{ST}, \texttt{SF}\}
+				\]
+				\begin{align*}
+				T_{1} = \{&5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}-3',\\
+						  &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}-3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+				 T_2 = \{\texttt{ST}, \texttt{SF}\}
+				\]
+				\begin{align*}	
+				T_{2} = \{&5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}-3',\\
+						  &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}-3' \}.
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
 
 Next, append each of the tubes with a positive (\texttt{T}) and negative (\texttt{F}) assignment for the literal $v_2$.  We have
-\begin{align*}
- T_1 &= \{\texttt{STT}, \texttt{SFT}\}, \text{ and} \\
- T_2 &= \{\texttt{STF}, \texttt{SFF}\}.
-\end{align*}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+				T_1 = \{\texttt{STT}, \texttt{SFT}\}
+				\]
+				\begin{align*}
+				T_{1} = \{&5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+						  &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+				T_2 = \{\texttt{STF}, \texttt{SFF}\}		
+				\]
+				\begin{align*}	
+				T_{2} = \{&5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3',\\
+						  &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3' \}.
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+\hspace{1em}
 
 Mix the contents of $T_1$ and $T_2$ to form $T_{comb}$ for the final iteration.  The algorithm {\sc Combinatorial Generate} returns the following tube
-\[
-T_{comb} = \{\texttt{STT}, \texttt{SFT}, \texttt{STF}, \texttt{SFF}\}.
-\]
 
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+	T_{comb} = \{\texttt{STT}, \texttt{SFT}, \texttt{STF}, \texttt{SFF}\},
+	\]
+	\begin{align*}
+	T_{comb} = \{&5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+			  &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+			  &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3',\\
+			  &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3' \}.
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}	
 %%%%%%%%%%%%%%%%%
 
-{\sc Combinatorial Generate} generates all witness candidates for a {\sc Satisfiability} instance.  {\sc Lipton's Algorithm} filters, from a combinatorial space $T$, configurations that represent witnesses for the input $\phi$.
+{\sc Combinatorial Generate} generates all witness candidates for a {\sc Satisfiability} instance.  Lipton's algorithm filters, from a combinatorial space $T$, configurations that represent witnesses for the input $\phi$.
 
 	\subsection{Detailed trace of Lipton's algorithm}	
 %	<Paragraph> Introduce pseudocode
@@ -128,7 +337,7 @@ Appendix B lists a detailed execution trace for Lipton's algorithm.
 
 %	<Paragraph> Introduce Ogihara and Ray's algorithm
 
-Ogihara and Ray's algorithm (Algorithm 3.2.1) consist of a breadth-first evaluation of clauses from a CNF formula \cite{Ogihara:1996:BFS:898228,Ogihara97dna-basedparallel}.  The algorithm constructs a set of witness candidates based on a parse of a 3-CNF formula.  In this section, we describe the preconditions and execution of Ogihara and Ray's algorithm.
+Ogihara and Ray's algorithm (Algorithm \ref{ogiharaRayAlgorithm}) consist of a breadth-first evaluation of clauses from a CNF formula \cite{Ogihara:1996:BFS:898228,Ogihara97dna-basedparallel}.  The algorithm constructs a set of witness candidates based on a parse of a 3-CNF formula.  In this section, we describe the preconditions and execution of Ogihara and Ray's algorithm.
 
 %		<Paragraph> Describe execution
 \input{./algorithms/ogiharaAlgorithm.tex}
@@ -136,92 +345,257 @@ Ogihara and Ray's algorithm (Algorithm 3.2.1) consist of a breadth-first evaluat
 
 \subsection{Description of Ogihara and Ray's algorithm}
 		
-%		<Paragraph> Describe preconditions
-Ogihara and Ray's algorithm requires each input to have two attributes:
+Ogihara and Ray's algorithm begins with four initial witness candidates, we have
 
-\begin{enumerate}
-\item All clauses consist of exactly three literals.
-\item All clauses must be ordered by the literal's variable.
-\end{enumerate}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+	T = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
+	\]
+	\begin{align*}
+	T = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+		   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3',\\
+		   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+		   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3'\}.
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
-Considering only $3$-{\sc Sat} instances fulfills Attribute (1).  If models of $k$-{\sc Sat} with $k > 3$ are desired as input, then a polynomial time reduction to $3$-{\sc Sat} must occur prior to execution.
-
-Ordering the literals from each clause by variable fulfills Attribute (2).  We impose an increasing ordering over the variable indices in each clause $C = (x_i \vee x_j \vee x_k)$.  We have
-\[
-1 \leq i < j < k \leq n.
-\]
-
-\noindent We use the notation $(a, b, c)$ to denote the ordered clause, where
-\begin{align*}
-a &= x_i, \\
-b &= x_j, \\
-c &= x_k.
-\end{align*}
-
-%		<Paragraph> Describe setup
-{\sc Ogihara and Ray's Algorithm} begins with four initial witness candidates. 
-\[
-T = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
-\]
-
-\noindent For example, let us evaluate the clause
+For each clause $C = (x_i \vee x_j \vee x_k)$, we have that $1 \leq i < j < k \leq n$.  As an example, let us evaluate the clause
 \[
 C = x_1 \vee \neg x_2 \vee \neg x_3.
 \]
 
 \noindent On the first iteration, we compare the third ordered literal $c$ with $x_3$.  Since $c = \neg x_3$, extract configurations that satisfy $a \vee b$.  
 
-\begin{align*}
-T_P &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\} \\
-T_N &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\} 
-\end{align*}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+				T_P = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
+				\]
+				\begin{align*}
+				T_P = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+					   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3',\\
+					   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+					   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3'\},
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\[
+				T_N = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}		
+				\]
+				\begin{align*}	
+				T_N = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+					   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3',\\
+					   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+					   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3'\}.
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+	
+\hspace{1em}
 
 \noindent From $T$, select configurations that satisfy $a_P = a_{\texttt{T}}$
-\[
-T_{P1} = \{ \texttt{STT}, \texttt{STF} \}.
-\]
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+	T_{P1} = \{ \texttt{STT}, \texttt{STF} \}.
+	\]
+	\begin{align*}
+	T_{P1} = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3', \\
+				&5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3'\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
 \noindent From $T$, Select configurations that satisfy $a_N = a_{\texttt{F}}$
-\[
-T_{N1} = \{ \texttt{SFT}, \texttt{SFF} \}.
-\]
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+	T_{N1} = \{ \texttt{SFT}, \texttt{SFF} \}.
+	\]
+	\begin{align*}
+	T_{N1} = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+				&5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3'\}
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
 \noindent From $T_{N1}$, select configurations that satisfy $b_P = b_{\texttt{F}}$
-\[
-T_{P2} = \{ \texttt{SFF} \}.
-\]
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+	T_{P2} = \{ \texttt{SFF} \},
+	\]
+	\[
+	T_{P2} = \{ 5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3'\}.
+	\]
+};
+\end{tikzpicture}
+\end{center}
 
 \noindent Mix the contents of $T_{P1}$ and $T_{P2}$ as the contents of $T_P$
 
-\[
-T_P = \{ \texttt{STT}, \texttt{STF}, \texttt{SFF} \}.
-\]
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+	\[
+	T_P = \{ \texttt{STT}, \texttt{STF}, \texttt{SFF} \},
+	\]
+	\begin{align*}
+	T_P = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3', \\
+			 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3', \\
+			 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3'\}.
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 
 \noindent We have the tubes
 
-\begin{align*}
-T_P &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFF} \}, \\
-T_N &= \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}.
-\end{align*}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+				T_P = \{ \texttt{STT}, \texttt{STF}, \texttt{SFF} \}
+				\]
+				\begin{align*}
+				T_P = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3', \\
+						 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3', \\
+						 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3'\},\\
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\[
+				T_N = \{ \texttt{STT}, \texttt{STF}, \texttt{SFT}, \texttt{SFF}\}
+				\]
+				\begin{align*}
+				T_N = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+					   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3',\\
+					   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}-3',\\
+					   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}-3'\}.
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+\hspace{1em}
 
 \noindent Finally append assignments that satisfy the current literal with $T_P$ and $T_F$.
 
-\begin{align*}
-T_P &= \text{append}(T_P, c_{\texttt{F}}) \\
-	&= \{ \texttt{STTF}, \texttt{STFF}, \texttt{SFFF} \}
-\end{align*}
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
+				\begin{align*}
+				T_P &= \text{append}(T_P, c_{\texttt{F}}) \\
+					&= \{ \texttt{STTF}, \texttt{STFF}, \texttt{SFFF} \}
+				\end{align*}
+				\begin{align*}
+				T_P = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{GTT}}_{\neg x_{3}}-3',\\
+						 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}\cdot\underbrace{\texttt{GTT}}_{\neg x_{3}}-3',\\
+						 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}\cdot\underbrace{\texttt{GTT}}_{\neg x_{3}}-3' \}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}
+		\end{minipage}
+		
+		\begin{minipage}[t]{0.5\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
+				\begin{align*}
+				T_N &= \text{append}(T_N, c_{\texttt{T}}) \\
+					&= \{ \texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{SFFT}\}
+				\end{align*}
+				\begin{align*}
+				T_N = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}}-3',\\
+						 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}}-3',\\
+						 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}}-3',\\
+						 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}}-3'\}.
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}
+		\end{minipage}
+	}
+};
+\end{tikzpicture}
+\end{center}
 
-\begin{align*}
-T_N &= \text{append}(T_N, c_{\texttt{T}}) \\
-	&= \{ \texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{SFFT}\}
-\end{align*}
+\hspace{1em}
 
 \noindent Mix the contents of $T_P$ and $T_N$ to form the set of configurations that witness the clause. 
-\[
-T = \{ \texttt{STTF}, \texttt{STFF}, \texttt{SFFF},  \texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{SFFT}\}
-\]
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3.5in]{
+	
+	\[
+	T = \{ \texttt{STTF}, \texttt{STFF}, \texttt{SFFF},  \texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{SFFT}\}
+	\]
+	\begin{align*}
+	T = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{GTT}}_{\neg x_{3}}-3',\\
+		   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}\cdot\underbrace{\texttt{GTT}}_{\neg x_{3}}-3',\\
+		   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}\cdot\underbrace{\texttt{GTT}}_{\neg x_{3}}-3',\\
+		   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}}-3',\\
+		   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}}-3',\\
+		   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}}-3',\\
+		   &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTA}}_{\neg x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}}-3'\}.
+	\end{align*}
+};
+\end{tikzpicture}
+\end{center}
 		
-	\subsection{Detailed trace of Ogihara and Ray's algorithm}
+\subsection{Detailed trace of Ogihara and Ray's algorithm}
 	
 Appendix B lists a detailed execution trace for Ogihara and Ray's algorithm.
 
@@ -240,6 +614,6 @@ Braich et al. implemented a molecular computer to filter solutions for a 3-{\sc 
 	\subsection{Simulation frameworks}
 
 %		<Paragraph> Describe computer simulation 
-Martín-Mateos et al. introduced a simulation for Lipton's algorithm \cite{MartinMateos02molecularcomputation}.   Molecular operations get implemented in \texttt{ACL2}, a Common Lisp variant.  The framework for this system implemented test cases for Lipton's algorithm.
+Mart\'{i}n-Mateos et al. introduced a simulation for Lipton's algorithm \cite{MartinMateos02molecularcomputation}.   Molecular operations get implemented in \texttt{ACL2}, a Common Lisp variant.  The framework for this system implemented test cases for Lipton's algorithm.
 
 Ogihara provides test results for an implementation of his original molecular algorithm \cite{Ogihara:1996:BFS:898228}.  This simulation provides a comparison to Lipton's algorithm for practical length restrictions.
