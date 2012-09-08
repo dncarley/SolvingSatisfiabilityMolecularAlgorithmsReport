@@ -10,28 +10,12 @@ This chapter introduces a new molecular algorithm for {\sc Satisfiability}: the 
 
 The Distribution algorithm (Algorithm \ref{distributionAlgorithm}) begins with a CNF instance $\phi$.  The algorithm constructs sets of witnesses stored in $T_C$ that satisfy the current clause $C$ along with all previously evaluated witnesses in the tube $T_S$.  Once the Distribution completes the tube $T_S$ contain witnesses for $\phi$; when $\phi$ is unsatisfiable the tube $T_S = \emptyset$. \\
 
-The algorithm begins by initiating a solution tube $T_S$ with a start sequence \texttt{S}.  During the evaluation of $m$ clauses\footnote{We consider only the parse ordering of the clauses from the CNF instance $\phi$.  The Distribution algorithm will resolve conflict uniquely depending on the permutations of the clauses in $\phi$.}, the tube stores witnesses for the CNF instance
-
-\[
-\bigwedge_{1\leq i \leq m} C_i.
-\]
-
-The tube $T_C$ stores witnesses for each clause.  The tube $T_C$ begins as the empty set on reading each clause $C$, and grows with the satisfying literal assignments.  
-
-During the evaluation of each literal, we split the contents of $T_S$ into the tubes $T_V$ and a copy of $T_S$.  We use the tube $T_V$ to filter positive and negative literal assignments into the tubes $T_P$ and $T_F$, respectively.  The copy of the tube $T_S$ retains the witness candidates for each of the literals in $C$.
-
-We extract from $T_V$ witnesses candidates that conflict with the current literal in the tube $T_F$, and those with idempotent assignments in the tube $T_P$.  The remaining contents of the tube $T_V$, if any, contain witness candidates that can witness the current clause with the assignment of the current literal $v$.  
-
-The Distribution algorithm extends $T_V$ by appending the contents with the assignment $v_p$ in the same polarity of the current literal $v$.  We mix the clause witnesses ($T_C$) with the contents of the idempotent witnesses ($T_P$), extended witnesses ($T_V$), along with existing clause witnesses in $T_C$.
-
-On each iteration of clauses, the Distribution algorithm clears the contents of the tube $T_S$ and passes the clause witnesses ($T_C$) to the remaining clauses.  We purify the contents of $T_S$ to create a uniform distribution of the witness candidates.  Once the Distribution algorithm completes the tube $T_S$ contains witnesses for $\phi$; if $T_S = \emptyset$ then $\phi$ is unsatisfiable.
-
-
 \input{./algorithms/distributionAlgorithm.tex}
 \FloatBarrier
 
 
-	\subsection{Description of the Distribution algorithm}
+	\subsection{Example of the Distribution algorithm}
+	\label{exDistribution}
 
 Let us consider an example CNF instance designed to show several aspects of the Distribution algorithm.
 
@@ -732,9 +716,192 @@ Complete the iteration of the last clause by storing the witnesses in $T_C$ as w
 
 
 
+\subsection{Collapse on unsatisfiable input}
 
-	
-	
+In the previous section (\ref{exDistribution}), we highlighted the execution of the Distribution algorithm with an input that demonstrates various aspects of the algorithm.  Now we show that the Distribution algorithm detects unsatisfiable input. \\
+
+Let us consider an unsatisfiable CNF instance $\phi$, with
+
+\begin{align*}
+\phi = &(x_{1} \vee  \neg x_{2} \vee  \neg x_{4} ) \wedge (x_{1} \vee x_{4} \vee  \neg x_{5} ) \wedge (x_{1} \vee  \neg x_{2} \vee  \neg x_{5} ) \wedge \\
+&( \neg x_{3} \vee  \neg x_{4} \vee  \neg x_{5} ) \wedge (x_{1} \vee x_{3} \vee  \neg x_{4} ) \wedge ( \neg x_{2} \vee x_{4} \vee  \neg x_{5} ) \wedge \\
+&( \neg x_{1} \vee x_{3} \vee x_{5} ) \wedge ( \neg x_{1} \vee x_{2} \vee  \neg x_{5} ) \wedge (x_{1} \vee  \neg x_{3} \vee  \neg x_{4} ) \wedge \\
+&( \neg x_{2} \vee x_{3} \vee  \neg x_{4} ) \wedge (x_{1} \vee  \neg x_{2} \vee x_{5} ) \wedge (x_{2} \vee  \neg x_{3} \vee  \neg x_{4} ) \wedge \\
+&(x_{2} \vee x_{3} \vee  \neg x_{5} ) \wedge ( \neg x_{3} \vee  \neg x_{4} \vee x_{5} ) \wedge (x_{1} \vee  \neg x_{3} \vee  \neg x_{5} ) \wedge \\
+&(x_{1} \vee  \neg x_{4} \vee  \neg x_{5} ) \wedge ( \neg x_{1} \vee  \neg x_{4} \vee x_{5} ) \wedge ( \neg x_{3} \vee x_{4} \vee x_{5} ) \wedge (x_{1}	\vee x_{3} \vee x_{4}).
+\end{align*}	
+
+The instance $\phi$ can be satisfied with clauses $C_{1}$--$C_{18}$.  To show the literal conflicts, we begin with the witnesses from the first 17 distributed clauses.  After distributing clauses $C_1$--$C_{17}$, we have the witnesses
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+W_{C1-C17} = \{&\{ \neg x_{2} , x_{3} ,  \neg x_{4} ,  \neg x_{5} \},\\
+&\{ \neg x_{1} ,  \neg x_{2} ,  \neg x_{4} ,  \neg x_{5} \},\\
+&\{ \neg x_{1} ,  \neg x_{2} ,  \neg x_{3} ,  \neg x_{4} ,  \neg x_{5} \},\\
+&\{ \neg x_{1} ,  \neg x_{2} , x_{3} ,  \neg x_{4} ,  \neg x_{5} \},\\
+&\{x_{1} , x_{3} ,  \neg x_{4} ,  \neg x_{5} \},\\
+&\{x_{1} ,  \neg x_{2} , x_{3} ,  \neg x_{4} ,  \neg x_{5} \}\}.
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+
+We distribute the contents of clause $C_{18} = ( \neg x_{3} \vee x_{4} \vee x_{5} )$.  The literal $\neg x_3$ satisfies one of the witness candidates in $W_{C1-C17}$.  The other two literals ($x_4$ and $x_5$) conflict with all witness candidates contained in $W_{C1-C17}$.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.5\textwidth} 
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=2.3in]{
+				\[
+				\neg x_3
+				\]
+				\begin{align*}
+					W_{L1} = \{ \{\neg x_1, \neg x_2, \neg x_3, \neg x_4, \neg x_5\}\}
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.25\textwidth}		
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=1.3in]{
+				\[
+				x_4
+				\]
+				\begin{align*}
+				 W_{L2} = \emptyset
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+		\begin{minipage}[t]{0.25\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=1.3in]{
+				\[
+				x_5
+				\]
+				\begin{align*}
+				 W_{L3} = \emptyset
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+		
+\hspace{1em}
+
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\begin{align*}
+W_{C1-C18} = &\{\{ \neg x_{1} ,  \neg x_{2} ,  \neg x_{3} ,  \neg x_{4} ,  \neg x_{5} \}\}
+\end{align*}
+};
+\end{tikzpicture}
+\end{center}
+
+Next, we distribute the contents of clause $C_{19} = (x_{1} \vee x_{3} \vee x_{4})$.  In this case all three literals contained in $C_{19}$ conflict with the witness candidate contained in the witnesses ($W_{C1-C18}$) for the first 18 clauses.
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=gray, rounded corners=5pt, text width=6in]{
+	\makebox[\textwidth][r]{
+		\begin{minipage}[t]{0.3\textwidth} 
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=1.3in]{
+				\[
+				  x_1
+				\]
+				\begin{align*}
+					W_{L1} = \emptyset
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}				
+		\begin{minipage}[t]{0.3\textwidth}		
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=1.3in]{
+				\[
+				x_3
+				\]
+				\begin{align*}
+				 W_{L2} = \emptyset
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+		\begin{minipage}[t]{0.3\textwidth}
+			\begin{center}
+			\begin{tikzpicture}
+			\node[fill=lightgray, rounded corners=5pt, text width=1.3in]{
+				\[
+				x_4
+				\]
+				\begin{align*}
+				 W_{L3} = \emptyset
+				\end{align*}
+			};
+			\end{tikzpicture}
+			\end{center}				
+		\end{minipage}		
+	}
+};
+\end{tikzpicture}
+\end{center}
+		
+\hspace{1em}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=lightgray, rounded corners=5pt, text width=3in]{
+\[
+W_{C1-C19} = \emptyset
+\]
+};
+\end{tikzpicture}
+\end{center}
+
+
+
+Since the clause $C_{19}$ eliminates all witness candidates from $W_{C1-C18}$ the entire CNF instance $\phi$ must be unsatisfiable.
+
+Additional clauses could not be satisfied because witnesses do not exist for $W_{C1-C19}$.  Including any other clause to $\phi$ over-constrains the unsatisfiable instance.
+
+
+\subsection{Maximum expansion of witnesses}
+
+We can write a trivially satisfiable $k$-CNF instance that constructs the maximum number of witnesses.  This type of instance can be generated using independent, non-conflicting literal assignments.  
+
+Let us consider the 3-CNF instance
+
+\begin{align*}
+\phi = &(x_1 \vee x_2 \vee x_3) \wedge \\
+	   &(x_4 \vee x_5 \vee x_6) \wedge \\
+	   &(x_7 \vee x_8 \vee x_9) \wedge \\
+	   &(x_{10} \vee x_{11} \vee x_{12}).
+\end{align*}	
+
+With this case we have the maximum number of witness candidates propagated for each clause.  Namely, we have the upper bound $O(k^m)$ on the number of witnesses.\\
+
 \subsection{Detailed trace of the Distribution algorithm}
 
 Appendix B lists a detailed execution trace for the Distribution algorithm.

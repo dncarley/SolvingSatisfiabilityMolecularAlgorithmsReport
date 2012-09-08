@@ -28,7 +28,7 @@
 	\RETURN{ \text{detect}(T_S)}
 	\end{pseudocode}
 
-\caption{The {\sc Distribution Algorithm} constructs a set of witnesses for a CNF instance $\phi$ by clause evaluation.  The literals of each clause $C$ get distributed into the clause witness tube $T_C$.  These witnesses contained in $T_C$ continue to witness the evaluated portion of $\phi$ in the solution witness tube $T_S$.  }
+\caption{The {\sc Distribution Algorithm} constructs a set of witnesses for a CNF instance $\phi$ by clause evaluation.  The literals of each clause $C$ get distributed into the clause witness tube $T_C$.  These witnesses contained in $T_C$ continue to witness the evaluated portion of $\phi$ in the solution witness tube $T_S$.  Note that the algorithm discards the tube $T_N$ to remove conflicting assignments. }
 \label{distributionAlgorithm}
 \end{center}
 \end{figure}

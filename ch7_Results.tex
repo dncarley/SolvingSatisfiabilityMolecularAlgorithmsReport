@@ -8,8 +8,6 @@ This chapter presents results of the $k$-{\sc Sat} execution test from the previ
 %		<Paragraph> Summary of measured metrics
 This section describes the results from the simulation.  We analyze the molecular operations count for append, extract, mix, purify, splice, and split.  Presentation of actual computation time and required memory for the solution representation allow for comparison of algorithms.
 
-The plots in this chapter use the shapes in Figure \ref{metricKey} for algorithm type.  We superimpose a line over each plot showing the percent of satisfiable $3$-CNF instances on each clause-variable ratio $\alpha$ for our test cases.
-
 %\subsection{Split}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[htdp]
@@ -25,6 +23,41 @@ The plots in this chapter use the shapes in Figure \ref{metricKey} for algorithm
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \FloatBarrier
+
+\newpage
+The plots in this chapter use the shapes in Figure \ref{metricKey} for algorithm type.  We superimpose a line over each plot showing the percent of satisfiable $3$-CNF instances on each clause-variable ratio $\alpha$ for our test cases.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[htdp]
+
+\begin{center}
+
+\includegraphics[width=0.7\textwidth]{./figures/gradientKey.pdf}
+
+\caption{The figures use transparent shapes to distinguish overlapping datapoints.}
+\label{metricKeyGridient}
+\end{center}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\FloatBarrier
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[htdp]
+
+\begin{center}
+
+\includegraphics[width=0.7\textwidth]{./figures/keyOverlap.pdf}
+
+\caption{Mixing of colors from combinations of algorithm metric datapoints.}
+\label{metricKeyOverlap}
+\end{center}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\FloatBarrier
+
+
+Figure \ref{metricKeyGridient} shows a linear gradient key for overlapping algorithm datapoints.  Metric datapoints may also overlap between algorithm implementations. Figure \ref{metricKeyOverlap} shows the additive mixing for each of the algorithm types.
+
 
 %\subsection{Append}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,7 +77,7 @@ Ogihara and Ray's algoritm uses $O(n)$ appends.  Unsatisfiable $k$-CNF input may
 
 \includegraphics[width=1.1\textwidth]{./figures/metricOutput_n20/appendCount.pdf}
 
-\caption{Clause to variable ratio $\alpha$ vs. Number of appends, with $n = 20$. }
+\caption{Clause to variable ratio $\alpha$ vs. Number of appends, with $n = 20$.  Black line represents percent satisfiable.}
 \label{appendFig}
 \end{center}
 \end{figure}
@@ -53,9 +86,9 @@ Ogihara and Ray's algoritm uses $O(n)$ appends.  Unsatisfiable $k$-CNF input may
 
 \begin{center}
 
-\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n10/appendCount.pdf}
+\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n20-earlyExit/appendCount.pdf}
 
-\caption{Clause to variable ratio $\alpha$ vs. Number of appends, with $n = 10$.  Algorithms terminate on detection of unsatisfiable input. }
+\caption{Clause to variable ratio $\alpha$ vs. Number of appends, with $n = 20$.  Algorithms terminate on detection of unsatisfiable input. }
 \label{appendFig_10}
 \end{center}
 \end{figure}
@@ -92,9 +125,9 @@ Ogihara and Ray's algorithm uses $O(m)$ extracts.   Lipton's algorithm shares th
 
 \begin{center}
 
-\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n10/extractCount.pdf}
+\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n20-earlyExit/extractCount.pdf}
 
-\caption{Clause to variable ratio $\alpha$ vs. Number of extracts, with $n = 10$.  Algorithms terminate on detection of unsatisfiable input. }
+\caption{Clause to variable ratio $\alpha$ vs. Number of extracts, with $n = 20$.  Algorithms terminate on detection of unsatisfiable input. }
 \label{extractFig_10}
 \end{center}
 \end{figure}
@@ -130,9 +163,9 @@ Ogihara and Ray's algorithm uses $O(m)$ extracts.   Lipton's algorithm shares th
 
 \begin{center}
 
-\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n10/mixCount.pdf}
+\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n20-earlyExit/mixCount.pdf}
 
-\caption{Clause to variable ratio $\alpha$ vs. Number of mixes, with $n = 10$.  Algorithms terminate on detection of unsatisfiable input. }
+\caption{Clause to variable ratio $\alpha$ vs. Number of mixes, with $n = 20$.  Algorithms terminate on detection of unsatisfiable input. }
 \label{mixFig_10}
 \end{center}
 \end{figure}
@@ -167,9 +200,9 @@ Lipton's and the Distribution algorithms each use $O(m)$ purifications.  Each of
 
 \begin{center}
 
-\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n10/purifyCount.pdf}
+\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n20-earlyExit/purifyCount.pdf}
 
-\caption{Clause to variable ratio $\alpha$ vs. Number of purifications, with $n = 10$.  Algorithms terminate on detection of unsatisfiable input. }
+\caption{Clause to variable ratio $\alpha$ vs. Number of purifications, with $n = 20$.  Algorithms terminate on detection of unsatisfiable input. }
 \label{purifyFig_10}
 \end{center}
 \end{figure}
@@ -207,9 +240,9 @@ Ogihara and Ray's algorithm uses $O(n)$ splits.  The algorithm requires a copy o
 
 \begin{center}
 
-\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n10/splitCount.pdf}
+\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n20-earlyExit/splitCount.pdf}
 
-\caption{Clause to variable ratio $\alpha$ vs. Number of splits, with $n = 10$.  Algorithms terminate on detection of unsatisfiable input. }
+\caption{Clause to variable ratio $\alpha$ vs. Number of splits, with $n = 20$.  Algorithms terminate on detection of unsatisfiable input. }
 \label{splitFig_10}
 \end{center}
 \end{figure}
@@ -218,7 +251,6 @@ Ogihara and Ray's algorithm uses $O(n)$ splits.  The algorithm requires a copy o
 
 \FloatBarrier
 
-			
 %\subsection{Time}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[htdp]
@@ -228,7 +260,7 @@ Ogihara and Ray's algorithm uses $O(n)$ splits.  The algorithm requires a copy o
 
 Ogihara and Ray's algorithm requires the least amount of time.  The algorithm takes the greatest amount of time for under-constrained instances (causing a large number of witnesses to be generated).   Less pruning occurs in over-constrained instances, reducing the execution time of test instances.\\
 
-Lipton's algorithm executes in exponential time $\alpha \approx [4.0, 6.0]$ (the phase transition region for 3-{\sc Sat}) taking the longest.\\
+Lipton's algorithm executes in exponential time with $\alpha \approx [4.0, 6.0]$ (the phase transition region for 3-{\sc Sat}) taking the longest.\\
 
 The Distribution algorithm executes in exponential time, and performs better than Lipton's algorithm for low conflict ratios.  Instances take the longest from $\alpha \approx [4.0, 6.0]$ (in the $3$-{\sc Sat} phase-transition region).
 }
@@ -247,9 +279,9 @@ The Distribution algorithm executes in exponential time, and performs better tha
 
 \begin{center}
 
-\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n10/executionTime.pdf}
+\includegraphics[width=1.1\textwidth]{./figures/metricOutput_n20-earlyExit/executionTime.pdf}
 
-\caption{Clause to variable ratio $\alpha$ vs. Number of splits, with $n = 10$.  Algorithms terminate on detection of unsatisfiable input. }
+\caption{Clause to variable ratio $\alpha$ vs. Number of splits, with $n = 20$.  Algorithms terminate on detection of unsatisfiable input. }
 \label{timeFig_10}
 \end{center}
 \end{figure}
@@ -297,7 +329,7 @@ Each {\sc Satisfiability} instance has a constrained solution space during the p
 
 	\section{Summary of Molecular Algorithms}
 
-		Table \ref{timeComplexityMolecularOperators} shows a comparison of the molecular operators of the algorithms under test.  Once the solution space $T_S = \emptyset$ the algorithms can terminate.  This provides the upper bounds for execution of various $k$-CNF instances.  
+		Table \ref{timeComplexityMolecularOperators} shows a theoretical comparison of the molecular operators of the algorithms under test.  Once the solution space $T_S = \emptyset$ the algorithms can terminate.  This provides the upper bounds for execution of various $k$-CNF instances.  
 		
 		\begin{table}[htdp]
 				\caption{Time complexity of molecular operators for each of the molecular algorithms.}
@@ -305,7 +337,7 @@ Each {\sc Satisfiability} instance has a constrained solution space during the p
 				\begin{tabular}{|c|c|c|c|c|}
 					\hline
 					\textbf{ Operator} & {\sc Combinatorial Generate} & {\sc Lipton}           & {\sc Ogihara-Ray}  & {\sc Distribution} \\ \hline
-					mix	               & $\Theta(n)$                  & $O(k\cdot m + m)$      & $O(m + n)$         & $O(k\cdot m + m)$ \\
+					mix	               & $\Theta(n)$                  & $O(k\cdot m)$          & $O(m + n)$         & $O(k\cdot m)$ \\
 					extract            & ---                          & $O(k\cdot m)$          & $O(m)$             & $O(k\cdot m)$ \\
 					split	           & $\Theta(n)$                  & ---                    & $O(n)$             & $O(k\cdot m)$ \\
 					purify	           & $\Theta(1)$                  & $O(m)$                 & $O(m + n)$         & $O(m)$ \\

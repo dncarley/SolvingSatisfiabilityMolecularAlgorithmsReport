@@ -534,10 +534,9 @@ C = x_1 \vee \neg x_2 \vee \neg x_3.
 			\begin{center}
 			\begin{tikzpicture}
 			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{		
-				\begin{align*}
-				T_P &= \text{append}(T_P, c_{\texttt{F}}) \\
-					&= \{ \texttt{STTF}, \texttt{STFF}, \texttt{SFFF} \}
-				\end{align*}
+				\[
+				T_P = \{ \texttt{STTF}, \texttt{STFF}, \texttt{SFFF} \}
+				\]
 				\begin{align*}
 				T_P = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{GTT}}_{\neg x_{3}}-3',\\
 						 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}\cdot\underbrace{\texttt{GTT}}_{\neg x_{3}}-3',\\
@@ -552,10 +551,9 @@ C = x_1 \vee \neg x_2 \vee \neg x_3.
 			\begin{center}
 			\begin{tikzpicture}
 			\node[fill=lightgray, rounded corners=5pt, text width=2.5in]{
-				\begin{align*}
-				T_N &= \text{append}(T_N, c_{\texttt{T}}) \\
-					&= \{ \texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{SFFT}\}
-				\end{align*}
+				\[
+				T_N = \{ \texttt{STTT}, \texttt{STFT}, \texttt{SFTT}, \texttt{SFFT}\}
+				\]
 				\begin{align*}
 				T_N = \{ &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{CTT}}_{ x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}}-3',\\
 						 &5'-\underbrace{\texttt{TTG}}_{\text{Start}}\cdot\underbrace{\texttt{TTT}}_{ x_{1}}\cdot\underbrace{\texttt{ATT}}_{\neg x_{2}}\cdot\underbrace{\texttt{ATG}}_{ x_{3}}-3',\\
