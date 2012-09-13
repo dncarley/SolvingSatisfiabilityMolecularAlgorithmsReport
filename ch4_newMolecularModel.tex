@@ -8,7 +8,7 @@ This chapter introduces a new molecular algorithm for {\sc Satisfiability}: the 
 
 %	<Paragraph> Introduce Distribution algorithm	
 
-The Distribution algorithm (Algorithm \ref{distributionAlgorithm}) begins with a CNF instance $\phi$.  The algorithm constructs sets of witnesses stored in $T_C$ that satisfy the current clause $C$ along with all previously evaluated witnesses in the tube $T_S$.  Once the Distribution completes the tube $T_S$ contain witnesses for $\phi$; when $\phi$ is unsatisfiable the tube $T_S = \emptyset$. \\
+The Distribution algorithm (Algorithm \ref{distributionAlgorithm}) takes as input a CNF instance $\phi$.  For each clause $C$ in $\phi$, the algorithm constructs sets of witnesses, stored in $T_C$, that satisfy $C$.  The algorithm outputs the tube $T_S$, which contains witnesses for $\phi$, if any exist.
 
 \input{./algorithms/distributionAlgorithm.tex}
 \FloatBarrier

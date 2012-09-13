@@ -9,8 +9,6 @@
 	
 	\text{// Input $\phi$ consists of $n$ variables.}\\
 	\text{// Each clause $C$ contains ordered literals $(a,b,c)$.}\\
-	\text{// Extract literals using the condensed notation $v_P$, where: }\\
-	\text{// \hspace{1em} $v_P$ matches the literal, and $v_N$ matches the negated literal.}\\
 	\\
 	T \GETS \{ \texttt{STT}, \texttt{STF}, \texttt{SFT},  \texttt{SFF}\} \\
 	
@@ -23,17 +21,17 @@
 				(a, b, c) \GETS C\\
 				\IF v_{\texttt{T}} = c  \THEN
 					\BEGIN
-						T_{P1} \GETS \text{extract}(T_N, a_P)\\
-						T_{N1} \GETS \text{extract}(T_N, a_N)\\				
-						T_{P2} \GETS \text{extract}(T_{N1}, b_P)\\
+						T_{P1} \GETS \text{extract}(T_N, a)\\
+						T_{N1} \GETS \text{extract}(T_N, \neg a)\\				
+						T_{P2} \GETS \text{extract}(T_{N1}, b)\\
 						T_{N} \GETS \text{mix}(T_{P1}, T_{P2})\\
 						T_{N} \GETS \text{purify(}T_{N}\text{)}					
 					\END \\  
 				\IF v_{\texttt{F}} = c \THEN
 					\BEGIN
-						T_{P1} \GETS \text{extract}(T_P, a_P)\\
-						T_{N1} \GETS \text{extract}(T_P, a_N)\\				
-						T_{P2} \GETS \text{extract}(T_{N1}, b_P)\\
+						T_{P1} \GETS \text{extract}(T_P, a)\\
+						T_{N1} \GETS \text{extract}(T_P, \neg a)\\				
+						T_{P2} \GETS \text{extract}(T_{N1}, b)\\
 						T_{P} \GETS \text{mix}(T_{P1}, T_{P2})\\
 						T_{P} \GETS \text{purify(}T_{P}\text{)} 						
 					\END\\

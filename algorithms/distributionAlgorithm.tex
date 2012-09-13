@@ -16,13 +16,12 @@
 			\FOREACH \text{literal } v \text{ in } C \DO
 				\BEGIN
 					[T_V, T_S] \GETS \text{split}(T_S) \\
-					T_N \GETS \text{extract}(T_V, v_{\texttt{N}})\\
-					T_P \GETS \text{extract}(T_V, v_{\texttt{P}})\\
-					T_V \GETS \text{append}(T_V, v_{\texttt{P}})\\
+					T_N \GETS \text{extract}(T_V, \neg v)\\
+					T_P \GETS \text{extract}(T_V, v)\\
+					T_V \GETS \text{append}(T_V, v)\\
 					T_C \GETS \text{mix}(T_C, T_P, T_V)\\
 				\END\\
-				T_S \GETS \emptyset\\
-				T_S \GETS \text{mix}(T_S, T_C)\\
+				T_S \GETS \text{mix}(T_C)\\
 				T_S \GETS \text{purify}(T_S)\\
 		\END\\
 	\RETURN{ \text{detect}(T_S)}

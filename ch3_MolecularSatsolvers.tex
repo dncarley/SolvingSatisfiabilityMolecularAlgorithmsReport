@@ -42,7 +42,7 @@ In Chapter 1, witness candidates for {\sc Satisfiability} were represented as a 
 
 We use the directed string notation (representation $D$ in Figure \ref{equivalentWitnessRepresentations}) as shorthand for a directed oligonucleotide.  The directed string representation $D$ can be indexed by the variable $v$ using the condensed literal from Table \ref{equivalentLiteralTable}.  In Lipton's algorithm, literal configurations for a variable $v$ get extracted directly ($v_{\texttt{T}}$ or $v_{\texttt{F}}$).
 
-Ogihara and Ray's algorithm extracts satisfying literal configurations from an ordered clause $(a, b, c)$.  We use the condensed literal notation $v_P$ to indicate the assignment (either \texttt{T} or \texttt{F}) for the literal $v$.  We use the literal configuration $v_N$ to indicate any other non-satisfiable literal assignment to $v$.
+Ogihara and Ray's algorithm extracts satisfying literal configurations from an ordered clause $(a, b, c)$.  We use the condensed literal notation $v_P$ to indicate the assignment (either \texttt{T} or \texttt{F}) for the literal $v$.  
 
 In the discussion of the Distribution algorithm in Chapter 4, we use the directed integer notation (representation $Z$ in Figure \ref{equivalentWitnessRepresentations}) as shorthand for a directed sequence of integers.
 
@@ -415,7 +415,7 @@ C = x_1 \vee \neg x_2 \vee \neg x_3.
 	
 \hspace{1em}
 
-\noindent From $T$, select configurations that satisfy $a_P = a_{\texttt{T}}$
+\noindent From $T$, select configurations that satisfy $a = a_{\texttt{T}}$
 
 \begin{center}
 \begin{tikzpicture}
@@ -431,7 +431,7 @@ C = x_1 \vee \neg x_2 \vee \neg x_3.
 \end{tikzpicture}
 \end{center}
 
-\noindent From $T$, Select configurations that satisfy $a_N = a_{\texttt{F}}$
+\noindent From $T$, Select configurations that satisfy $\neg a = a_{\texttt{F}}$
 
 \begin{center}
 \begin{tikzpicture}
@@ -447,7 +447,7 @@ C = x_1 \vee \neg x_2 \vee \neg x_3.
 \end{tikzpicture}
 \end{center}
 
-\noindent From $T_{N1}$, select configurations that satisfy $b_P = b_{\texttt{F}}$
+\noindent From $T_{N1}$, select configurations that satisfy $b = b_{\texttt{F}}$
 \begin{center}
 \begin{tikzpicture}
 \node[fill=lightgray, rounded corners=5pt, text width=3in]{
