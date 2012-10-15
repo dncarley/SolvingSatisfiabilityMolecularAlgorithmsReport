@@ -25,8 +25,6 @@
 \bibitem{dimacsFormat}
 {\sc {DIMACS}}.
 \newblock {S}{\sc atisfiability} suggested format. {A}ccessed from
-  \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/}. {DIMACS} 1993.
-\newblock {A}ccessed from
   \url{ftp://dimacs.rutgers.edu/pub/challenge/satisfiability/}. {DIMACS} 1993.,
   May 1993.
 

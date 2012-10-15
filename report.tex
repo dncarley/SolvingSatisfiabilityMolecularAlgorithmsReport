@@ -28,25 +28,37 @@
 	urlcolor=black
 }
 
+\newcommand{\blankpage}{
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+}
+
 \newtheorem{definition}{Definition}[section]
 
 \begin{document}
 
 \input{title.tex}
+\blankpage
 \input{abstract.tex}
+\blankpage
+
 
 \pagenumbering{roman}
 \tableofcontents
-
-\clearpage
+\blankpage
 \pagenumbering{arabic}
 \input{ch1_introduction.tex}
 \input{ch2_background.tex}
 \input{ch3_MolecularSatsolvers.tex}
+\blankpage
 \input{ch4_newMolecularModel.tex}
+\blankpage
 \input{ch5_MolecularSimulation.tex}
 \input{ch6_ExperimentalSetup.tex}
 \input{ch7_Results}
+\blankpage
 \input{ch8_Conclusions.tex}
 
 \newpage

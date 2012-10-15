@@ -9,24 +9,24 @@
 	T \GETS \text{{\sc Combinatorial Generate}}(n) \\
 	\FOREACH \text{clause } C \text{ in } \phi \DO
 		\BEGIN
-		T_c \GETS \emptyset \\
+		T_C \GETS \emptyset \\
 		\FOREACH \text{literal } v \text{ in } C \DO
 			\BEGIN
 				\IF v \text{ is a positive literal} \THEN
 					\BEGIN
 						T_P \GETS \text{extract}(T, v_{\texttt{T}})\\
-						T_c \GETS \text{mix}(T_P, T_c)						
+						T_C \GETS \text{mix}(T_P, T_C)						
 					\END
 				\ELSE
 					\BEGIN
 						T_N \GETS \text{extract}(T, v_{\texttt{F}})\\
-						T_c \GETS \text{mix}(T_N, T_c)						
+						T_C \GETS \text{mix}(T_N, T_C)						
 					\END
 			\END
 		\\
 		T \GETS \emptyset \\
 		T \GETS \text{mix(}T, T_C\text{)} \\
-		T \GETS \text{purify(}T_c\text{)} \\
+		T \GETS \text{purify(}T_C\text{)} \\
 		\END
 	\\
 	\RETURN{\text{detect}(T)}
